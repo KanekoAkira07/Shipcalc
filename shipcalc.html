@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- PRIMARY SEO -->
+<title>ShipCalc — Shipping & Import Cost Calculator from Japan, USA, China & Korea</title>
+<meta name="description" content="Calculate the real cost of shipping and importing from Japan, USA, China or Korea. Includes shipping rates, customs duties, import VAT, and platform fees. Free calculator in English and Spanish.">
+<meta name="keywords" content="shipping cost calculator, Japan shipping calculator, import cost calculator, Japan Post EMS cost, DHL Japan shipping, customs duty calculator, send package from Japan, ship from Japan to USA, ship from Japan to Spain, cuanto cuesta enviar desde Japon, calculadora envios Japon, importar desde Japon">
+<meta name="author" content="ShipCalc">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://shipcalc.co">
+
+<!-- OPEN GRAPH (Facebook, WhatsApp, LinkedIn) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://shipcalc.co">
+<meta property="og:title" content="ShipCalc — How much does it really cost to ship from Japan?">
+<meta property="og:description" content="Free calculator. Enter the product price, weight and destination — get the exact cost including shipping, customs, taxes and platform fees in 30 seconds.">
+<meta property="og:image" content="https://shipcalc.co/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:site_name" content="ShipCalc">
+
+<!-- TWITTER CARD -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://shipcalc.co">
+<meta name="twitter:title" content="ShipCalc — Shipping & Import Cost Calculator">
+<meta name="twitter:description" content="Calculate the real cost of importing from Japan, USA, China or Korea. Shipping + customs + taxes. Free, instant, in English and Spanish.">
+<meta name="twitter:image" content="https://shipcalc.co/og-image.png">
+
+<!-- STRUCTURED DATA (Google Rich Results) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ShipCalc",
+  "description": "Free shipping and import cost calculator from Japan, USA, China and Korea. Calculates shipping rates, customs duties, import VAT and resale profitability.",
+  "url": "https://shipcalc.co",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "inLanguage": ["en", "es"],
+  "keywords": "shipping calculator, import cost, Japan Post, DHL, customs duty, import tax"
+}
+</script>
+
+<!-- CACHE HINT -->
+<meta http-equiv="Cache-Control" content="max-age=86400">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f0f2f7;--white:#fff;--surface:#f7f8fb;--border:#dde1ea;
+  --accent:#0052cc;--accent-light:#e8f0ff;--accent-hover:#0041a8;
+  --text:#0f1117;--text-mid:#4a5263;--text-muted:#8c94a6;
+  --green:#006644;--green-bg:#e3fcef;--green-border:#abf5d1;
+  --red:#bf2600;--red-bg:#ffebe6;--red-border:#ffbdad;
+  --orange:#974f0c;--orange-bg:#fff4e5;--orange-border:#ffd8a8;
+  --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04)
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px}
+
+/* HEADER */
+header{background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:56px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+.logo{font-weight:700;font-size:1.2rem;letter-spacing:-.02em;display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text);cursor:pointer}
+.logo-box{width:30px;height:30px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.72rem;font-weight:700;font-family:var(--mono)}
+.logo-text span{color:var(--accent)}
+.header-right{display:flex;align-items:center;gap:10px}
+.lang-toggle{display:flex;border:1px solid var(--border);border-radius:7px;overflow:hidden;font-size:.72rem;font-weight:600;font-family:var(--mono)}
+.lang-btn{padding:6px 13px;cursor:pointer;color:var(--text-muted);background:var(--white);border:none;font-family:var(--mono);font-size:.72rem;font-weight:600;transition:all .15s}
+.lang-btn.active{background:var(--accent);color:#fff}
+.pro-btn{padding:6px 12px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;border:none;border-radius:7px;font-size:.72rem;font-weight:700;cursor:pointer;font-family:var(--mono);letter-spacing:.05em}
+
+/* LAYOUT */
+.page-wrap{max-width:1060px;margin:0 auto;padding:28px 20px 60px}
+.page-header{margin-bottom:20px}
+.page-title{font-size:1.55rem;font-weight:700;letter-spacing:-.025em;line-height:1.2;margin-bottom:6px}
+.page-sub{font-size:.875rem;color:var(--text-muted);font-weight:300;line-height:1.5}
+
+/* QUICK CONVERTER */
+.quick-converter{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);flex-wrap:wrap}
+.qc-label{font-size:.68rem;font-weight:600;color:var(--text-muted);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+.qc-input{border:1.5px solid var(--border);border-radius:7px;padding:6px 10px;font-family:var(--mono);font-size:.88rem;width:110px;outline:none;background:var(--surface)}
+.qc-input:focus{border-color:var(--accent)}
+.qc-select{border:1.5px solid var(--border);border-radius:7px;padding:6px 10px;font-family:var(--sans);font-size:.82rem;outline:none;appearance:none;background:var(--surface);cursor:pointer}
+.qc-select:focus{border-color:var(--accent)}
+.qc-arrow{color:var(--text-muted);font-size:.9rem}
+.qc-result{font-family:var(--mono);font-size:.9rem;font-weight:600;color:var(--accent);min-width:120px}
+.qc-rate{font-size:.65rem;color:var(--text-muted)}
+
+/* MAIN GRID */
+.main-grid{display:grid;grid-template-columns:1fr 380px;gap:20px;align-items:start}
+
+/* CARDS */
+.card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card:last-child{margin-bottom:0}
+.card-head{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.step-badge{width:20px;height:20px;background:var(--accent);color:#fff;border-radius:5px;font-size:.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}
+.step-badge.muted{background:#cbd2e0}
+.card-title{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.optional-tag{font-size:.58rem;background:var(--surface);border:1px solid var(--border);color:var(--text-muted);padding:2px 7px;border-radius:4px;font-weight:500;margin-left:4px;letter-spacing:.04em;text-transform:uppercase}
+
+/* ORIGIN */
+.origin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.origin-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 10px;text-align:center;cursor:pointer;transition:all .15s;position:relative;user-select:none}
+.origin-card:hover{border-color:#a0b4d6;background:#f0f4fb}
+.origin-card.selected{border-color:var(--accent);background:var(--accent-light)}
+.origin-flag{font-size:1.8rem;display:block;margin-bottom:6px;line-height:1}
+.origin-name{font-size:.8rem;font-weight:600;color:var(--text)}
+.origin-sub{font-size:.6rem;color:var(--text-muted);margin-top:2px;line-height:1.3}
+.check-mark{position:absolute;top:6px;right:6px;width:16px;height:16px;background:var(--accent);border-radius:50%;display:none;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700}
+.origin-card.selected .check-mark{display:flex}
+
+/* FORM */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:.68rem;font-weight:600;color:var(--text-mid);letter-spacing:.03em}
+.field input,.field select{background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-family:var(--sans);font-size:.9rem;color:var(--text);outline:none;appearance:none;transition:border-color .15s,box-shadow .15s;width:100%}
+.field input:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,82,204,.1)}
+.field input.mono{font-family:var(--mono);font-size:.88rem}
+
+/* VOLUMETRIC */
+.vol-toggle{font-size:.68rem;color:var(--accent);cursor:pointer;font-weight:600;margin-top:8px;display:inline-flex;align-items:center;gap:4px;user-select:none}
+.vol-fields{display:none;margin-top:10px;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:8px}
+.vol-fields.open{display:block}
+.vol-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+.vol-result{font-size:.75rem;color:var(--text-mid);margin-top:4px}
+.vol-result strong{color:var(--accent);font-family:var(--mono)}
+
+/* THRESHOLD */
+.threshold-warn{display:none;margin-top:10px;padding:10px 14px;background:var(--orange-bg);border:1px solid var(--orange-border);border-radius:8px;font-size:.8rem;color:var(--orange);line-height:1.5}
+
+/* SHIPPING TABLE */
+.ship-table{width:100%;border-collapse:separate;border-spacing:0;border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--white)}
+.ship-table thead tr{background:var(--surface)}
+.ship-table th{padding:9px 14px;text-align:left;font-size:.63rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);border-bottom:1.5px solid var(--border)}
+.ship-table th:last-child{text-align:right}
+.ship-table td{padding:10px 14px;font-size:.82rem;border-bottom:1px solid var(--border);vertical-align:middle}
+.ship-table tr:last-child td{border-bottom:none}
+.ship-table tbody tr{cursor:pointer;transition:background .1s}
+.ship-table tbody tr:hover td{background:#f5f7fc}
+.ship-table tbody tr.selected td{background:var(--accent-light)}
+.ship-service{font-weight:500}
+.ship-time{color:var(--text-muted);font-size:.75rem}
+.ship-cost{font-family:var(--mono);font-size:.78rem;font-weight:500;color:var(--accent);text-align:right;white-space:nowrap}
+.ship-note{font-size:.63rem;color:var(--text-muted);margin-top:2px}
+
+/* CALC BTN */
+.calc-btn{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-family:var(--sans);font-size:.95rem;font-weight:600;cursor:pointer;transition:all .15s;letter-spacing:.01em;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px}
+.calc-btn:hover{background:var(--accent-hover);box-shadow:0 4px 14px rgba(0,82,204,.3);transform:translateY(-1px)}
+.calc-btn:active{transform:translateY(0)}
+
+/* HISTORY */
+.history-section{margin-top:20px}
+.history-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.history-title{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.history-clear{font-size:.65rem;color:var(--red);cursor:pointer;font-weight:500;background:none;border:none;font-family:var(--sans)}
+.history-item{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:.8rem;transition:border-color .15s}
+.history-item:hover{border-color:var(--accent);cursor:pointer}
+.history-item-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px}
+.history-item-name{font-weight:600}
+.history-item-total{font-family:var(--mono);font-size:.82rem;font-weight:700;color:var(--accent)}
+.history-item-sub{color:var(--text-muted);font-size:.72rem}
+
+/* RIGHT PANEL */
+.results-panel{background:var(--white);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);position:sticky;top:72px}
+.results-header{padding:16px 20px;background:var(--text);color:#fff}
+.results-header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.results-title-label{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;opacity:.5}
+.rate-live{display:flex;align-items:center;gap:5px;font-size:.65rem;opacity:.5}
+.live-dot{width:6px;height:6px;background:#22c55e;border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+#rate-display{font-family:var(--mono);font-size:.78rem;opacity:.65;color:#fff}
+.results-empty{padding:40px 20px;text-align:center;color:var(--text-muted);font-size:.85rem;line-height:1.6}
+.results-empty .icon{font-size:2rem;margin-bottom:10px;display:block;opacity:.4}
+.results-body{padding:16px 20px;display:none}
+.r-line{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--border);font-size:.83rem}
+.r-line:last-child{border-bottom:none}
+.r-label{color:var(--text-mid);padding-right:8px;line-height:1.3}
+.r-val{font-family:var(--mono);font-size:.78rem;font-weight:500;white-space:nowrap}
+.r-divider{border:none;border-top:2px solid var(--border);margin:8px 0}
+.r-total-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0}
+.r-total-label{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.r-total-val{font-size:1.75rem;font-weight:700;letter-spacing:-.02em;font-family:var(--mono)}
+.profit-box{padding:12px 14px;border-radius:8px;margin-top:10px;display:flex;justify-content:space-between;align-items:center}
+.profit-box.loss{background:var(--red-bg);border:1px solid var(--red-border)}
+.profit-box.gain{background:var(--green-bg);border:1px solid var(--green-border)}
+.profit-box.neutral{background:var(--surface);border:1px solid var(--border)}
+.pb-label{font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.profit-box.loss .pb-label{color:var(--red)}
+.profit-box.gain .pb-label{color:var(--green)}
+.profit-box.neutral .pb-label{color:var(--text-muted)}
+.pb-sub{font-size:.68rem;margin-top:2px;opacity:.75}
+.profit-box.loss .pb-sub{color:#de350b}
+.profit-box.gain .pb-sub{color:#006644}
+.pb-val{font-family:var(--mono);font-size:1.25rem;font-weight:700;white-space:nowrap}
+.profit-box.loss .pb-val{color:var(--red)}
+.profit-box.gain .pb-val{color:var(--green)}
+.profit-box.neutral .pb-val{color:var(--text-muted)}
+
+/* HS BOX */
+.hs-box{margin-top:10px;padding:11px 14px;background:#fffbf0;border:1px solid #ffe58f;border-radius:8px}
+.hs-box-title{font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#7c5b00;margin-bottom:4px}
+.hs-code{font-family:var(--mono);font-size:.9rem;font-weight:600;color:#5a3e00}
+.hs-desc{font-size:.72rem;color:#7c5b00;margin-top:2px}
+
+/* CUSTOMS NOTE */
+.customs-note{margin-top:10px;padding:11px 14px;background:#f0f4fb;border:1px solid #c5d3ef;border-radius:8px;font-size:.74rem;color:var(--text-mid);line-height:1.6}
+.customs-note strong{color:var(--text)}
+
+/* SHIP SERVICE BANNER */
+.ship-service-banner{margin-top:14px;padding:18px 20px;background:linear-gradient(135deg,#0f1117 0%,#1a2035 100%);border-radius:12px;color:#fff;border:1px solid #2a3045}
+.ssb-eyebrow{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#f0b429;margin-bottom:6px;opacity:.9}
+.ssb-title{font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-.01em}
+.ssb-body{font-size:.78rem;line-height:1.55;color:rgba(255,255,255,.7);margin-bottom:14px}
+.ssb-prices{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.ssb-price-tag{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:5px 9px;font-size:.68rem;color:rgba(255,255,255,.75);font-family:var(--mono)}
+.ssb-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:#f0b429;color:#000;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;border:none;font-family:var(--sans);transition:all .15s}
+.ssb-btn:hover{background:#e0a820;transform:translateY(-1px)}
+
+/* COMPARE */
+.compare-section{padding:16px 20px;border-top:1px solid var(--border);display:none}
+.compare-title{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px}
+.compare-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:.78rem;gap:8px}
+.compare-row:last-child{border-bottom:none}
+.compare-row.best{color:var(--green)}
+.compare-row.best .compare-name{font-weight:600}
+.compare-name{flex:1;color:var(--text-mid)}
+.compare-row.best .compare-name{color:var(--green)}
+.compare-best-badge{font-size:.55rem;background:var(--green);color:#fff;padding:1px 5px;border-radius:3px;font-weight:700;margin-left:4px;vertical-align:middle}
+.compare-cost{font-family:var(--mono);font-size:.75rem;white-space:nowrap;color:var(--text)}
+.compare-margin{font-family:var(--mono);font-size:.75rem;white-space:nowrap;text-align:right;min-width:60px}
+.compare-margin.pos{color:var(--green)}
+.compare-margin.neg{color:var(--red)}
+.compare-margin.neu{color:var(--text-muted)}
+
+/* EMAIL RESULT */
+.email-btn{width:100%;padding:11px;background:var(--surface);border:1.5px solid var(--border);border-radius:9px;font-family:var(--sans);font-size:.88rem;font-weight:600;cursor:pointer;transition:all .15s;color:var(--text-mid);display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px}
+.email-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+.email-inline{margin-top:8px;display:none;background:var(--surface);border:1.5px solid var(--border);border-radius:9px;padding:12px;gap:8px;align-items:center}
+.email-inline.open{display:flex}
+.email-inline input{flex:1;border:1.5px solid var(--border);border-radius:7px;padding:8px 11px;font-family:var(--sans);font-size:.85rem;outline:none;background:var(--white)}
+.email-inline input:focus{border-color:var(--accent)}
+.email-inline button{padding:8px 14px;background:var(--accent);color:#fff;border:none;border-radius:7px;font-size:.8rem;font-weight:600;cursor:pointer;white-space:nowrap;font-family:var(--sans)}
+.email-inline button:hover{background:var(--accent-hover)}
+.email-sent{font-size:.75rem;color:var(--green);text-align:center;padding:8px;display:none}
+
+/* SHARE */
+.share-row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.share-btn{flex:1;min-width:70px;padding:9px 8px;border:1.5px solid var(--border);border-radius:8px;background:var(--surface);font-size:.72rem;font-weight:600;cursor:pointer;transition:all .15s;color:var(--text-mid);display:flex;align-items:center;justify-content:center;gap:5px;font-family:var(--sans)}
+.share-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+.share-btn.copied{border-color:var(--green);color:var(--green);background:var(--green-bg)}
+
+/* MAPS */
+.maps-box{margin-top:10px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.maps-box-left{font-size:.76rem;color:var(--text-mid)}
+.maps-link{font-size:.7rem;font-weight:700;color:var(--accent);padding:5px 10px;border:1px solid var(--accent);border-radius:6px;text-decoration:none;white-space:nowrap;transition:all .12s}
+.maps-link:hover{background:var(--accent);color:#fff}
+
+/* ERRORS */
+.error-msg{display:none;padding:10px 14px;background:var(--red-bg);border:1px solid var(--red-border);border-radius:8px;color:var(--red);font-size:.8rem;margin-top:8px}
+
+/* MODALS */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);border-radius:16px;padding:32px;max-width:520px;width:90%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-close{float:right;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);margin-top:-4px}
+.modal-title{font-size:1.2rem;font-weight:700;margin-bottom:6px;clear:both}
+.modal-sub{font-size:.85rem;color:var(--text-muted);margin-bottom:20px;line-height:1.5}
+.modal-field{margin-bottom:14px}
+.modal-field label{display:block;font-size:.72rem;font-weight:600;color:var(--text-mid);margin-bottom:5px}
+.modal-field input,.modal-field select,.modal-field textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-family:var(--sans);font-size:.9rem;outline:none;appearance:none;transition:border-color .15s}
+.modal-field input:focus,.modal-field select:focus,.modal-field textarea:focus{border-color:var(--accent)}
+.modal-field textarea{resize:vertical;min-height:80px}
+.modal-submit{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all .15s}
+.modal-submit:hover{background:var(--accent-hover)}
+.modal-success{display:none;text-align:center;padding:20px 0}
+.modal-success .icon{font-size:3rem;display:block;margin-bottom:12px}
+.notice-box{background:var(--orange-bg);border:1px solid var(--orange-border);border-radius:8px;padding:12px;font-size:.78rem;color:var(--orange);margin-bottom:16px;line-height:1.5}
+.rates-box{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:.78rem;color:var(--text-mid);margin-bottom:16px;line-height:1.8}
+
+/* PRO */
+.pro-modal .modal-title{background:linear-gradient(135deg,#f59e0b,#d97706);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.pro-features{list-style:none;margin-bottom:20px}
+.pro-features li{padding:8px 0;border-bottom:1px solid var(--border);font-size:.85rem;display:flex;align-items:center;gap:8px}
+.pro-features li:last-child{border-bottom:none}
+.pro-features li::before{content:'✓';color:var(--green);font-weight:700}
+.pro-price{text-align:center;padding:16px;background:var(--surface);border-radius:10px;margin-bottom:16px}
+.pro-price-num{font-size:2rem;font-weight:800;font-family:var(--mono)}
+.pro-price-per{font-size:.8rem;color:var(--text-muted)}
+.excel-preview{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:16px}
+.excel-preview-title{font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px}
+.excel-table{width:100%;border-collapse:collapse;font-size:.75rem;font-family:var(--mono)}
+.excel-table thead tr{background:var(--text);color:#fff}
+.excel-table th{padding:6px 10px;text-align:left}
+.excel-table td{padding:6px 10px;border-bottom:1px solid var(--border)}
+.excel-table tr:nth-child(even) td{background:#fff}
+.excel-table tr:nth-child(odd) td{background:var(--surface)}
+.excel-note{font-size:.68rem;color:var(--text-muted);margin-top:8px}
+.pro-submit{background:linear-gradient(135deg,#f59e0b,#d97706)!important}
+
+/* FOOTER */
+footer{text-align:center;padding:20px;color:var(--text-muted);font-size:.7rem;border-top:1px solid var(--border);background:var(--white);line-height:1.6}
+
+/* RESPONSIVE */
+@media(max-width:780px){
+  .main-grid{grid-template-columns:1fr}
+  .results-panel{position:static}
+  .origin-grid{grid-template-columns:repeat(2,1fr)}
+  .form-row,.vol-row{grid-template-columns:1fr}
+  header{padding:0 16px}
+  .page-wrap{padding:20px 14px 40px}
+  .card{padding:18px 16px}
+  .quick-converter{gap:6px}
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.results-body.visible{animation:fadeIn .25s ease}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-box">SC</div>
+    <div class="logo-text">Ship<span>Calc</span></div>
+  </div>
+  <div class="header-right">
+    <button class="pro-btn" onclick="openModal('pro-modal')">&#9733; PRO</button>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <h1 class="page-title" id="t-title">How much does it really cost to import that product?</h1>
+    <p class="page-sub" id="t-subtitle">Calculate shipping + customs + taxes + platform fee. Exact result in 30 seconds.</p>
+  </div>
+
+  <!-- QUICK CONVERTER -->
+  <div class="quick-converter">
+    <span class="qc-label" id="t-qc-label">Quick convert</span>
+    <input type="number" class="qc-input" id="qc-amount" placeholder="10000" oninput="quickConvert()">
+    <select class="qc-select" id="qc-from" onchange="quickConvert()">
+      <option value="JPY">JPY &#127471;&#127477;</option>
+      <option value="USD">USD &#127482;&#127480;</option>
+      <option value="CNY">CNY &#127464;&#127475;</option>
+      <option value="KRW">KRW &#127472;&#127479;</option>
+    </select>
+    <span class="qc-arrow">&#8594;</span>
+    <select class="qc-select" id="qc-to" onchange="quickConvert()">
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+      <option value="GBP">GBP</option>
+      <option value="MXN">MXN</option>
+      <option value="ARS">ARS</option>
+      <option value="COP">COP</option>
+      <option value="CLP">CLP</option>
+      <option value="AUD">AUD</option>
+      <option value="CAD">CAD</option>
+    </select>
+    <div>
+      <div class="qc-result" id="qc-result">—</div>
+      <div class="qc-rate" id="qc-rate"></div>
+    </div>
+  </div>
+
+  <div class="main-grid">
+    <!-- LEFT: FORM -->
+    <div class="left-col">
+
+      <!-- STEP 1: ORIGIN -->
+      <div class="card">
+        <div class="card-head"><div class="step-badge">1</div><span class="card-title" id="t-step1">Origin country</span></div>
+        <div class="origin-grid">
+          <div class="origin-card" data-origin="JP" onclick="selectOrigin('JP')">
+            <div class="check-mark">&#10003;</div>
+            <span class="origin-flag">&#127471;&#127477;</span>
+            <div class="origin-name">Japan</div>
+            <div class="origin-sub" id="t-jp-sub">Collectibles · Retro</div>
+          </div>
+          <div class="origin-card" data-origin="US" onclick="selectOrigin('US')">
+            <div class="check-mark">&#10003;</div>
+            <span class="origin-flag">&#127482;&#127480;</span>
+            <div class="origin-name">USA</div>
+            <div class="origin-sub" id="t-us-sub">Sneakers · Tech</div>
+          </div>
+          <div class="origin-card" data-origin="CN" onclick="selectOrigin('CN')">
+            <div class="check-mark">&#10003;</div>
+            <span class="origin-flag">&#127464;&#127475;</span>
+            <div class="origin-name">China</div>
+            <div class="origin-sub" id="t-cn-sub">Electronics · Fashion</div>
+          </div>
+          <div class="origin-card" data-origin="KR" onclick="selectOrigin('KR')">
+            <div class="check-mark">&#10003;</div>
+            <span class="origin-flag">&#127472;&#127479;</span>
+            <div class="origin-name">Korea</div>
+            <div class="origin-sub" id="t-kr-sub">K-Pop · Skincare</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: PRODUCT -->
+      <div class="card">
+        <div class="card-head"><div class="step-badge">2</div><span class="card-title" id="t-step2">Product & destination</span></div>
+        <div class="form-row" style="margin-bottom:12px">
+          <div class="field">
+            <label id="t-price-label">Purchase price</label>
+            <input type="text" id="purchase-price" class="mono" placeholder="e.g. 5000" oninput="onPriceChange()">
+          </div>
+          <div class="field">
+            <label id="t-weight-label">Package weight (kg)</label>
+            <input type="number" id="weight" class="mono" placeholder="0.5" step="0.1" min="0.1" oninput="onWeightChange()">
+          </div>
+        </div>
+        <!-- VOLUMETRIC TOGGLE -->
+        <div class="vol-toggle" onclick="toggleVol()" id="t-vol-toggle">&#43; Add dimensions (volumetric weight)</div>
+        <div class="vol-fields" id="vol-fields">
+          <div style="font-size:.68rem;color:var(--text-muted);margin-bottom:8px" id="t-vol-note">Couriers like DHL/FedEx charge by volumetric weight if it exceeds actual weight. Enter box dimensions.</div>
+          <div class="vol-row">
+            <div class="field"><label id="t-vol-l">Length (cm)</label><input type="number" id="vol-l" class="mono" placeholder="30" min="1" oninput="calcVol()"></div>
+            <div class="field"><label id="t-vol-w">Width (cm)</label><input type="number" id="vol-w" class="mono" placeholder="20" min="1" oninput="calcVol()"></div>
+            <div class="field"><label id="t-vol-h">Height (cm)</label><input type="number" id="vol-h" class="mono" placeholder="15" min="1" oninput="calcVol()"></div>
+          </div>
+          <div class="vol-result" id="vol-result"></div>
+        </div>
+        <div class="form-row" style="margin-top:12px">
+          <div class="field">
+            <label id="t-dest-label">Destination country</label>
+            <select id="destination" onchange="onDestinationChange()">
+              <optgroup label="Europe">
+                <option value="ES">&#127466;&#127480; Spain</option>
+                <option value="DE">&#127465;&#127466; Germany</option>
+                <option value="GB">&#127468;&#127463; UK</option>
+                <option value="IT">&#127470;&#127481; Italy</option>
+              </optgroup>
+              <optgroup label="North America">
+                <option value="US">&#127482;&#127480; USA</option>
+                <option value="CA">&#127464;&#127462; Canada</option>
+                <option value="MX">&#127474;&#127485; Mexico</option>
+              </optgroup>
+              <optgroup label="South America">
+                <option value="AR">&#127462;&#127479; Argentina</option>
+                <option value="CO">&#127464;&#127476; Colombia</option>
+                <option value="CL">&#127464;&#127473; Chile</option>
+                <option value="PE">&#127477;&#127466; Peru</option>
+                <option value="VE">&#127483;&#127466; Venezuela</option>
+                <option value="EC">&#127466;&#127464; Ecuador</option>
+                <option value="UY">&#127482;&#127486; Uruguay</option>
+                <option value="PY">&#127477;&#127486; Paraguay</option>
+                <option value="BO">&#127463;&#127476; Bolivia</option>
+              </optgroup>
+              <optgroup label="Central America">
+                <option value="DO">&#127465;&#127476; Dominican Rep.</option>
+                <option value="GT">&#127468;&#127481; Guatemala</option>
+                <option value="CR">&#127464;&#127479; Costa Rica</option>
+                <option value="PA">&#127477;&#127462; Panama</option>
+              </optgroup>
+              <optgroup label="Pacific">
+                <option value="AU">&#127462;&#127482; Australia</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="field">
+            <label id="t-cat-label">Product category</label>
+            <select id="category" onchange="clearResults()">
+              <option value="collectibles">Collectibles / Figures</option>
+              <option value="videogames">Video Games / Consoles</option>
+              <option value="electronics">Electronics / Gadgets</option>
+              <option value="clothing">Clothing / Fashion</option>
+              <option value="supplements">Supplements / Health</option>
+              <option value="kpop">K-Pop Merch / Albums</option>
+              <option value="skincare">Skincare / Cosmetics</option>
+              <option value="toys">Toys / Games</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="threshold-warn" id="threshold-warn"></div>
+      </div>
+
+      <!-- STEP 3: SHIPPING -->
+      <div class="card">
+        <div class="card-head"><div class="step-badge">3</div><span class="card-title" id="t-step3">Shipping service</span></div>
+        <table class="ship-table">
+          <thead>
+            <tr>
+              <th id="t-th-service">Service</th>
+              <th id="t-th-time">Est. time</th>
+              <th id="t-th-cost">Est. cost</th>
+            </tr>
+          </thead>
+          <tbody id="shipping-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- STEP 4: RESALE -->
+      <div class="card">
+        <div class="card-head">
+          <div class="step-badge muted">4</div>
+          <span class="card-title" id="t-step4">Resale profitability</span>
+          <span class="optional-tag" id="t-optional">Optional</span>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label id="t-sell-label">Estimated sale price</label>
+            <input type="text" id="sell-price" class="mono" placeholder="0" oninput="clearResults()">
+          </div>
+          <div class="field">
+            <label id="t-platform-label">Sales platform</label>
+            <select id="platform" onchange="clearResults()"></select>
+          </div>
+        </div>
+      </div>
+
+      <div id="error-msg" class="error-msg"></div>
+      <button class="calc-btn" onclick="calculate()">
+        <span>&#8594;</span><span id="t-calc-btn">Calculate real cost</span>
+      </button>
+
+      <!-- HISTORY -->
+      <div class="history-section" id="history-section" style="display:none">
+        <div class="history-header">
+          <span class="history-title" id="t-history">Recent calculations</span>
+          <button class="history-clear" onclick="clearHistory()" id="t-history-clear">Clear</button>
+        </div>
+        <div id="history-list"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: RESULTS -->
+    <div class="right-col">
+      <div class="results-panel">
+        <div class="results-header">
+          <div class="results-header-top">
+            <div class="results-title-label" id="t-breakdown">Full breakdown</div>
+            <div class="rate-live"><div class="live-dot"></div><span id="t-live">Live rate</span></div>
+          </div>
+          <div id="rate-display">—</div>
+        </div>
+        <div class="results-empty" id="results-empty">
+          <span class="icon">&#128230;</span>
+          <span id="t-empty-msg">Fill in the form and click calculate to see the full breakdown.</span>
+        </div>
+        <div class="results-body" id="results-body"></div>
+        <!-- COMPARE inside panel -->
+        <div class="compare-section" id="compare-section">
+          <div class="compare-title" id="t-compare">Compare all shipping services</div>
+          <div id="compare-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM SECTIONS -->
+<div style="max-width:1060px;margin:0 auto;padding:0 20px 40px">
+
+  <!-- SEPARATOR -->
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px">
+    <div style="flex:1;height:1px;background:var(--border)"></div>
+    <div style="font-size:.65rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)">ShipCalc</div>
+    <div style="flex:1;height:1px;background:var(--border)"></div>
+  </div>
+
+  <!-- ESIM SECTION FIRST -->
+  <div style="margin-bottom:20px">
+    <div style="font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px" id="t-travel-title">Useful for your trip</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+
+      <!-- Holafly -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow);display:flex;align-items:flex-start;gap:12px">
+        <div style="font-size:1.4rem;flex-shrink:0">&#128241;</div>
+        <div>
+          <div style="font-size:.75rem;font-weight:700;margin-bottom:4px">Holafly eSIM</div>
+          <div style="font-size:.72rem;color:var(--text-mid);line-height:1.5;margin-bottom:8px" id="t-airalo-text">Stay connected in Japan without roaming fees. Use code <strong>JAPANGEMU</strong> for a discount on your Holafly eSIM.</div>
+          <a href="https://www.holafly.com" target="_blank" rel="noopener sponsored" style="font-size:.7rem;font-weight:700;color:var(--accent);text-decoration:none;padding:5px 10px;border:1px solid var(--accent);border-radius:6px;display:inline-block;transition:all .12s" onmouseover="this.style.background='var(--accent)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--accent)'">Get eSIM &#8594;</a>
+        </div>
+      </div>
+
+      <!-- Saily -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow);display:flex;align-items:flex-start;gap:12px">
+        <div style="font-size:1.4rem;flex-shrink:0">&#127758;</div>
+        <div>
+          <div style="font-size:.75rem;font-weight:700;margin-bottom:4px">Saily eSIM</div>
+          <div style="font-size:.72rem;color:var(--text-mid);line-height:1.5;margin-bottom:8px" id="t-yesim-text">eSIM by NordVPN (Saily). Use code <strong>JAPANGEMU</strong> for a discount. Works in Japan, Korea, China and 150+ countries.</div>
+          <a href="https://saily.com" target="_blank" rel="noopener sponsored" style="font-size:.7rem;font-weight:700;color:var(--accent);text-decoration:none;padding:5px 10px;border:1px solid var(--accent);border-radius:6px;display:inline-block;transition:all .12s" onmouseover="this.style.background='var(--accent)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--accent)'">Get eSIM &#8594;</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SEO TEXT LAST -->
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:28px 32px;box-shadow:var(--shadow)">
+    <h2 style="font-size:1rem;font-weight:700;margin-bottom:12px;letter-spacing:-.01em" id="seo-title">How ShipCalc works</h2>
+    <p style="font-size:.85rem;color:var(--text-mid);line-height:1.7;margin-bottom:12px" id="seo-p1">ShipCalc calculates the real cost of importing products from Japan, USA, China or Korea to any country in the world. Enter the purchase price in the local currency, the package weight and your destination — ShipCalc shows you the exact breakdown: shipping cost, customs duty, import VAT and platform commission if you plan to resell.</p>
+    <p style="font-size:.85rem;color:var(--text-mid);line-height:1.7;margin-bottom:12px" id="seo-p2">Exchange rates are updated in real time. Shipping rates cover Japan Post EMS, SAL, Air Small Packet and Surface, DHL, FedEx and UPS. Customs thresholds and import taxes are included for 20 destination countries including USA, Spain, Mexico, Argentina, Colombia, Chile, UK, Germany and Australia.</p>
+    <p style="font-size:.85rem;color:var(--text-mid);line-height:1.7" id="seo-p3">ShipCalc also offers a personal shipping service for travelers in Japan, Korea and China — we pick up your package, inspect the contents with you, and handle the full international shipping process so you can keep enjoying your trip.</p>
+    <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:8px">
+      <span style="font-size:.7rem;background:var(--surface);border:1px solid var(--border);padding:4px 10px;border-radius:20px;color:var(--text-muted)">Japan Post EMS calculator</span>
+      <span style="font-size:.7rem;background:var(--surface);border:1px solid var(--border);padding:4px 10px;border-radius:20px;color:var(--text-muted)">Ship from Japan to USA</span>
+      <span style="font-size:.7rem;background:var(--surface);border:1px solid var(--border);padding:4px 10px;border-radius:20px;color:var(--text-muted)">Import cost calculator</span>
+      <span style="font-size:.7rem;background:var(--surface);border:1px solid var(--border);padding:4px 10px;border-radius:20px;color:var(--text-muted)">Customs duty calculator</span>
+      <span style="font-size:.7rem;background:var(--surface);border:1px solid var(--border);padding:4px 10px;border-radius:20px;color:var(--text-muted)">Calculadora envios Japon</span>
+      <span style="font-size:.7rem;background:var(--surface);border:1px solid var(--border);padding:4px 10px;border-radius:20px;color:var(--text-muted)">Enviar paquete desde Japon</span>
+      <span style="font-size:.7rem;background:var(--surface);border:1px solid var(--border);padding:4px 10px;border-radius:20px;color:var(--text-muted)">DHL Japan shipping rates</span>
+      <span style="font-size:.7rem;background:var(--surface);border:1px solid var(--border);padding:4px 10px;border-radius:20px;color:var(--text-muted)">Korea Post EMS cost</span>
+      <span style="font-size:.7rem;background:var(--surface);border:1px solid var(--border);padding:4px 10px;border-radius:20px;color:var(--text-muted)">AliExpress import tax</span>
+      <span style="font-size:.7rem;background:var(--surface);border:1px solid var(--border);padding:4px 10px;border-radius:20px;color:var(--text-muted)">Resale profit calculator</span>
+    </div>
+  </div>
+
+</div>
+
+<footer><span id="t-footer">ShipCalc · Indicative data. Real-time exchange rates. Approximate tariffs. Always verify with your local customs authority.</span></footer>
+
+<!-- SEND MODAL -->
+<div class="modal-overlay" id="send-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('send-modal')">&#10005;</button>
+    <div class="modal-title" id="t-send-title">We ship it for you</div>
+    <div class="modal-sub" id="t-send-sub">We pick up your package, inspect the contents with you, and handle the entire international shipping process. You keep enjoying your trip.</div>
+    <form name="shipcalc-shipping" data-netlify="true" netlify-honeypot="bot-field" style="display:contents" onsubmit="submitSendForm(event)">
+<input type="hidden" name="form-name" value="shipcalc-shipping">
+<p style="display:none"><input name="bot-field"></p>
+<div id="send-form-wrap">
+      <div class="modal-field"><label id="t-sf-name">Full name</label><input type="text" id="sf-name" placeholder="Your name"></div>
+      <div class="modal-field"><label id="t-sf-email">Email</label><input type="email" id="sf-email" placeholder="your@email.com"></div>
+      <div class="modal-field"><label id="t-sf-dest">Destination country</label><input type="text" id="sf-dest" placeholder="e.g. Spain, Mexico, USA..."></div>
+      <div class="modal-field"><label id="t-sf-city">Your city in Japan</label><input type="text" id="sf-city" placeholder="e.g. Tokyo, Osaka, Kyoto..."></div>
+      <div class="modal-field"><label id="t-sf-weight">Estimated weight (kg)</label><input type="number" id="sf-weight" placeholder="e.g. 5" min="0.5" step="0.5"></div>
+      <div class="modal-field"><label id="t-sf-date">Approximate shipping date</label><input type="date" id="sf-date"></div>
+      <div class="modal-field"><label id="t-sf-notes">Contents description (required for customs)</label><textarea id="sf-notes" placeholder="e.g. anime figures, clothing, books... Be as specific as possible."></textarea></div>
+      <div class="notice-box" id="t-sf-notice"><strong>Important:</strong> All package contents are inspected in person together with the client before shipping. We do not accept prohibited items, brand replicas, loose lithium batteries, or undeclared goods.</div>
+      <div class="rates-box" id="t-sf-rates"><strong style="display:block;margin-bottom:4px">Service fees (added to shipping cost):</strong>0.5–2 kg: 1,500 JPY &nbsp;|&nbsp; 2–5 kg: 2,500 JPY &nbsp;|&nbsp; 5–10 kg: 3,500 JPY &nbsp;|&nbsp; 10–20 kg: 5,000 JPY</div>
+      <button class="modal-submit" onclick="submitSendForm()" id="t-sf-submit">Request shipping service</button>
+    </div>
+</form>
+    <div class="modal-success" id="send-success">
+      <span class="icon">&#10003;</span>
+      <strong id="t-send-ok">Request received!</strong>
+      <p style="font-size:.85rem;color:var(--text-muted);margin-top:8px" id="t-send-ok-sub">We will contact you by email within 24 hours to confirm the details.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PRO MODAL -->
+<div class="modal-overlay" id="pro-modal">
+  <div class="modal pro-modal">
+    <button class="modal-close" onclick="closeModal('pro-modal')">&#10005;</button>
+    <div class="modal-title" id="t-pro-title">ShipCalc PRO</div>
+    <div class="modal-sub" id="t-pro-sub">For resellers and frequent buyers who want to calculate multiple products at once.</div>
+    <ul class="pro-features">
+      <li id="t-pro-f1">Unlimited calculations</li>
+      <li id="t-pro-f2">Batch mode: upload an Excel with up to 50 products</li>
+      <li id="t-pro-f3">Export results to PDF or Excel</li>
+      <li id="t-pro-f4">Save frequent destination profiles</li>
+      <li id="t-pro-f5">Priority access to new features</li>
+    </ul>
+    <div class="pro-price">
+      <div class="pro-price-num">$5<span style="font-size:1rem;font-weight:400">/mo</span></div>
+      <div class="pro-price-per" id="t-pro-price-sub">Cancel anytime</div>
+    </div>
+    <div class="excel-preview">
+      <div class="excel-preview-title" id="t-pro-example">Excel format (example)</div>
+      <table class="excel-table">
+        <thead><tr><th>Name</th><th>Price (origin)</th><th>Weight (kg)</th><th>Dest.</th></tr></thead>
+        <tbody>
+          <tr><td>Goku Figure</td><td>8500</td><td>0.3</td><td>ES</td></tr>
+          <tr><td>Pokemon Card Box</td><td>15000</td><td>0.5</td><td>MX</td></tr>
+          <tr><td>Retro Console</td><td>35000</td><td>1.2</td><td>AR</td></tr>
+        </tbody>
+      </table>
+      <div class="excel-note" id="t-pro-example-note">4 columns. Destination uses 2-letter country code (ES, MX, AR, CO, US, etc.)</div>
+    </div>
+    <div class="modal-field"><label id="t-pro-email-label">Your email — we'll notify you when it's ready</label><input type="email" id="pro-email" placeholder="your@email.com"></div>
+    <button class="modal-submit pro-submit" onclick="submitProWaitlist()" id="t-pro-submit">Join the waitlist (free)</button>
+    <div class="modal-success" id="pro-success">
+      <span class="icon">&#9733;</span>
+      <strong id="t-pro-ok">You're on the PRO waitlist!</strong>
+      <p style="font-size:.85rem;color:var(--text-muted);margin-top:8px" id="t-pro-ok-sub">You'll be among the first to get access when it launches.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+var ORIGIN_CURRENCY={JP:'JPY',US:'USD',CN:'CNY',KR:'KRW'};
+var ORIGIN_LABEL={
+  en:{JP:'Purchase price (JPY yen)',US:'Purchase price (USD)',CN:'Purchase price (CNY yuan)',KR:'Purchase price (KRW won)'},
+  es:{JP:'Precio de compra (JPY yenes)',US:'Precio de compra (USD)',CN:'Precio de compra (CNY yuan)',KR:'Precio de compra (KRW wones)'}
+};
+var ORIGIN_PH={JP:'e.g. 5000',US:'e.g. 50',CN:'e.g. 300',KR:'e.g. 30000'};
+var ORIGIN_SYM={JP:'',US:'$',CN:'',KR:''};
+
+function getTieredCost(tiers,w){
+  var kg=Math.max(w,0.1);
+  for(var i=0;i<tiers.length;i++){if(kg<=tiers[i][0])return tiers[i][1];}
+  var last=tiers[tiers.length-1],prev=tiers[tiers.length-2]||[0,0];
+  return last[1]+((last[1]-prev[1])/(last[0]-prev[0]))*(kg-last[0]);
+}
+
+var SHIPPING={
+  JP:[
+    {id:'ems',     name:'Japan Post EMS',         te:'5-7 biz days', te_es:'5-7 dias hab.',  tiers:[[0.5,2200],[1,2900],[1.5,3500],[2,4100],[3,5300],[5,7100],[10,11500],[20,20000],[30,27000]]},
+    {id:'sal',     name:'Japan Post SAL',         te:'14-21 days',   te_es:'14-21 dias',     tiers:[[0.5,1450],[1,1900],[2,2700],[3,3500],[5,4900],[10,8200]]},
+    {id:'airsmall',name:'Air Small Packet',       te:'7-14 days',    te_es:'7-14 dias',      tiers:[[0.1,820],[0.25,1050],[0.5,1300],[1,1750],[2,2600]]},
+    {id:'surface', name:'Japan Post Surface',     te:'2-3 months',   te_es:'2-3 meses',      tiers:[[0.5,820],[1,1050],[2,1450],[5,2600],[10,4400],[20,7600]]},
+    {id:'dhl_jp',  name:'DHL Japan',              te:'2-3 biz days', te_es:'2-3 dias hab.',  tiers:[[0.5,4200],[1,5500],[2,7200],[5,12000],[10,20000],[20,35000]]},
+    {id:'fedex_jp',name:'FedEx Japan',            te:'2-4 biz days', te_es:'2-4 dias hab.',  tiers:[[0.5,4000],[1,5200],[2,6900],[5,11500],[10,19000],[20,33000]]}
+  ],
+  US:[
+    {id:'usps_fc', name:'USPS First Class Intl',  te:'7-21 days',    te_es:'7-21 dias',      tiers:[[0.1,14],[0.25,17],[0.5,22],[1,30],[1.8,38]]},
+    {id:'usps_pm', name:'USPS Priority Mail Intl',te:'6-10 days',    te_es:'6-10 dias',      tiers:[[0.5,28],[1,35],[2,48],[4,68],[9,110],[20,190]]},
+    {id:'usps_pme',name:'USPS Priority Express',  te:'3-5 days',     te_es:'3-5 dias',       tiers:[[0.5,45],[1,58],[2,78],[4,108],[9,175]]},
+    {id:'fedex_us',name:'FedEx International',    te:'2-5 biz days', te_es:'2-5 dias hab.',  tiers:[[0.5,42],[1,55],[2,72],[5,118],[10,190],[20,330]]},
+    {id:'dhl_us',  name:'DHL Express',            te:'2-4 biz days', te_es:'2-4 dias hab.',  tiers:[[0.5,40],[1,52],[2,68],[5,112],[10,180],[20,310]]},
+    {id:'ups_us',  name:'UPS Worldwide',          te:'2-5 biz days', te_es:'2-5 dias hab.',  tiers:[[0.5,44],[1,57],[2,74],[5,121],[10,195],[20,340]]},
+    {id:'myus',    name:'MyUS (forwarding)',       te:'5-14 days',    te_es:'5-14 dias',      tiers:[[0.5,12],[1,18],[2,28],[5,55],[10,95]],aff:true},
+    {id:'shipito', name:'Shipito (forwarding)',    te:'5-14 days',    te_es:'5-14 dias',      tiers:[[0.5,10],[1,16],[2,25],[5,50],[10,88]],aff:true}
+  ],
+  CN:[
+    {id:'china_ord',name:'China Post Ordinary',   te:'30-60 days',   te_es:'30-60 dias',     tiers:[[0.1,8],[0.5,18],[1,28],[2,45],[3,62]]},
+    {id:'epacket',  name:'ePacket',               te:'10-20 days',   te_es:'10-20 dias',     tiers:[[0.1,15],[0.5,32],[1,50],[2,80]]},
+    {id:'dhl_cn',   name:'DHL China',             te:'2-4 biz days', te_es:'2-4 dias hab.',  tiers:[[0.5,180],[1,240],[2,320],[5,540],[10,880]]},
+    {id:'yanwen',   name:'Yanwen',                te:'15-30 days',   te_es:'15-30 dias',     tiers:[[0.1,20],[0.5,38],[1,58],[2,90],[3,122]]},
+    {id:'yunexpress',name:'Yunexpress',           te:'7-15 days',    te_es:'7-15 dias',      tiers:[[0.1,25],[0.5,48],[1,72],[2,112],[5,210]]}
+  ],
+  KR:[
+    {id:'kr_ems',  name:'Korea Post EMS',         te:'5-7 biz days', te_es:'5-7 dias hab.',  tiers:[[0.5,14000],[1,19500],[2,28500],[5,52000],[10,88000],[20,150000]]},
+    {id:'kr_kpkt', name:'K-Packet',               te:'7-14 days',    te_es:'7-14 dias',      tiers:[[0.1,7000],[0.5,11500],[1,16000],[2,25000]]},
+    {id:'dhl_kr',  name:'DHL Korea',              te:'2-3 biz days', te_es:'2-3 dias hab.',  tiers:[[0.5,28000],[1,38000],[2,52000],[5,88000],[10,145000]]},
+    {id:'cj_kr',   name:'CJ Logistics Intl',      te:'4-7 days',     te_es:'4-7 dias',       tiers:[[0.5,11000],[1,16000],[2,24000],[5,43000],[10,72000]]}
+  ]
+};
+
+var CUSTOMS={
+  ES:{freeLimit:150,vat:0.21,tariff:0.035,currency:'EUR',sym:'EUR ',limitCurrency:'EUR',name:'Spain'},
+  DE:{freeLimit:150,vat:0.19,tariff:0.035,currency:'EUR',sym:'EUR ',limitCurrency:'EUR',name:'Germany'},
+  GB:{freeLimit:135,vat:0.20,tariff:0.025,currency:'GBP',sym:'GBP ',limitCurrency:'GBP',name:'UK'},
+  IT:{freeLimit:150,vat:0.22,tariff:0.035,currency:'EUR',sym:'EUR ',limitCurrency:'EUR',name:'Italy'},
+  US:{freeLimit:800,vat:0,tariff:0,currency:'USD',sym:'$',limitCurrency:'USD',name:'USA'},
+  CA:{freeLimit:20,vat:0.05,tariff:0.062,currency:'CAD',sym:'CAD ',limitCurrency:'CAD',name:'Canada'},
+  MX:{freeLimit:50,vat:0.16,tariff:0.15,currency:'MXN',sym:'MX$',limitCurrency:'USD',name:'Mexico'},
+  AR:{freeLimit:200,vat:0.21,tariff:0.50,currency:'ARS',sym:'AR$',limitCurrency:'USD',name:'Argentina'},
+  CO:{freeLimit:200,vat:0.19,tariff:0.10,currency:'COP',sym:'COP$',limitCurrency:'USD',name:'Colombia'},
+  CL:{freeLimit:30,vat:0.19,tariff:0.06,currency:'CLP',sym:'CLP$',limitCurrency:'USD',name:'Chile'},
+  PE:{freeLimit:200,vat:0.18,tariff:0.12,currency:'PEN',sym:'S/',limitCurrency:'USD',name:'Peru'},
+  VE:{freeLimit:100,vat:0.16,tariff:0.10,currency:'USD',sym:'$',limitCurrency:'USD',name:'Venezuela'},
+  EC:{freeLimit:400,vat:0.12,tariff:0.08,currency:'USD',sym:'$',limitCurrency:'USD',name:'Ecuador'},
+  UY:{freeLimit:200,vat:0.22,tariff:0.06,currency:'UYU',sym:'UY$',limitCurrency:'USD',name:'Uruguay'},
+  PY:{freeLimit:300,vat:0.10,tariff:0.10,currency:'PYG',sym:'Gs.',limitCurrency:'USD',name:'Paraguay'},
+  BO:{freeLimit:200,vat:0.13,tariff:0.10,currency:'BOB',sym:'Bs.',limitCurrency:'USD',name:'Bolivia'},
+  DO:{freeLimit:200,vat:0.18,tariff:0.20,currency:'DOP',sym:'RD$',limitCurrency:'USD',name:'Dom. Republic'},
+  GT:{freeLimit:250,vat:0.12,tariff:0.10,currency:'GTQ',sym:'Q',limitCurrency:'USD',name:'Guatemala'},
+  CR:{freeLimit:500,vat:0.13,tariff:0.01,currency:'CRC',sym:'col.',limitCurrency:'USD',name:'Costa Rica'},
+  PA:{freeLimit:100,vat:0.07,tariff:0.10,currency:'PAB',sym:'B/.',limitCurrency:'USD',name:'Panama'},
+  AU:{freeLimit:1000,vat:0.10,tariff:0.05,currency:'AUD',sym:'AUD ',limitCurrency:'AUD',name:'Australia'}
+};
+
+var PLATFORMS={
+  ES:[{id:'wallapop',name:'Wallapop',fee:0,fixed:0},{id:'vinted',name:'Vinted',fee:0,fixed:0},{id:'ebay_es',name:'eBay Spain',fee:0.1235,fixed:0.30},{id:'amazon_es',name:'Amazon.es',fee:0.12,fixed:0},{id:'etsy',name:'Etsy',fee:0.065,fixed:0.21},{id:'fb',name:'Facebook Marketplace',fee:0,fixed:0},{id:'direct',name:'Direct sale',fee:0,fixed:0}],
+  DE:[{id:'ebay_de',name:'eBay Kleinanzeigen',fee:0,fixed:0},{id:'vinted_de',name:'Vinted DE',fee:0,fixed:0},{id:'amazon_de',name:'Amazon.de',fee:0.12,fixed:0},{id:'fb',name:'Facebook Marketplace',fee:0,fixed:0},{id:'direct',name:'Direct sale',fee:0,fixed:0}],
+  GB:[{id:'ebay_uk',name:'eBay UK',fee:0.1235,fixed:0.30},{id:'vinted_uk',name:'Vinted UK',fee:0,fixed:0},{id:'depop',name:'Depop',fee:0.10,fixed:0},{id:'amazon_uk',name:'Amazon UK',fee:0.12,fixed:0},{id:'fb',name:'Facebook Marketplace',fee:0,fixed:0},{id:'direct',name:'Direct sale',fee:0,fixed:0}],
+  IT:[{id:'ebay_it',name:'eBay Italy',fee:0.1235,fixed:0.30},{id:'vinted_it',name:'Vinted IT',fee:0,fixed:0},{id:'amazon_it',name:'Amazon.it',fee:0.12,fixed:0},{id:'fb',name:'Facebook Marketplace',fee:0,fixed:0},{id:'direct',name:'Direct sale',fee:0,fixed:0}],
+  US:[{id:'ebay_us',name:'eBay USA',fee:0.1235,fixed:0.30},{id:'amazon_us',name:'Amazon USA',fee:0.12,fixed:0},{id:'mercari_us',name:'Mercari USA',fee:0.10,fixed:0},{id:'poshmark',name:'Poshmark',fee:0.20,fixed:0},{id:'fb',name:'Facebook Marketplace',fee:0,fixed:0},{id:'direct',name:'Direct sale',fee:0,fixed:0}],
+  CA:[{id:'ebay_ca',name:'eBay Canada',fee:0.1235,fixed:0.30},{id:'poshmark_ca',name:'Poshmark CA',fee:0.20,fixed:0},{id:'fb',name:'Facebook Marketplace',fee:0,fixed:0},{id:'direct',name:'Direct sale',fee:0,fixed:0}],
+  MX:[{id:'ml_mx',name:'Mercado Libre Mexico',fee:0.169,fixed:0},{id:'amazon_mx',name:'Amazon Mexico',fee:0.12,fixed:0},{id:'fb',name:'Facebook Marketplace',fee:0,fixed:0},{id:'direct',name:'Direct sale',fee:0,fixed:0}],
+  AR:[{id:'ml_ar',name:'Mercado Libre Argentina',fee:0.12,fixed:0},{id:'fb',name:'Facebook Marketplace',fee:0,fixed:0},{id:'direct',name:'Direct sale',fee:0,fixed:0}],
+  CO:[{id:'ml_co',name:'Mercado Libre Colombia',fee:0.14,fixed:0},{id:'linio',name:'Linio/Falabella',fee:0.12,fixed:0},{id:'fb',name:'Facebook Marketplace',fee:0,fixed:0},{id:'direct',name:'Direct sale',fee:0,fixed:0}],
+  CL:[{id:'ml_cl',name:'Mercado Libre Chile',fee:0.12,fixed:0},{id:'falabella',name:'Falabella',fee:0.12,fixed:0},{id:'paris',name:'Paris (Cencosud)',fee:0.12,fixed:0},{id:'fb',name:'Facebook Marketplace',fee:0,fixed:0},{id:'direct',name:'Direct sale',fee:0,fixed:0}],
+  PE:[{id:'ml_pe',name:'Mercado Libre Peru',fee:0.12,fixed:0},{id:'fb',name:'Facebook Marketplace',fee:0,fixed:0},{id:'direct',name:'Direct sale',fee:0,fixed:0}],
+  AU:[{id:'ebay_au',name:'eBay Australia',fee:0.1235,fixed:0.30},{id:'poshmark_au',name:'Poshmark AU',fee:0.20,fixed:0},{id:'fb',name:'Facebook Marketplace',fee:0,fixed:0},{id:'direct',name:'Direct sale',fee:0,fixed:0}]
+};
+
+var HS={
+  collectibles:{code:'9705.00',en:'Collections and collectors pieces',es:'Colecciones y especimenes para colecciones'},
+  videogames:  {code:'8523.49',en:'Video games and recorded software',es:'Videojuegos y software grabado'},
+  electronics: {code:'8471.30',en:'Electronic equipment',es:'Equipos electronicos'},
+  clothing:    {code:'6109.10',en:'Cotton knitted apparel',es:'Prendas de vestir de punto'},
+  supplements: {code:'2106.90',en:'Miscellaneous food preparations',es:'Preparaciones alimenticias'},
+  kpop:        {code:'9705.00',en:'Cultural collections / fan merchandise',es:'Articulos de coleccion cultural'},
+  skincare:    {code:'3304.99',en:'Beauty and skin care preparations',es:'Preparaciones de belleza'},
+  toys:        {code:'9503.00',en:'Toys, games and entertainment articles',es:'Juguetes y juegos'},
+  other:       {code:'9999.00',en:'General classification - verify with customs',es:'Clasificacion general - verifica con aduana'}
+};
+
+var MAPS_Q={
+  JP:{ems:'Japan Post office',sal:'Japan Post office',airsmall:'Japan Post office',surface:'Japan Post office',dhl_jp:'DHL service point Japan',fedex_jp:'FedEx office Japan'},
+  US:{usps_fc:'USPS post office',usps_pm:'USPS post office',usps_pme:'USPS post office',fedex_us:'FedEx office',dhl_us:'DHL service point',ups_us:'UPS store',myus:'MyUS shipping',shipito:'Shipito shipping'},
+  CN:{china_ord:'China Post office',epacket:'China Post office',dhl_cn:'DHL service point China',yanwen:'Yanwen courier',yunexpress:'Yunexpress courier'},
+  KR:{kr_ems:'Korea Post office',kr_kpkt:'Korea Post office',dhl_kr:'DHL service point Korea',cj_kr:'CJ logistics Korea'}
+};
+
+var CURR_NAMES={
+  en:{EUR:'euros',USD:'dollars',GBP:'pounds',AUD:'Australian dollars',CAD:'Canadian dollars',MXN:'Mexican pesos',ARS:'Argentine pesos',COP:'Colombian pesos',CLP:'Chilean pesos',PEN:'soles',UYU:'Uruguayan pesos',PYG:'guaranies',BOB:'bolivianos',DOP:'Dominican pesos',GTQ:'quetzales',CRC:'colones',PAB:'balboas'},
+  es:{EUR:'euros',USD:'dolares',GBP:'libras',AUD:'dolares australianos',CAD:'dolares canadienses',MXN:'pesos mexicanos',ARS:'pesos argentinos',COP:'pesos colombianos',CLP:'pesos chilenos',PEN:'soles',UYU:'pesos uruguayos',PYG:'guaranies',BOB:'bolivianos',DOP:'pesos dominicanos',GTQ:'quetzales',CRC:'colones',PAB:'balboas'}
+};
+
+var I18N={
+  en:{
+    title:'How much does it really cost to import that product?',
+    subtitle:'Calculate shipping + customs + taxes + platform fee. Exact result in 30 seconds.',
+    step1:'Origin country',step2:'Product & destination',step3:'Shipping service',
+    step4:'Resale profitability',optional:'Optional',
+    'weight-label':'Package weight (kg)','dest-label':'Destination country','cat-label':'Product category',
+    'th-service':'Service','th-time':'Est. time','th-cost':'Est. cost',
+    'platform-label':'Sales platform','calc-btn':'Calculate real cost',
+    breakdown:'Full breakdown',live:'Live rate',
+    'empty-msg':'Fill in the form and click calculate to see the full breakdown.',
+    footer:'ShipCalc · Indicative data. Real-time exchange rates. Approximate tariffs. Always verify with your local customs authority.',
+    compare:'Compare all shipping services',history:'Recent calculations','history-clear':'Clear',
+    'qc-label':'Quick convert',
+    'vol-toggle':'+ Add dimensions (volumetric weight)',
+    'vol-note':'Couriers like DHL/FedEx charge by volumetric weight if it exceeds actual weight.',
+    'vol-l':'Length (cm)','vol-w':'Width (cm)','vol-h':'Height (cm)',
+    'r-purchase':'Purchase price','r-shipping':'Shipping cost','r-tariff':'Import tariff',
+    'r-vat':'Import VAT/tax','r-pfee':'Platform commission','r-total':'Total real cost',
+    'r-profit':'Estimated profit','r-loss':'Estimated loss','r-break':'Break even',
+    'r-hs':'Tariff (HS) code','r-maps-near':'near you',
+    'r-free':'Below customs threshold — no import taxes',
+    'r-suggest':'Suggested sale price','r-margin':'margin',
+    'ssb-eyebrow':'ShipCalc Delivery Service',
+    'ssb-title':'We ship it for you',
+    'ssb-body':'Traveling in Japan, Korea or China? We pick up your package, inspect the contents with you, and handle the entire international shipping process. You keep enjoying your trip.',
+    'ssb-btn':'Ship my package',
+    'warn-near1':'Heads up: your product is close to the duty-free limit of',
+    'warn-near2':'If the declared value exceeds this, you would pay approximately',
+    'warn-near3':'extra in taxes.',
+    'warn-over1':'This product exceeds the duty-free limit of',
+    'warn-over2':'Import taxes included in calculation:',
+    'warn-over3':'tariff +','warn-over4':'VAT/tax.',
+    'warn-explain':'What is the duty-free threshold? Each country allows importing goods up to a certain value without paying taxes. Above that limit, customs charges a tariff plus the import VAT. ShipCalc calculates this automatically.',
+    'err-origin':'Please select an origin country.','err-price':'Please enter a valid purchase price.',
+    'err-weight':'Please enter the package weight.','err-shipping':'Please select a shipping service.',
+    'send-title':'We ship it for you','send-sub':'We pick up your package, inspect the contents with you, and handle the entire international shipping process.',
+    'sf-name':'Full name','sf-email':'Email','sf-dest':'Destination country','sf-city':'Your city in Japan',
+    'sf-weight':'Estimated weight (kg)','sf-date':'Approximate shipping date',
+    'sf-notes':'Contents description (required for customs)',
+    'sf-notice':'<strong>Important:</strong> All contents are inspected in person with the client before shipping. We do not accept prohibited items, brand replicas, loose lithium batteries, or undeclared goods.',
+    'sf-rates':'<strong style="display:block;margin-bottom:4px">Service fees (added to shipping cost):</strong>0.5–2 kg: 1,500 JPY | 2–5 kg: 2,500 JPY | 5–10 kg: 3,500 JPY | 10–20 kg: 5,000 JPY',
+    'sf-submit':'Request shipping service','send-ok':'Request received!',
+    'send-ok-sub':'We will contact you by email within 24 hours to confirm the details.',
+    'pro-title':'ShipCalc PRO','pro-sub':'For resellers and frequent buyers who want to calculate multiple products at once.',
+    'pro-f1':'Unlimited calculations','pro-f2':'Batch mode: upload Excel with up to 50 products',
+    'pro-f3':'Export results to PDF or Excel','pro-f4':'Save frequent destination profiles',
+    'pro-f5':'Priority access to new features','pro-price-sub':'Cancel anytime',
+    'pro-example':'Excel format (example)','pro-example-note':'4 columns. Destination uses 2-letter country code (ES, MX, AR, CO, US, etc.)',
+    'pro-email-label':'Your email — we will notify you when ready','pro-submit':'Join the waitlist (free)',
+    'pro-ok':'You are on the PRO waitlist!','pro-ok-sub':'You will be among the first to get access when it launches.',
+    'vol-result-ok':'Volumetric weight: {v} kg — billing weight: {b} kg (the higher is used)',
+    'vol-result-ok-es':'Peso volumetrico: {v} kg'
+  },
+  es:{
+    title:'Cuanto te cuesta realmente importar ese producto?',
+    subtitle:'Calcula envio + aduana + impuestos + comision. Resultado exacto en 30 segundos.',
+    step1:'Pais de origen',step2:'Producto y destino',step3:'Servicio de envio',
+    step4:'Rentabilidad de reventa',optional:'Opcional',
+    'weight-label':'Peso del paquete (kg)','dest-label':'Pais de destino','cat-label':'Categoria',
+    'th-service':'Servicio','th-time':'Tiempo est.','th-cost':'Costo est.',
+    'platform-label':'Plataforma de venta','calc-btn':'Calcular coste real',
+    breakdown:'Desglose completo',live:'En tiempo real',
+    'empty-msg':'Rellena el formulario y pulsa calcular para ver el desglose.',
+    footer:'ShipCalc · Datos orientativos. Tipo de cambio en tiempo real. Aranceles aproximados. Verifica con tu aduana local.',
+    compare:'Comparar todos los servicios',history:'Calculos recientes','history-clear':'Borrar',
+    'qc-label':'Conversor rapido',
+    'vol-toggle':'+ Agregar dimensiones (peso volumetrico)',
+    'vol-note':'Courier como DHL/FedEx cobran por peso volumetrico si supera el peso real.',
+    'vol-l':'Largo (cm)','vol-w':'Ancho (cm)','vol-h':'Alto (cm)',
+    'r-purchase':'Precio de compra','r-shipping':'Costo de envio','r-tariff':'Arancel de importacion',
+    'r-vat':'IVA importacion','r-pfee':'Comision plataforma','r-total':'Coste total real',
+    'r-profit':'Ganancia estimada','r-loss':'Perdida estimada','r-break':'Sin margen',
+    'r-hs':'Codigo arancelario (HS)','r-maps-near':'cerca de ti',
+    'r-free':'Por debajo del umbral de aduana — sin impuestos de importacion',
+    'r-suggest':'Precio de venta sugerido','r-margin':'de margen',
+    'ssb-eyebrow':'Servicio de envio ShipCalc',
+    'ssb-title':'Enviamos el paquete por ti',
+    'ssb-body':'De viaje por Japon, Corea o China? Recogemos tu paquete, revisamos el contenido contigo y gestionamos todo el envio internacional. Tu sigues disfrutando tu viaje.',
+    'ssb-btn':'Solicitar servicio de envio',
+    'warn-near1':'Atencion: tu producto esta cerca del umbral libre de impuestos de',
+    'warn-near2':'Si el valor declarado supera ese limite, pagarias aproximadamente',
+    'warn-near3':'adicionales en impuestos.',
+    'warn-over1':'Este producto supera el umbral de aduana de',
+    'warn-over2':'Impuestos incluidos en el calculo:',
+    'warn-over3':'de arancel +','warn-over4':'de IVA.',
+    'warn-explain':'Que es el umbral de aduana? Cada pais permite importar productos hasta cierto valor sin pagar impuestos. Por encima, la aduana cobra un arancel mas el IVA de importacion. ShipCalc lo calcula automaticamente.',
+    'err-origin':'Selecciona un pais de origen.','err-price':'Introduce un precio de compra valido.',
+    'err-weight':'Introduce el peso del paquete.','err-shipping':'Selecciona un servicio de envio.',
+    'send-title':'Enviamos el paquete por ti','send-sub':'Recogemos tu paquete, revisamos el contenido contigo y gestionamos todo el envio internacional.',
+    'sf-name':'Nombre completo','sf-email':'Email','sf-dest':'Pais de destino','sf-city':'Ciudad donde estas en Japon',
+    'sf-weight':'Peso estimado (kg)','sf-date':'Fecha aproximada de envio',
+    'sf-notes':'Descripcion del contenido (requerido por aduana)',
+    'sf-notice':'<strong>Importante:</strong> El contenido se revisa en persona con el cliente antes del envio. No aceptamos articulos prohibidos, replicas de marcas, baterias de litio sueltas ni articulos no declarados.',
+    'sf-rates':'<strong style="display:block;margin-bottom:4px">Tarifas de gestion (se suman al costo de envio):</strong>0.5-2 kg: 1,500 JPY | 2-5 kg: 2,500 JPY | 5-10 kg: 3,500 JPY | 10-20 kg: 5,000 JPY',
+    'sf-submit':'Solicitar servicio de envio','send-ok':'Solicitud recibida',
+    'send-ok-sub':'Te contactaremos por email en menos de 24 horas para confirmar los detalles.',
+    'pro-title':'ShipCalc PRO','pro-sub':'Para revendedores y compradores frecuentes que quieren calcular multiples productos de una vez.',
+    'pro-f1':'Calculos ilimitados','pro-f2':'Modo lote: sube un Excel con hasta 50 productos',
+    'pro-f3':'Exporta resultados a PDF o Excel','pro-f4':'Guarda perfiles de destino frecuente',
+    'pro-f5':'Acceso prioritario a nuevas funciones','pro-price-sub':'Cancela cuando quieras',
+    'pro-example':'Formato del Excel (ejemplo)','pro-example-note':'4 columnas. Destino usa codigo de 2 letras (ES, MX, AR, CO, US, etc.)',
+    'pro-email-label':'Tu email para avisarte cuando este listo','pro-submit':'Unirme a la lista de espera (gratis)',
+    'pro-ok':'Apuntado a la lista PRO','pro-ok-sub':'Seras de los primeros en acceder cuando este listo.',
+    'vol-result-ok':'Peso volumetrico: {v} kg — peso de cobro: {b} kg (se usa el mayor)'
+  }
+};
+
+// STATE
+var state={lang:'en',origin:null,selectedShipping:null,rates:{},ratesFetched:false};
+var calcHistory=[];
+try{calcHistory=JSON.parse(localStorage.getItem('sc_history')||'[]');}catch(e){}
+
+function t(k){return (I18N[state.lang]&&I18N[state.lang][k])||k;}
+
+// LANGUAGE
+function setLang(lang){
+  state.lang=lang;
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.remove('active');});
+  document.querySelector('.lang-btn[onclick="setLang(\''+lang+'\')"]').classList.add('active');
+  document.documentElement.lang=lang;
+  // Update all text elements
+  var map={
+    'title':'t-title','subtitle':'t-subtitle','step1':'t-step1','step2':'t-step2',
+    'step3':'t-step3','step4':'t-step4','optional':'t-optional','calc-btn':'t-calc-btn',
+    'breakdown':'t-breakdown','live':'t-live','empty-msg':'t-empty-msg','footer':'t-footer',
+    'compare':'t-compare','history':'t-history','history-clear':'t-history-clear',
+    'qc-label':'t-qc-label','vol-l':'t-vol-l','vol-w':'t-vol-w','vol-h':'t-vol-h',
+    'vol-toggle':'t-vol-toggle','vol-note':'t-vol-note',
+    'weight-label':'t-weight-label','dest-label':'t-dest-label','cat-label':'t-cat-label',
+    'platform-label':'t-platform-label','th-service':'t-th-service','th-time':'t-th-time','th-cost':'t-th-cost',
+    'jp-sub':'t-jp-sub','us-sub':'t-us-sub','cn-sub':'t-cn-sub','kr-sub':'t-kr-sub'
+  };
+  for(var k in map){var el=document.getElementById(map[k]);if(el)el.textContent=t(k);}
+  // Modal texts
+  var modalMap={
+    'send-title':'t-send-title','send-sub':'t-send-sub','sf-name':'t-sf-name','sf-email':'t-sf-email',
+    'sf-dest':'t-sf-dest','sf-city':'t-sf-city','sf-weight':'t-sf-weight','sf-date':'t-sf-date',
+    'sf-notes':'t-sf-notes','sf-submit':'t-sf-submit','send-ok':'t-send-ok','send-ok-sub':'t-send-ok-sub',
+    'pro-title':'t-pro-title','pro-sub':'t-pro-sub','pro-f1':'t-pro-f1','pro-f2':'t-pro-f2',
+    'pro-f3':'t-pro-f3','pro-f4':'t-pro-f4','pro-f5':'t-pro-f5','pro-price-sub':'t-pro-price-sub',
+    'pro-example':'t-pro-example','pro-example-note':'t-pro-example-note',
+    'pro-email-label':'t-pro-email-label','pro-submit':'t-pro-submit',
+    'pro-ok':'t-pro-ok','pro-ok-sub':'t-pro-ok-sub'
+  };
+  for(var k2 in modalMap){var el2=document.getElementById(modalMap[k2]);if(el2)el2.textContent=t(k2);}
+  // HTML fields (notice/rates use innerHTML)
+  var notEl=document.getElementById('t-sf-notice');if(notEl)notEl.innerHTML=t('sf-notice');
+  var ratEl=document.getElementById('t-sf-rates');if(ratEl)ratEl.innerHTML=t('sf-rates');
+  // Price label
+  if(state.origin){
+    document.getElementById('t-price-label').textContent=ORIGIN_LABEL[lang][state.origin];
+    renderShippingTable(state.origin);
+  }
+  updateSellPriceLabel(document.getElementById('destination').value);
+  checkThreshold();
+  calcVol();
+  quickConvert();
+  updateSEOSection(lang);
+}
+
+// RATES
+function getFallbackRates(base){
+  var toUSD={JPY:0.00668,USD:1,CNY:0.138,KRW:0.000734};
+  var fUSD={USD:1,EUR:0.92,GBP:0.79,AUD:1.53,CAD:1.36,MXN:17.5,ARS:900,COP:3900,CLP:950,PEN:3.73,UYU:38,PYG:7300,BOB:6.9,DOP:58,GTQ:7.8,CRC:520,PAB:1};
+  var u=toUSD[base]||1,r={};
+  for(var k in fUSD){r[k]=u*fUSD[k];}
+  return r;
+}
+
+function fetchRates(base){
+  // 24h cache
+  var cacheKey='sc_rates_'+base;
+  var tsKey='sc_rates_ts_'+base;
+  var cached=null,ts=0;
+  try{cached=localStorage.getItem(cacheKey);ts=parseInt(localStorage.getItem(tsKey)||'0');}catch(e){}
+  var now=Date.now();
+  if(cached&&(now-ts)<86400000){
+    try{
+      state.rates=JSON.parse(cached);state.ratesFetched=true;
+      updateRateDisplay();
+      if(state.origin){updateShippingCosts(state.origin);}
+      checkThreshold();quickConvert();
+      return;
+    }catch(e){}
+  }
+  fetch('https://api.exchangerate-api.com/v4/latest/'+base)
+    .then(function(r){return r.json();})
+    .then(function(d){
+      state.rates=d.rates;state.ratesFetched=true;
+      try{localStorage.setItem(cacheKey,JSON.stringify(d.rates));localStorage.setItem(tsKey,String(Date.now()));}catch(e){}
+      updateRateDisplay();
+      if(state.origin){updateShippingCosts(state.origin);}
+      checkThreshold();quickConvert();
+    })
+    .catch(function(){
+      state.rates=getFallbackRates(base);state.ratesFetched=true;
+      document.getElementById('rate-display').textContent='(approx.)';
+      if(state.origin){updateShippingCosts(state.origin);}
+    });
+}
+
+function updateRateDisplay(){
+  if(!state.origin)return;
+  var dest=document.getElementById('destination').value,c=CUSTOMS[dest];
+  if(!c)return;
+  var r=state.rates[c.currency];
+  if(r)document.getElementById('rate-display').textContent='1 '+ORIGIN_CURRENCY[state.origin]+' = '+r.toFixed(5)+' '+c.currency;
+}
+
+// QUICK CONVERTER
+function quickConvert(){
+  var from=document.getElementById('qc-from').value;
+  var to=document.getElementById('qc-to').value;
+  var amount=parseFloat(document.getElementById('qc-amount').value)||0;
+  var resEl=document.getElementById('qc-result');
+  var rateEl=document.getElementById('qc-rate');
+  if(!amount||!state.ratesFetched){
+    // use fallback
+    var fbRates=getFallbackRates(from);
+    var r=fbRates[to]||1;
+    var result=amount*r;
+    resEl.textContent=result>0?(to+' '+result.toFixed(2)):'—';
+    rateEl.textContent='1 '+from+' = '+r.toFixed(5)+' '+to;
+    return;
+  }
+  // Convert via USD pivot if needed
+  var ratesFrom=state.ratesFetched?state.rates:getFallbackRates(from);
+  // If current state.origin matches qc-from we have rates directly
+  if(ORIGIN_CURRENCY[state.origin]===from){
+    var r2=ratesFrom[to]||1;
+    resEl.textContent=to+' '+( amount*r2).toFixed(2);
+    rateEl.textContent='1 '+from+' = '+r2.toFixed(5)+' '+to;
+  } else {
+    // Use fallback pivot
+    var fb=getFallbackRates(from);
+    var r3=fb[to]||1;
+    resEl.textContent=to+' '+(amount*r3).toFixed(2);
+    rateEl.textContent='1 '+from+' = '+r3.toFixed(5)+' '+to;
+  }
+}
+
+// VOLUMETRIC
+function toggleVol(){
+  var f=document.getElementById('vol-fields');
+  f.classList.toggle('open');
+  document.getElementById('t-vol-toggle').textContent=f.classList.contains('open')
+    ?t('vol-toggle').replace('+','-')
+    :t('vol-toggle');
+}
+
+function calcVol(){
+  var l=parseFloat(document.getElementById('vol-l').value)||0;
+  var w=parseFloat(document.getElementById('vol-w').value)||0;
+  var h=parseFloat(document.getElementById('vol-h').value)||0;
+  var el=document.getElementById('vol-result');
+  if(!l||!w||!h){el.textContent='';return;}
+  var volKg=(l*w*h)/5000;
+  var actualKg=parseFloat(document.getElementById('weight').value)||0;
+  var billingKg=Math.max(volKg,actualKg);
+  var tpl=t('vol-result-ok');
+  el.innerHTML=tpl.replace('{v}','<strong>'+volKg.toFixed(2)+'</strong>').replace('{b}','<strong>'+billingKg.toFixed(2)+'</strong>');
+  if(volKg>actualKg&&actualKg>0){
+    el.innerHTML+=' <span style="color:var(--orange);font-size:.7rem">('+t('vol-toggle').replace('+ Add','').replace('+ Agregar','')+'!)</span>';
+    // update weight field with volumetric
+    document.getElementById('weight').value=billingKg.toFixed(2);
+    if(state.origin)updateShippingCosts(state.origin);
+  }
+}
+
+// THRESHOLD WARNING
+function checkThreshold(){
+  var el=document.getElementById('threshold-warn');
+  if(!state.origin){el.style.display='none';return;}
+  var pr=document.getElementById('purchase-price').value.replace(/[^\d.,]/g,'').replace(',','.');
+  var price=parseFloat(pr);
+  if(!price||price<=0){el.style.display='none';return;}
+  var dest=document.getElementById('destination').value,c=CUSTOMS[dest];
+  if(!c||c.vat===0){el.style.display='none';return;}
+  var rates=state.ratesFetched?state.rates:getFallbackRates(ORIGIN_CURRENCY[state.origin]);
+  var priceInLimit;
+  if(c.limitCurrency==='USD') priceInLimit=price*(rates['USD']||1);
+  else if(c.limitCurrency==='EUR') priceInLimit=price*(rates['EUR']||1);
+  else if(c.limitCurrency==='GBP') priceInLimit=price*(rates['GBP']||1);
+  else if(c.limitCurrency==='AUD') priceInLimit=price*(rates['AUD']||1);
+  else priceInLimit=price;
+  var rate=rates[c.currency]||1;
+  var priceInDest=price*rate;
+  var tariff=priceInDest*c.tariff;
+  var vat=(priceInDest+tariff)*c.vat;
+  var extra=tariff+vat;
+  var explain='<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--orange-border);font-size:.72rem;opacity:.85">'+t('warn-explain')+'</div>';
+  if(priceInLimit>c.freeLimit){
+    el.innerHTML='<strong>'+t('warn-over1')+' '+c.freeLimit+' '+c.limitCurrency+'.</strong> '+
+      t('warn-over2')+' <strong>'+c.sym+tariff.toFixed(2)+'</strong> '+t('warn-over3')+
+      ' <strong>'+c.sym+vat.toFixed(2)+'</strong> '+t('warn-over4')+explain;
+    el.style.display='block';
+  } else if(priceInLimit>=c.freeLimit*0.8){
+    el.innerHTML='<strong>'+t('warn-near1')+' '+c.freeLimit+' '+c.limitCurrency+'.</strong> '+
+      t('warn-near2')+' <strong>'+c.sym+extra.toFixed(2)+'</strong> '+t('warn-near3')+explain;
+    el.style.display='block';
+  } else {
+    el.style.display='none';
+  }
+}
+
+// ORIGIN
+function selectOrigin(o){
+  state.origin=o;state.selectedShipping=null;
+  document.querySelectorAll('.origin-card').forEach(function(c){c.classList.remove('selected');});
+  document.querySelector('[data-origin="'+o+'"]').classList.add('selected');
+  document.getElementById('t-price-label').textContent=ORIGIN_LABEL[state.lang][o];
+  document.getElementById('purchase-price').placeholder=ORIGIN_PH[o]||'0';
+  // Update quick converter from
+  document.getElementById('qc-from').value=ORIGIN_CURRENCY[o];
+  renderShippingTable(o);
+  fetchRates(ORIGIN_CURRENCY[o]);
+  clearResults();
+}
+
+// SHIPPING TABLE
+function renderShippingTable(o){
+  var tbody=document.getElementById('shipping-tbody');tbody.innerHTML='';
+  var svcs=SHIPPING[o]||[];
+  svcs.forEach(function(s,i){
+    var tr=document.createElement('tr');
+    if(i===0){tr.classList.add('selected');state.selectedShipping=s.id;}
+    tr.onclick=function(){selectShipping(s.id);};
+    var tk=state.lang==='es'?'te_es':'te';
+    var note=s.aff?('<div class="ship-note">'+(state.lang==='es'?'Servicio de reenvio':'Forwarding service')+'</div>'):'';
+    tr.innerHTML='<td class="ship-service">'+s.name+note+'</td>'+
+      '<td class="ship-time">'+s[tk]+'</td>'+
+      '<td class="ship-cost" id="sc-'+s.id+'">—</td>';
+    tbody.appendChild(tr);
+  });
+  updateShippingCosts(o);
+}
+
+function selectShipping(id){
+  state.selectedShipping=id;
+  var rows=document.querySelectorAll('#shipping-tbody tr');
+  var svcs=SHIPPING[state.origin]||[];
+  rows.forEach(function(r){r.classList.remove('selected');});
+  svcs.forEach(function(s,i){if(s.id===id&&rows[i])rows[i].classList.add('selected');});
+  clearResults();
+}
+
+function updateShippingCosts(o){
+  var dest=document.getElementById('destination').value,c=CUSTOMS[dest];if(!c)return;
+  var w=parseFloat(document.getElementById('weight').value)||1;if(w<=0)w=1;
+  var svcs=SHIPPING[o]||[];
+  var rates=state.ratesFetched?state.rates:getFallbackRates(ORIGIN_CURRENCY[o]);
+  var rate=rates[c.currency]||1;
+  var oSym=ORIGIN_SYM[o]||'';
+  svcs.forEach(function(s){
+    var el=document.getElementById('sc-'+s.id);if(!el)return;
+    var base=getTieredCost(s.tiers,w);
+    var dest2=base*rate;
+    el.innerHTML=oSym+Math.round(base).toLocaleString()+
+      ' <span style="color:var(--text-muted);font-size:.72em">(~'+c.sym+dest2.toFixed(2)+')</span>';
+  });
+}
+
+function onWeightChange(){
+  if(state.origin)updateShippingCosts(state.origin);
+  clearResults();
+}
+function onPriceChange(){clearResults();checkThreshold();}
+
+// PLATFORMS
+function getPlatforms(dest){return PLATFORMS[dest]||PLATFORMS['MX']||[];}
+
+function renderPlatforms(dest){
+  var sel=document.getElementById('platform');sel.innerHTML='';
+  getPlatforms(dest).forEach(function(p){
+    var opt=document.createElement('option');
+    opt.value=p.id;
+    opt.textContent=p.name+(p.fee>0?' ('+(p.fee*100).toFixed(1)+'%)':' (0%)');
+    sel.appendChild(opt);
+  });
+}
+
+function updateSellPriceLabel(dest){
+  var c=CUSTOMS[dest];if(!c)return;
+  var names=CURR_NAMES[state.lang]||CURR_NAMES.en;
+  var cn=names[c.currency]||c.currency;
+  var el=document.getElementById('t-sell-label');if(!el)return;
+  el.textContent=state.lang==='es'
+    ?'Precio de venta estimado ('+c.sym+cn+')'
+    :'Estimated sale price ('+c.sym+cn+')';
+  var inp=document.getElementById('sell-price');
+  if(inp)inp.placeholder=state.lang==='es'?'ej. '+c.sym+'50':'e.g. '+c.sym+'50';
+}
+
+function onDestinationChange(){
+  var dest=document.getElementById('destination').value;
+  renderPlatforms(dest);updateSellPriceLabel(dest);updateRateDisplay();
+  if(state.origin)updateShippingCosts(state.origin);
+  checkThreshold();clearResults();
+}
+
+// CALC CORE
+function calcFor(price,weight,dest,serviceId,sellPrice,platformId){
+  var c=CUSTOMS[dest];if(!c)return null;
+  var rates=state.ratesFetched?state.rates:getFallbackRates(ORIGIN_CURRENCY[state.origin]);
+  var rate=rates[c.currency]||1;
+  var purchaseInDest=price*rate;
+  var svc=null,svcs=SHIPPING[state.origin]||[];
+  for(var i=0;i<svcs.length;i++){if(svcs[i].id===serviceId){svc=svcs[i];break;}}
+  if(!svc)return null;
+  var shipBase=getTieredCost(svc.tiers,weight),shipDest=shipBase*rate;
+  var below=false,priceInLimit=0;
+  if(c.limitCurrency==='USD') priceInLimit=price*(rates['USD']||1);
+  else if(c.limitCurrency==='EUR') priceInLimit=price*(rates['EUR']||1);
+  else if(c.limitCurrency==='GBP') priceInLimit=price*(rates['GBP']||1);
+  else if(c.limitCurrency==='AUD') priceInLimit=price*(rates['AUD']||1);
+  else priceInLimit=price;
+  below=priceInLimit<=c.freeLimit;
+  var tariff=0,vat=0;
+  if(!below){tariff=purchaseInDest*c.tariff;vat=(purchaseInDest+shipDest+tariff)*c.vat;}
+  var pfee=0,plat=null;
+  var plats=getPlatforms(dest);
+  for(var j=0;j<plats.length;j++){if(plats[j].id===platformId){plat=plats[j];break;}}
+  if(sellPrice>0&&plat){pfee=(sellPrice*plat.fee)+plat.fixed;}
+  var total=purchaseInDest+shipDest+tariff+vat+pfee;
+  var profit=sellPrice>0?sellPrice-total:null;
+  return{sym:c.sym,purchaseInDest:purchaseInDest,shipDest:shipDest,tariff:tariff,vat:vat,
+    pfee:pfee,below:below,total:total,profit:profit,svc:svc,plat:plat,c:c,
+    rate:rate,base:ORIGIN_CURRENCY[state.origin],purchasePrice:price};
+}
+
+function calculate(){
+  hideError();
+  if(!state.origin){showError(t('err-origin'));return;}
+  var pr=document.getElementById('purchase-price').value.replace(/[^\d.,]/g,'').replace(',','.');
+  var price=parseFloat(pr);
+  if(!price||price<=0){showError(t('err-price'));return;}
+  var weight=parseFloat(document.getElementById('weight').value);
+  if(!weight||weight<=0){showError(t('err-weight'));return;}
+  if(!state.selectedShipping){showError(t('err-shipping'));return;}
+  var dest=document.getElementById('destination').value;
+  var spr=document.getElementById('sell-price').value.replace(/[^\d.,]/g,'').replace(',','.');
+  var sellPrice=parseFloat(spr)||0;
+  var platformId=document.getElementById('platform').value;
+  var cat=document.getElementById('category').value;
+  var hs=HS[cat]||HS.other;
+  var d=calcFor(price,weight,dest,state.selectedShipping,sellPrice,platformId);
+  if(!d){showError(t('err-shipping'));return;}
+  renderResults(d,hs,sellPrice,dest);
+  renderCompare(price,weight,dest,sellPrice,platformId);
+  saveHistory(d,dest,cat);
+}
+
+// RENDER RESULTS
+function renderResults(d,hs,sellPrice,dest){
+  var body=document.getElementById('results-body');
+  var empty=document.getElementById('results-empty');
+  var es=state.lang==='es';
+  function fmt(n){return d.sym+Math.abs(n).toFixed(2);}
+  var html='';
+  html+=rLine(t('r-purchase'),Math.round(d.purchasePrice).toLocaleString()+' '+d.base+' = '+fmt(d.purchaseInDest));
+  html+=rLine(t('r-shipping')+' ('+d.svc.name+')',fmt(d.shipDest));
+  if(d.below){
+    html+='<div style="font-size:.72rem;color:var(--green);padding:6px 0 4px;border-bottom:1px solid var(--border)">&#10003; '+t('r-free')+'</div>';
+  } else {
+    if(d.tariff>0) html+=rLine(t('r-tariff')+' ('+(d.c.tariff*100).toFixed(1)+'%)',fmt(d.tariff));
+    if(d.vat>0)    html+=rLine(t('r-vat')+' ('+(d.c.vat*100).toFixed(0)+'%)',fmt(d.vat));
+  }
+  if(d.pfee>0) html+=rLine(t('r-pfee')+' ('+d.plat.name+')',fmt(d.pfee));
+  html+='<hr class="r-divider">';
+  html+='<div class="r-total-row"><div class="r-total-label">'+t('r-total')+'</div><div class="r-total-val">'+fmt(d.total)+'</div></div>';
+  if(d.profit!==null){
+    var pc=d.profit>0?'gain':d.profit<0?'loss':'neutral';
+    var pl=d.profit>0?t('r-profit'):d.profit<0?t('r-loss'):t('r-break');
+    var margin=sellPrice>0?((d.profit/sellPrice)*100).toFixed(1):'0';
+    var sub=d.profit>0?(margin+'% '+t('r-margin')):(t('r-suggest')+': '+d.sym+(d.total*1.20).toFixed(2));
+    html+='<div class="profit-box '+pc+'"><div><div class="pb-label">'+pl+'</div><div class="pb-sub">'+sub+'</div></div>'+
+      '<div class="pb-val">'+(d.profit>=0?'+':'-')+fmt(d.profit)+'</div></div>';
+  }
+  // HS
+  var hd=es?hs.es:hs.en;
+  html+='<div class="hs-box"><div class="hs-box-title">'+t('r-hs')+'</div><div class="hs-code">'+hs.code+'</div><div class="hs-desc">'+hd+'</div></div>';
+  // Customs note
+  html+='<div class="customs-note"><strong>'+(es?'Umbral libre de impuestos: ':'Duty-free threshold: ')+
+    d.c.freeLimit+' '+d.c.limitCurrency+'.</strong> '+
+    (es?'Por encima: arancel ':'Above: tariff ')+(d.c.tariff*100).toFixed(1)+'% + '+
+    (es?'IVA ':'VAT/tax ')+(d.c.vat*100).toFixed(0)+'%.<br>'+
+    '<span style="font-size:.7rem;opacity:.75">'+t('warn-explain')+'</span></div>';
+  // Ship service banner (prominent, before maps)
+  if(['JP','CN','KR'].indexOf(state.origin)>=0){
+    html+='<div class="ship-service-banner">'+
+      '<div class="ssb-eyebrow">'+t('ssb-eyebrow')+'</div>'+
+      '<div class="ssb-title">'+t('ssb-title')+'</div>'+
+      '<div class="ssb-body">'+t('ssb-body')+'</div>'+
+      '<div class="ssb-prices">'+
+        '<span class="ssb-price-tag">0.5-2 kg: &#165;1,500</span>'+
+        '<span class="ssb-price-tag">2-5 kg: &#165;2,500</span>'+
+        '<span class="ssb-price-tag">5-10 kg: &#165;3,500</span>'+
+        '<span class="ssb-price-tag">10-20 kg: &#165;5,000</span>'+
+      '</div>'+
+      '<button class="ssb-btn" onclick="openModal(\'send-modal\')">&#128230; '+t('ssb-btn')+'</button>'+
+      '</div>';
+  }
+  // Google Maps (after banner)
+  var q=(MAPS_Q[state.origin]&&MAPS_Q[state.origin][d.svc.id])||d.svc.name;
+  var murl='https://www.google.com/maps/search/'+encodeURIComponent(q);
+  html+='<div class="maps-box">'+
+    '<div class="maps-box-left">&#128205; '+d.svc.name+' '+t('r-maps-near')+'</div>'+
+    '<a class="maps-link" href="'+murl+'" target="_blank" rel="noopener">Google Maps &#8594;</a>'+
+    '</div>';
+  // SHARE BUTTONS
+  var shareLabel = es ? 'Compartir resultado' : 'Share result';
+  var waLabel = 'WhatsApp';
+  var twLabel = 'Twitter/X';
+  var copyLabel = es ? 'Copiar link' : 'Copy link';
+  var emailLabel = es ? 'Recibir por email' : 'Send to email';
+  var sendLabel = es ? 'Enviar' : 'Send';
+  var emailPh = es ? 'tu@email.com' : 'your@email.com';
+  var emailSentMsg = es ? '&#10003; Enviado a tu correo' : '&#10003; Sent to your email';
+  var emailErrMsg = es ? 'Error al enviar. Intenta de nuevo.' : 'Error sending. Please try again.';
+
+  html += '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">';
+  html += '<div style="font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">'+shareLabel+'</div>';
+  html += '<div class="share-row">';
+  html += '<button class="share-btn" onclick="shareWA()" id="btn-wa">&#128172; '+waLabel+'</button>';
+  html += '<button class="share-btn" onclick="shareTW()" id="btn-tw">&#120143; '+twLabel+'</button>';
+  html += '<button class="share-btn" id="btn-copy" onclick="copyLink(this)">&#128279; '+copyLabel+'</button>';
+  html += '</div>';
+  html += '<button class="email-btn" onclick="toggleEmailBox()" id="btn-email">&#9993; '+emailLabel+'</button>';
+  html += '<div class="email-inline" id="email-inline-box">';
+  html += '<input type="email" id="result-email" placeholder="'+emailPh+'">';
+  html += '<button onclick="sendResultEmail()">'+sendLabel+'</button>';
+  html += '</div>';
+  html += '<div class="email-sent" id="email-sent-msg">'+emailSentMsg+'</div>';
+  html += '</div>';
+
+  body.innerHTML=html;
+  body.style.display='block';
+  body.classList.add('visible');
+  empty.style.display='none';
+}
+
+function rLine(l,v){return '<div class="r-line"><span class="r-label">'+l+'</span><span class="r-val">'+v+'</span></div>';}
+
+// COMPARE (inside panel)
+function renderCompare(price,weight,dest,sellPrice,platformId){
+  var svcs=SHIPPING[state.origin]||[];
+  var c=CUSTOMS[dest];
+  var results=[];
+  svcs.forEach(function(s){
+    var d=calcFor(price,weight,dest,s.id,sellPrice,platformId);
+    if(d)results.push({svc:s,total:d.total,profit:d.profit,sym:d.sym});
+  });
+  results.sort(function(a,b){return a.total-b.total;});
+  var list=document.getElementById('compare-list');list.innerHTML='';
+  results.forEach(function(r,i){
+    var div=document.createElement('div');
+    div.className='compare-row'+(i===0?' best':'');
+    var badge=i===0?'<span class="compare-best-badge">BEST</span>':'';
+    var profitHtml='<span class="compare-margin neu">—</span>';
+    if(r.profit!==null){
+      var cls=r.profit>0?'pos':r.profit<0?'neg':'neu';
+      profitHtml='<span class="compare-margin '+cls+'">'+(r.profit>=0?'+':'')+r.sym+r.profit.toFixed(2)+'</span>';
+    }
+    div.innerHTML='<span class="compare-name">'+r.svc.name+badge+'</span>'+
+      '<span class="compare-cost">'+r.sym+r.total.toFixed(2)+'</span>'+profitHtml;
+    list.appendChild(div);
+  });
+  document.getElementById('compare-section').style.display='block';
+}
+
+// HISTORY
+function saveHistory(d,dest,cat){
+  var c=CUSTOMS[dest];
+  var item={ts:Date.now(),origin:state.origin,dest:dest,destName:c.name,
+    price:Math.round(d.purchasePrice),base:d.base,
+    total:d.total.toFixed(2),sym:d.sym,svc:d.svc.name,
+    profit:d.profit!==null?d.profit.toFixed(2):null};
+  calcHistory.unshift(item);
+  if(calcHistory.length>10)calcHistory.pop();
+  try{localStorage.setItem('sc_history',JSON.stringify(calcHistory));}catch(e){}
+  renderHistory();
+}
+
+function renderHistory(){
+  if(!calcHistory||calcHistory.length===0){document.getElementById('history-section').style.display='none';return;}
+  document.getElementById('history-section').style.display='block';
+  document.getElementById('t-history').textContent=t('history');
+  document.getElementById('t-history-clear').textContent=t('history-clear');
+  var list=document.getElementById('history-list');list.innerHTML='';
+  calcHistory.forEach(function(h){
+    var d2=new Date(h.ts);
+    var ds=d2.getDate()+'/'+(d2.getMonth()+1)+' '+d2.getHours()+':'+String(d2.getMinutes()).padStart(2,'0');
+    var ps=h.profit!==null?(parseFloat(h.profit)>=0?' · +'+h.sym+h.profit:' · -'+h.sym+Math.abs(h.profit)):'';
+    var div=document.createElement('div');div.className='history-item';
+    div.innerHTML='<div class="history-item-top"><span class="history-item-name">'+h.origin+' &#8594; '+h.destName+'</span><span class="history-item-total">'+h.sym+h.total+'</span></div>'+
+      '<div class="history-item-sub">'+h.price.toLocaleString()+' '+h.base+' · '+h.svc+' · '+ds+ps+'</div>';
+    list.appendChild(div);
+  });
+}
+
+function clearHistory(){
+  calcHistory=[];
+  try{localStorage.removeItem('sc_history');}catch(e){}
+  document.getElementById('history-section').style.display='none';
+}
+
+// MODALS
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+function submitSendForm(e){
+  var name=document.getElementById('sf-name').value;
+  var email=document.getElementById('sf-email').value;
+  var dest=document.getElementById('sf-dest').value;
+  if(!name||!email||!dest){
+    alert(state.lang==='es'?'Por favor completa los campos obligatorios.':'Please fill in the required fields.');return;
+  }
+  document.getElementById('send-form-wrap').style.display='none';
+  document.getElementById('send-success').style.display='block';
+}
+
+function submitProWaitlist(){
+  var email=document.getElementById('pro-email').value;
+  if(!email||email.indexOf('@')<0){
+    alert(state.lang==='es'?'Introduce un email valido.':'Please enter a valid email.');return;
+  }
+  document.getElementById('pro-email').parentElement.style.display='none';
+  document.getElementById('t-pro-submit').style.display='none';
+  document.getElementById('pro-success').style.display='block';
+}
+
+function clearResults(){
+  var body=document.getElementById('results-body');
+  body.style.display='none';body.classList.remove('visible');
+  document.getElementById('results-empty').style.display='block';
+  document.getElementById('compare-section').style.display='none';
+}
+function showError(msg){var el=document.getElementById('error-msg');el.textContent=msg;el.style.display='block';}
+function hideError(){document.getElementById('error-msg').style.display='none';}
+
+// EMAILJS CONFIG
+var EJS_SERVICE = 'service_m2zlfc2';
+var EJS_TEMPLATE = 'template_txpa10k';
+var EJS_PUBKEY = 'eE1WhtAPVLFGvsGST';
+
+function getShareText(){
+  var body=document.getElementById('results-body');if(!body)return'';
+  var lines=[];
+  body.querySelectorAll('.r-line').forEach(function(el){
+    var l=el.querySelector('.r-label'),v=el.querySelector('.r-val');
+    if(l&&v)lines.push(l.textContent.trim()+': '+v.textContent.trim());
+  });
+  var total=body.querySelector('.r-total-val');
+  if(total)lines.push('TOTAL: '+total.textContent.trim());
+  var profit=body.querySelector('.pb-val');
+  if(profit)lines.push((state.lang==='es'?'Margen: ':'Margin: ')+profit.textContent.trim());
+  return lines.join('\n');
+}
+
+function getShareUrl(){return 'https://shipcalc.co';}
+
+function shareWA(){
+  var text=getShareText();
+  var msg=(state.lang==='es'?'Mira cuanto cuesta este envio (via ShipCalc):\n\n':'Check this shipping cost (via ShipCalc):\n\n')+text+'\n\n'+getShareUrl();
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+
+function shareTW(){
+  var dest=document.getElementById('destination').value;
+  var c=CUSTOMS[dest];
+  var total=document.querySelector('.r-total-val');
+  var tv=total?total.textContent.trim():'';
+  var msg=(state.lang==='es'?'Calculo mi envio desde '+state.origin+' con ShipCalc: '+tv:'Calculated my shipment from '+state.origin+' with ShipCalc: '+tv)+' '+getShareUrl()+' #ShipCalc';
+  window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(msg),'_blank');
+}
+
+function copyLink(btn){
+  var text=getShareText()+'\n\n'+getShareUrl();
+  var done=function(){
+    btn.classList.add('copied');
+    btn.innerHTML='&#10003; '+(state.lang==='es'?'Copiado':'Copied');
+    setTimeout(function(){btn.classList.remove('copied');btn.innerHTML='&#128279; '+(state.lang==='es'?'Copiar link':'Copy link');},2500);
+  };
+  if(navigator.clipboard){navigator.clipboard.writeText(text).then(done).catch(done);}
+  else{var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);done();}
+}
+
+function toggleEmailBox(){
+  var box=document.getElementById('email-inline-box');
+  if(box)box.classList.toggle('open');
+}
+
+function sendResultEmail(){
+  var emailEl=document.getElementById('result-email');
+  var sentEl=document.getElementById('email-sent-msg');
+  var email=emailEl?emailEl.value.trim():'';
+  if(!email||email.indexOf('@')<0){alert(state.lang==='es'?'Introduce un email valido.':'Please enter a valid email.');return;}
+  var dest=document.getElementById('destination').value;
+  var c=CUSTOMS[dest];
+  var es=state.lang==='es';
+  var originNames={
+    en:{JP:'Japan',US:'USA',CN:'China',KR:'Korea'},
+    es:{JP:'Japon',US:'Estados Unidos',CN:'China',KR:'Corea'}
+  };
+  var originName=(originNames[state.lang]||originNames.en)[state.origin]||state.origin;
+  var esimText=es
+    ? '&#128241; De viaje por '+originName+'? Mantente conectado sin roaming. Usa el codigo JAPANGEMU en Holafly (holafly.com) o Saily (saily.com) para obtener un descuento en tu eSIM.'
+    : '&#128241; Traveling in '+originName+'? Stay connected without roaming fees. Use code JAPANGEMU on Holafly (holafly.com) or Saily (saily.com) for a discount on your eSIM.';
+  var params={
+    user_email:email,
+    origin:originName,
+    destination:c?c.name:dest,
+    breakdown:getShareText(),
+    lang:state.lang,
+    site_url:getShareUrl(),
+    esim_text:esimText
+  };
+  emailjs.init(EJS_PUBKEY);
+  emailjs.send(EJS_SERVICE,EJS_TEMPLATE,params)
+    .then(function(){
+      var box=document.getElementById('email-inline-box');
+      if(box)box.style.display='none';
+      if(sentEl){sentEl.style.display='block';sentEl.innerHTML=es?'&#10003; Enviado a tu correo':'&#10003; Sent to your email';}
+    })
+    .catch(function(err){
+      console.error('EmailJS:',err);
+      alert(es?'Error al enviar. Intenta de nuevo.':'Error sending. Please try again.');
+    });
+}
+
+// INIT
+// SEO section translations
+var SEO_I18N = {
+  en:{
+    'seo-title':'How ShipCalc works',
+    'seo-p1':'ShipCalc calculates the real cost of importing products from Japan, USA, China or Korea to any country in the world. Enter the purchase price in the local currency, the package weight and your destination — ShipCalc shows you the exact breakdown: shipping cost, customs duty, import VAT and platform commission if you plan to resell.',
+    'seo-p2':'Exchange rates are updated in real time. Shipping rates cover Japan Post EMS, SAL, Air Small Packet and Surface, DHL, FedEx and UPS. Customs thresholds and import taxes are included for 20 destination countries.',
+    'seo-p3':'ShipCalc also offers a personal shipping service for travelers in Japan, Korea and China — we pick up your package, inspect the contents with you, and handle the full international shipping process.',
+    'travel-title':'Useful for your trip',
+    'airalo-text':'Stay connected in Japan without roaming fees. Use code <strong>JAPANGEMU</strong> for a discount on your Holafly eSIM.',
+    'yesim-text':'eSIM by NordVPN (Saily). Use code <strong>JAPANGEMU</strong> for a discount. Works in Japan, Korea, China and 150+ countries.'
+  },
+  es:{
+    'seo-title':'Como funciona ShipCalc',
+    'seo-p1':'ShipCalc calcula el coste real de importar productos desde Japon, Estados Unidos, China o Corea a cualquier pais del mundo. Introduce el precio de compra en la moneda local, el peso del paquete y tu destino — ShipCalc te muestra el desglose exacto: costo de envio, arancel de aduana, IVA de importacion y comision de plataforma si vas a revender.',
+    'seo-p2':'Los tipos de cambio se actualizan en tiempo real. Las tarifas de envio incluyen Japan Post EMS, SAL, Air Small Packet y Surface, DHL, FedEx y UPS. Los umbrales de aduana e impuestos de importacion estan incluidos para 20 paises de destino.',
+    'seo-p3':'ShipCalc tambien ofrece un servicio personal de envio para viajeros en Japon, Corea y China — recogemos tu paquete, revisamos el contenido contigo y gestionamos todo el proceso de envio internacional.',
+    'travel-title':'Util para tu viaje',
+    'airalo-text':'Mantente conectado en Japon sin cargos de roaming. Usa el codigo <strong>JAPANGEMU</strong> para obtener un descuento en tu Holafly eSIM.',
+    'yesim-text':'eSIM de NordVPN (Saily). Usa el codigo <strong>JAPANGEMU</strong> para obtener un descuento. Funciona en Japon, Corea, China y mas de 150 paises.'
+  }
+};
+
+function updateSEOSection(lang){
+  var d=SEO_I18N[lang]||SEO_I18N.en;
+  var ids=['seo-title','seo-p1','seo-p2','seo-p3','travel-title'];
+  ids.forEach(function(k){var el=document.getElementById('t-'+k);if(el)el.textContent=d[k]||'';});
+  var airalo=document.getElementById('t-airalo-text');if(airalo)airalo.innerHTML=d['airalo-text']||'';
+  var yesim=document.getElementById('t-yesim-text');if(yesim)yesim.innerHTML=d['yesim-text']||'';
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  renderPlatforms('ES');
+  updateSellPriceLabel('ES');
+  selectOrigin('JP');
+  renderHistory();
+  updateSEOSection('en');
+  document.querySelectorAll('.modal-overlay').forEach(function(el){
+    el.addEventListener('click',function(e){if(e.target===el)el.classList.remove('open');});
+  });
+  quickConvert();
+});
+</script>
+</body>
+</html>
