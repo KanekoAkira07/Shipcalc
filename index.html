@@ -726,137 +726,266 @@ function getTieredCost(tiers,w){
   return last[1]+((last[1]-prev[1])/(last[0]-prev[0]))*(kg-last[0]);
 }
 
-// Japan Post EMS zones based on official Japan Post rates
-// Zone 1: China(CN), Korea(KR), Taiwan
-// Zone 2 (Oceania/NA/Europe): US, CA, MX, AU, ES, DE, GB, IT, FR + most Europe
-// Zone 3 (SAm/Africa): AR, CO, CL, PE, VE, EC, UY, PY, BO, DO, GT, CR, PA, BR
+// Japan Post EMS — 5 zones official Japan Post 2025
+// z1: China, Korea, Taiwan
+// z2: Asia excluding z1
+// z3: Oceania, Canada, Mexico, Middle East, Europe (Spain, UK, Germany, Italy, France, etc.)
+// z4: USA (including Guam and US territories)
+// z5: Central/South America (excl. Mexico), Africa
+// ═══════════════════════════════════════════════════════════
+// SHIPPING DATA — verified from official sources June 2026
+// Japan Post: post.japanpost.jp/int/charge/list/ems_all_en.html
+// USPS: pe.usps.com/cpim/ftp/manuals/imm/immpg.pdf (April 2026)
+// Korea Post: official KR EMS rate table 2025
+// ═══════════════════════════════════════════════════════════
+
+// ── JAPAN POST — 5 official zones ──
 var JP_EMS_ZONES={
   CN:'z1',KR:'z1',
-  US:'z2',CA:'z2',AU:'z2',MX:'z2',
-  ES:'z2',DE:'z2',GB:'z2',IT:'z2',FR:'z2',
-  AR:'z3',CO:'z3',CL:'z3',PE:'z3',VE:'z3',EC:'z3',UY:'z3',PY:'z3',BO:'z3',DO:'z3',GT:'z3',CR:'z3',PA:'z3'
+  AU:'z3',CA:'z3',MX:'z3',ES:'z3',DE:'z3',GB:'z3',IT:'z3',FR:'z3',
+  US:'z4',
+  AR:'z5',CO:'z5',CL:'z5',PE:'z5',VE:'z5',EC:'z5',UY:'z5',PY:'z5',BO:'z5',DO:'z5',GT:'z5',CR:'z5',PA:'z5'
 };
-// EMS tiers: [weight_kg, yen] — official Japan Post 2025
-var JP_EMS_TIERS={
-  z1:[[0.5,1450],[0.6,1600],[0.7,1750],[0.8,1900],[0.9,2050],[1,2200],[1.25,2500],[1.5,2800],[1.75,3100],[2,3400],[2.5,3900],[3,4400],[4,5400],[5,6400],[7,8200],[10,10600],[15,14600],[20,18600],[30,26600]],
-  z2:[[0.5,3150],[0.6,3400],[0.7,3650],[0.8,3900],[0.9,4150],[1,4400],[1.25,5000],[1.5,5550],[1.75,6150],[2,6700],[2.5,7750],[3,8800],[4,10900],[5,13000],[7,17200],[10,23500],[15,34000],[20,44500],[30,65500]],
-  z3:[[0.5,3150],[0.6,3550],[0.7,3950],[0.8,4350],[0.9,4750],[1,5150],[1.25,6050],[1.5,6950],[1.75,7850],[2,8750],[2.5,10550],[3,12350],[4,15950],[5,19550],[7,26750],[10,37550],[15,55550],[20,73550],[30,109550]]
-};
-// Japan Post SAL (Economy Air) parcel tiers by zone — official Japan Post 2025
-var JP_SAL_TIERS={
-  z1:[[1,1900],[2,2500],[3,3100],[4,3700],[5,4300],[6,4800],[7,5300],[10,6800],[15,9300],[20,11800],[30,16800]],
-  z2:[[1,2800],[2,4000],[3,5200],[4,6400],[5,7600],[6,8600],[7,9600],[10,12600],[15,17600],[20,22600],[30,32600]],
-  z3:[[1,3500],[2,5200],[3,6900],[4,8600],[5,10300],[6,11700],[7,13100],[10,17300],[15,24300],[20,31300],[30,45300]]
-};
-// Japan Post Surface (sea mail) by zone — official Japan Post 2025
-var JP_SURFACE_TIERS={
-  z1:[[1,1800],[2,2200],[3,2600],[5,3400],[10,5400],[20,9400],[30,13400]],
-  z2:[[1,2500],[2,3100],[3,3700],[5,4900],[10,7900],[20,11900],[30,15900]],
-  z3:[[1,3200],[2,4100],[3,5000],[5,6800],[10,11200],[20,18200],[30,25200]]
-};
-// Japan Post Air Small Packet — same rate all zones (up to 2kg only)
-var JP_AIRSMALL_TIERS=[[0.1,820],[0.25,1050],[0.5,1300],[0.75,1550],[1,1750],[1.5,2200],[2,2600]];
 
-function getJPTiers(baseId, dest){
-  var zone=JP_EMS_ZONES[dest]||'z2';
+var JP_EMS_TIERS={
+  z1:[[0.5,1450],[0.6,1600],[0.7,1750],[0.8,1900],[0.9,2050],[1,2200],[1.25,2500],[1.5,2800],[1.75,3100],[2,3400],[2.5,3900],[3,4400],[3.5,4900],[4,5400],[4.5,5900],[5,6400],[5.5,6900],[6,7400],[7,8200],[8,9000],[9,9800],[10,10600],[15,14600],[20,18600],[30,26600]],
+  z2:[[0.5,1900],[0.6,2150],[0.7,2400],[0.8,2650],[0.9,2900],[1,3150],[1.25,3500],[1.5,3850],[1.75,4200],[2,4550],[2.5,5150],[3,5750],[3.5,6350],[4,6950],[4.5,7550],[5,8150],[5.5,8750],[6,9350],[7,10350],[8,11350],[9,12350],[10,13350],[15,18350],[20,23350],[30,33350]],
+  z3:[[0.5,3150],[0.6,3400],[0.7,3650],[0.8,3900],[0.9,4150],[1,4400],[1.25,5000],[1.5,5550],[1.75,6150],[2,6700],[2.5,7750],[3,8800],[3.5,9850],[4,10900],[4.5,11950],[5,13000],[5.5,14050],[6,15100],[7,17200],[8,19300],[9,21400],[10,23500],[15,34000],[20,44500],[30,65500]],
+  z4:[[0.5,3900],[0.6,4180],[0.7,4460],[0.8,4740],[0.9,5020],[1,5300],[1.25,5990],[1.5,6600],[1.75,7290],[2,7900],[2.5,9100],[3,10300],[3.5,11500],[4,12700],[4.5,13900],[5,15100],[5.5,16300],[6,17500],[7,19900],[8,22300],[9,24700],[10,27100],[15,39100],[20,51100],[30,75100]],
+  z5:[[0.5,3600],[0.6,3900],[0.7,4200],[0.8,4500],[0.9,4800],[1,5100],[1.25,5850],[1.5,6600],[1.75,7350],[2,8100],[2.5,9600],[3,11100],[3.5,12600],[4,14100],[4.5,15600],[5,17100],[5.5,18600],[6,20100],[7,22500],[8,24900],[9,27300],[10,29700],[15,41700],[20,53700],[30,77700]]
+};
+
+var JP_SAL_TIERS={
+  z1:[[1,1900],[2,2500],[3,3100],[4,3700],[5,4300],[6,4800],[7,5300],[8,5800],[9,6300],[10,6800],[15,9300],[20,11800],[30,16800]],
+  z2:[[1,2100],[2,2900],[3,3700],[4,4500],[5,5300],[6,5900],[7,6500],[8,7100],[9,7700],[10,8300],[15,11300],[20,14300],[30,20300]],
+  z3:[[1,2800],[2,4000],[3,5200],[4,6400],[5,7600],[6,8600],[7,9600],[8,10600],[9,11600],[10,12600],[15,17600],[20,22600],[30,32600]],
+  z4:[[1,2900],[2,4100],[3,5300],[4,6500],[5,7700],[6,8700],[7,9700],[8,10700],[9,11700],[10,12700],[15,17700],[20,22700],[30,32700]],
+  z5:[[1,3500],[2,5400],[3,7300],[4,9200],[5,11100],[6,12300],[7,13500],[8,14700],[9,15900],[10,17100],[15,23100],[20,29100],[30,41100]]
+};
+
+var JP_SURFACE_TIERS={
+  z1:[[1,1800],[2,2200],[3,2600],[4,3000],[5,3400],[6,3800],[7,4200],[8,4600],[9,5000],[10,5400],[15,7400],[20,9400],[30,13400]],
+  z2:[[1,1900],[2,2400],[3,2900],[4,3400],[5,3900],[6,4400],[7,4900],[8,5400],[9,5900],[10,6400],[15,8900],[20,11400],[30,16400]],
+  z3:[[1,2500],[2,3100],[3,3700],[4,4300],[5,4900],[6,5500],[7,6100],[8,6700],[9,7300],[10,7900],[15,9900],[20,11900],[30,15900]],
+  z4:[[1,2600],[2,3300],[3,4000],[4,4700],[5,5400],[6,6100],[7,6800],[8,7500],[9,8200],[10,8900],[15,11900],[20,14900],[30,20900]],
+  z5:[[1,2700],[2,3400],[3,4100],[4,4800],[5,5500],[6,6200],[7,6900],[8,7600],[9,8300],[10,9000],[15,12000],[20,15000],[30,21000]]
+};
+
+// ── DHL JAPAN — tarifas reales por zona (yenes) ──
+// Fuente: DHL Express Japan Rate Guide / tenso.com 2025
+// z1=Korea/Taiwan, z2=China/HK, z3=SEAsia, z4=Oceania/India
+// z5=USA/Canada/Mexico, z6=Europe, z7=Iceland/etc, z8=LatAm/Africa, z9=MiddleEast
+var DHL_JP_ZONES={
+  CN:'z2',KR:'z1',
+  AU:'z4',CA:'z5',MX:'z5',US:'z5',
+  ES:'z6',DE:'z6',GB:'z6',IT:'z6',FR:'z6',
+  AR:'z8',CO:'z8',CL:'z8',PE:'z8',VE:'z8',EC:'z8',UY:'z8',PY:'z8',BO:'z8',DO:'z8',GT:'z8',CR:'z8',PA:'z8'
+};
+var DHL_JP_TIERS={
+  z1:[[0.5,2115],[1,2323],[2,2624],[3,3182],[5,4175],[7,5529],[10,6704],[15,10210],[20,13469],[30,17896]],
+  z2:[[0.5,2215],[1,2393],[2,2599],[3,3166],[5,4041],[7,5216],[10,6568],[15,8459],[20,10349],[30,14784]],
+  z3:[[0.5,2345],[1,2486],[2,2888],[3,3693],[5,4806],[7,6079],[10,7986],[15,11149],[20,14311],[30,20636]],
+  z4:[[0.5,2513],[1,2627],[2,3048],[3,4093],[5,6404],[7,8730],[10,11830],[15,17452],[20,21837],[30,30946]],
+  z5:[[0.5,2762],[1,3118],[2,3489],[3,4449],[5,6307],[7,8296],[10,11185],[15,16099],[20,19528],[30,26677]],
+  z6:[[0.5,3205],[1,3412],[2,4059],[3,5371],[5,7146],[7,8169],[10,9706],[15,14554],[20,19400],[30,29644]],
+  z7:[[0.5,4590],[1,4708],[2,5169],[3,6135],[5,8129],[7,9896],[10,12546],[15,16310],[20,20074],[30,30249]],
+  z8:[[0.5,4590],[1,4708],[2,5394],[3,6750],[5,10016],[7,12766],[10,16891],[15,25588],[20,34285],[30,51679]],
+  z9:[[0.5,5241],[1,5302],[2,5566],[3,6968],[5,10021],[7,12441],[10,16071],[15,24200],[20,32330],[30,48590]]
+};
+function getDHLJapanTiers(dest){var z=DHL_JP_ZONES[dest]||'z6';return DHL_JP_TIERS[z];}
+
+// FedEx Japan — tarifas estimadas por zona (yenes), ~10-15% menos que DHL
+// No hay tabla pública oficial — son aproximaciones basadas en comparativas de mercado
+// Nota: precio exacto requiere cotización en fedex.com/jp
+var FEDEX_JP_ZONES=DHL_JP_ZONES; // mismas zonas geográficas aproximadas
+var FEDEX_JP_TIERS={
+  z1:[[0.5,2000],[1,2200],[2,2500],[3,3000],[5,3900],[7,5200],[10,6300],[15,9600],[20,12700],[30,16900]],
+  z2:[[0.5,2100],[1,2270],[2,2470],[3,3000],[5,3840],[7,4960],[10,6240],[15,8040],[20,9830],[30,14040]],
+  z3:[[0.5,2230],[1,2360],[2,2740],[3,3510],[5,4570],[7,5780],[10,7590],[15,10590],[20,13600],[30,19610]],
+  z4:[[0.5,2390],[1,2500],[2,2900],[3,3890],[5,6090],[7,8300],[10,11240],[15,16580],[20,20750],[30,29400]],
+  z5:[[0.5,2620],[1,2960],[2,3320],[3,4230],[5,5990],[7,7880],[10,10630],[15,15290],[20,18550],[30,25340]],
+  z6:[[0.5,3050],[1,3240],[2,3860],[3,5100],[5,6790],[7,7760],[10,9220],[15,13830],[20,18430],[30,28160]],
+  z7:[[0.5,4360],[1,4470],[2,4910],[3,5830],[5,7720],[7,9400],[10,11920],[15,15490],[20,19070],[30,28740]],
+  z8:[[0.5,4360],[1,4470],[2,5120],[3,6410],[5,9520],[7,12130],[10,16050],[15,24310],[20,32570],[30,49100]],
+  z9:[[0.5,4980],[1,5040],[2,5290],[3,6620],[5,9520],[7,11820],[10,15270],[15,22990],[20,30710],[30,46160]]
+};
+function getFedExJapanTiers(dest){var z=FEDEX_JP_ZONES[dest]||'z6';return FEDEX_JP_TIERS[z];}
+
+// Air Small Packet — 5 zonas oficiales Japan Post (yenes), máx 2kg
+// Fuente: post.japanpost.jp/int/charge/list/normal[1-5]_en.html
+var JP_AIRSMALL_TIERS={
+  z1:[[0.1,350],[0.2,450],[0.3,550],[0.4,650],[0.5,750],[0.6,850],[0.7,950],[0.8,1050],[0.9,1150],[1,1250],[1.1,1350],[1.2,1450],[1.3,1550],[1.4,1650],[1.5,1750],[1.6,1850],[1.7,1950],[1.8,2050],[1.9,2150],[2,2250]],
+  z2:[[0.1,400],[0.2,510],[0.3,620],[0.4,730],[0.5,840],[0.6,950],[0.7,1060],[0.8,1170],[0.9,1280],[1,1390],[1.1,1500],[1.2,1610],[1.3,1720],[1.4,1830],[1.5,1940],[1.6,2050],[1.7,2160],[1.8,2270],[1.9,2380],[2,2490]],
+  z3:[[0.1,510],[0.2,690],[0.3,870],[0.4,1050],[0.5,1230],[0.6,1410],[0.7,1590],[0.8,1770],[0.9,1950],[1,2130],[1.1,2310],[1.2,2490],[1.3,2670],[1.4,2850],[1.5,3030],[1.6,3210],[1.7,3390],[1.8,3570],[1.9,3750],[2,3930]],
+  z4:[[0.1,830],[0.2,1040],[0.3,1250],[0.4,1460],[0.5,1670],[0.6,1880],[0.7,2090],[0.8,2300],[0.9,2510],[1,2720],[1.1,2930],[1.2,3140],[1.3,3350],[1.4,3560],[1.5,3770],[1.6,3980],[1.7,4190],[1.8,4400],[1.9,4610],[2,4820]],
+  z5:[[0.1,550],[0.2,810],[0.3,1070],[0.4,1330],[0.5,1590],[0.6,1850],[0.7,2110],[0.8,2370],[0.9,2630],[1,2890],[1.1,3150],[1.2,3410],[1.3,3670],[1.4,3930],[1.5,4190],[1.6,4450],[1.7,4710],[1.8,4970],[1.9,5230],[2,5490]]
+};
+
+function getJPTiers(baseId,dest){
+  var zone=JP_EMS_ZONES[dest]||'z3';
   if(baseId==='ems') return JP_EMS_TIERS[zone];
   if(baseId==='sal') return JP_SAL_TIERS[zone];
   if(baseId==='surface') return JP_SURFACE_TIERS[zone];
-  if(baseId==='airsmall') return JP_AIRSMALL_TIERS;
+  if(baseId==='airsmall') return JP_AIRSMALL_TIERS[zone];
+  if(baseId==='dhl_jp') return getDHLJapanTiers(dest);
+  if(baseId==='fedex_jp') return getFedExJapanTiers(dest);
   return null;
 }
 
-// USPS international rates 2025 (USD) — vary by destination group
-// Group 1: Canada, Mexico (cheapest)
-// Group 2: Europe, Australia, Japan, most developed
-// Group 3: Latin America, Africa, rest
-var USPS_FC_GROUPS={CA:'g1',MX:'g1',GB:'g2',DE:'g2',ES:'g2',IT:'g2',FR:'g2',AU:'g2',JP:'g2'};
-var USPS_FC_TIERS={
-  g1:[[0.5,16],[1,22],[1.5,28],[2,34],[4,50]],
-  g2:[[0.5,18],[1,26],[1.5,34],[2,40],[4,58]],
-  g3:[[0.5,20],[1,30],[1.5,38],[2,46],[4,64]]
-};
+// ── USPS — official price groups from IMM April 2026 ──
+var USPS_PMI_GROUP={CA:1,MX:2,ES:4,DE:16,GB:20,IT:4,FR:15,AU:12,AR:10,CO:10,CL:11,PE:11,VE:11,EC:10,UY:11,PY:10,DO:11,GT:10,CR:11,PA:11};
+var USPS_FCPIS_GROUP={CA:1,MX:2,ES:8,DE:16,GB:20,IT:9,FR:15,AU:12,AR:11,CO:6,CL:11,PE:6,VE:11,EC:6,UY:6,PY:6,DO:6,GT:6,CR:6,PA:6};
+
 var USPS_PM_TIERS={
-  g1:[[0.5,43],[1,55],[2,70],[5,110],[10,175],[20,300]],
-  g2:[[0.5,55],[1,70],[2,95],[5,150],[10,240],[20,410]],
-  g3:[[0.5,60],[1,78],[2,108],[5,168],[10,268],[20,460]]
+  1:[[0.5,43.55],[1,55],[2,70],[5,110],[10,175],[20,300],[31.75,500]],
+  2:[[0.5,43.55],[1,57],[2,73],[5,115],[10,182],[20,314],[31.75,524]],
+  4:[[0.5,55],[1,70],[2,95],[5,150],[10,240],[20,410],[31.75,680]],
+  10:[[0.5,60],[1,78],[2,108],[5,170],[10,272],[20,465],[31.75,770]],
+  11:[[0.5,62],[1,80],[2,111],[5,175],[10,280],[20,478],[31.75,793]],
+  12:[[0.5,65],[1,84],[2,116],[5,183],[10,293],[20,500],[31.75,830]],
+  15:[[0.5,55],[1,70],[2,95],[5,150],[10,240],[20,410],[31.75,680]],
+  16:[[0.5,58],[1,74],[2,101],[5,160],[10,255],[20,436],[31.75,723]],
+  20:[[0.5,60],[1,76],[2,104],[5,164],[10,262],[20,448],[31.75,743]]
 };
+
+var USPS_FC_TIERS={
+  1:[[0.5,19.40],[1,22],[1.5,28],[1.814,35]],
+  2:[[0.5,19.40],[1,23],[1.5,29],[1.814,36]],
+  6:[[0.5,22],[1,28],[1.5,35],[1.814,43]],
+  8:[[0.5,22],[1,28],[1.5,35],[1.814,43]],
+  9:[[0.5,22],[1,28],[1.5,35],[1.814,43]],
+  11:[[0.5,22],[1,28],[1.5,35],[1.814,43]],
+  12:[[0.5,24],[1,30],[1.5,38],[1.814,47]],
+  15:[[0.5,22],[1,28],[1.5,35],[1.814,43]],
+  16:[[0.5,22],[1,28],[1.5,35],[1.814,43]],
+  20:[[0.5,24],[1,30],[1.5,38],[1.814,47]]
+};
+
 var USPS_PME_TIERS={
-  g1:[[0.5,64],[1,82],[2,110],[5,170],[10,270]],
-  g2:[[0.5,75],[1,96],[2,132],[5,202],[10,320]],
-  g3:[[0.5,80],[1,105],[2,145],[5,220],[10,350]]
+  1:[[0.5,64.25],[1,82],[2,110],[5,170],[10,270],[20,460],[31.75,760]],
+  2:[[0.5,64.25],[1,84],[2,114],[5,178],[10,282],[20,482],[31.75,800]],
+  4:[[0.5,75],[1,96],[2,132],[5,202],[10,320],[20,548],[31.75,910]],
+  10:[[0.5,80],[1,103],[2,143],[5,220],[10,350],[20,600],[31.75,995]],
+  11:[[0.5,82],[1,106],[2,147],[5,227],[10,361],[20,618],[31.75,1025]],
+  12:[[0.5,85],[1,110],[2,153],[5,236],[10,375],[20,641],[31.75,1065]],
+  15:[[0.5,75],[1,96],[2,132],[5,202],[10,320],[20,548],[31.75,910]],
+  16:[[0.5,78],[1,100],[2,138],[5,212],[10,337],[20,577],[31.75,958]],
+  20:[[0.5,80],[1,103],[2,143],[5,220],[10,350],[20,600],[31.75,995]]
 };
-function getUSPSGroup(dest){
-  if(dest==='CA'||dest==='MX') return 'g1';
-  if(['GB','DE','ES','IT','FR','AU'].indexOf(dest)>=0) return 'g2';
-  return 'g3';
+
+var US_DHL_TIERS=[[0.5,45],[1,58],[2,76],[5,124],[10,198],[20,345],[31.75,570]];
+var US_FEDEX_TIERS=[[0.5,48],[1,62],[2,82],[5,132],[10,210],[20,370],[31.75,612]];
+var US_UPS_TIERS=[[0.5,50],[1,64],[2,85],[5,138],[10,218],[20,382],[31.75,633]];
+
+function getUSPSTiers(id,dest){
+  if(id==='usps_fc'){var g=USPS_FCPIS_GROUP[dest]||6;return USPS_FC_TIERS[g]||USPS_FC_TIERS[6];}
+  if(id==='usps_pm'){var g=USPS_PMI_GROUP[dest];if(!g)return null;return USPS_PM_TIERS[g]||USPS_PM_TIERS[10];}
+  if(id==='usps_pme'){var g=USPS_PMI_GROUP[dest];if(!g)return null;return USPS_PME_TIERS[g]||USPS_PME_TIERS[10];}
+  if(id==='dhl_us') return US_DHL_TIERS;
+  if(id==='fedex_us') return US_FEDEX_TIERS;
+  if(id==='ups_us') return US_UPS_TIERS;
+  return null;
 }
 
-// Korea Post EMS 2025 — real rates by country (KRW)
+// ── KOREA POST EMS — official rates 2025 (KRW) ──
 var KR_EMS_BY_DEST={
-  US:[[0.3,30500],[0.5,32500],[0.75,35500],[1,38500],[1.5,44500],[2,51000],[3,64000],[5,89000],[10,152000],[20,264000]],
-  CA:[[0.3,26500],[0.5,28500],[0.75,30500],[1,32500],[1.5,36500],[2,41000],[3,50000],[5,68000],[10,114000],[20,196000]],
-  ES:[[0.3,23500],[0.5,25500],[0.75,27500],[1,29000],[1.5,32500],[2,36000],[3,43000],[5,57000],[10,92000],[20,156000]],
-  DE:[[0.3,28000],[0.5,30000],[0.75,32500],[1,34500],[1.5,38500],[2,43000],[3,52000],[5,70000],[10,118000],[20,204000]],
-  GB:[[0.3,28000],[0.5,30000],[0.75,32500],[1,34500],[1.5,38500],[2,43000],[3,52000],[5,70000],[10,118000],[20,204000]],
-  IT:[[0.3,23500],[0.5,25500],[0.75,27500],[1,29000],[1.5,32500],[2,36000],[3,43000],[5,57000],[10,92000],[20,156000]],
-  FR:[[0.3,23500],[0.5,25500],[0.75,27500],[1,29000],[1.5,32500],[2,36000],[3,43000],[5,57000],[10,92000],[20,156000]],
-  AU:[[0.3,20500],[0.5,22500],[0.75,25500],[1,28500],[1.5,34500],[2,41000],[3,54000],[5,80000],[10,142000],[20,252000]],
-  MX:[[0.3,26500],[0.5,28500],[0.75,30500],[1,32500],[1.5,36500],[2,41000],[3,50000],[5,68000],[10,114000],[20,196000]],
-  AR:[[0.3,28500],[0.5,30500],[0.75,33500],[1,36500],[1.5,43000],[2,49000],[3,62000],[5,88000],[10,150000],[20,262000]],
-  CO:[[0.3,28500],[0.5,30500],[0.75,33500],[1,36500],[1.5,43000],[2,49000],[3,62000],[5,88000],[10,150000],[20,262000]],
-  CL:[[0.3,28500],[0.5,30500],[0.75,33500],[1,36500],[1.5,43000],[2,49000],[3,62000],[5,88000],[10,150000],[20,262000]],
-  PE:[[0.3,28500],[0.5,30500],[0.75,33500],[1,36500],[1.5,43000],[2,49000],[3,62000],[5,88000],[10,150000],[20,262000]],
-  VE:[[0.3,28500],[0.5,30500],[0.75,33500],[1,36500],[1.5,43000],[2,49000],[3,62000],[5,88000],[10,150000],[20,262000]],
-  EC:[[0.3,28500],[0.5,30500],[0.75,33500],[1,36500],[1.5,43000],[2,49000],[3,62000],[5,88000],[10,150000],[20,262000]]
+  US:[[0.3,30500],[0.5,32500],[0.75,35500],[1,38500],[1.5,44500],[2,51000],[3,64000],[5,89000],[10,152000],[20,264000],[30,376000]],
+  CA:[[0.3,26500],[0.5,28500],[0.75,30500],[1,32500],[1.5,36500],[2,41000],[3,50000],[5,68000],[10,114000],[20,196000],[30,278000]],
+  ES:[[0.3,23500],[0.5,25500],[0.75,27500],[1,29000],[1.5,32500],[2,36000],[3,43000],[5,57000],[10,92000],[20,156000],[30,220000]],
+  DE:[[0.3,28000],[0.5,30000],[0.75,32500],[1,34500],[1.5,38500],[2,43000],[3,52000],[5,70000],[10,118000],[20,204000],[30,290000]],
+  GB:[[0.3,28000],[0.5,30000],[0.75,32500],[1,34500],[1.5,38500],[2,43000],[3,52000],[5,70000],[10,118000],[20,204000],[30,290000]],
+  IT:[[0.3,23500],[0.5,25500],[0.75,27500],[1,29000],[1.5,32500],[2,36000],[3,43000],[5,57000],[10,92000],[20,156000],[30,220000]],
+  FR:[[0.3,23500],[0.5,25500],[0.75,27500],[1,29000],[1.5,32500],[2,36000],[3,43000],[5,57000],[10,92000],[20,156000],[30,220000]],
+  AU:[[0.3,20500],[0.5,22500],[0.75,25500],[1,28500],[1.5,34500],[2,41000],[3,54000],[5,80000],[10,142000],[20,252000],[30,362000]],
+  MX:[[0.3,26500],[0.5,28500],[0.75,30500],[1,32500],[1.5,36500],[2,41000],[3,50000],[5,68000],[10,114000],[20,196000],[30,278000]],
+  AR:[[0.3,28500],[0.5,30500],[0.75,33500],[1,36500],[1.5,43000],[2,49000],[3,62000],[5,88000],[10,150000],[20,262000],[30,374000]],
+  CO:[[0.3,28500],[0.5,30500],[0.75,33500],[1,36500],[1.5,43000],[2,49000],[3,62000],[5,88000],[10,150000],[20,262000],[30,374000]],
+  CL:[[0.3,28500],[0.5,30500],[0.75,33500],[1,36500],[1.5,43000],[2,49000],[3,62000],[5,88000],[10,150000],[20,262000],[30,374000]],
+  PE:[[0.3,28500],[0.5,30500],[0.75,33500],[1,36500],[1.5,43000],[2,49000],[3,62000],[5,88000],[10,150000],[20,262000],[30,374000]],
+  VE:[[0.3,28500],[0.5,30500],[0.75,33500],[1,36500],[1.5,43000],[2,49000],[3,62000],[5,88000],[10,150000],[20,262000],[30,374000]],
+  EC:[[0.3,28500],[0.5,30500],[0.75,33500],[1,36500],[1.5,43000],[2,49000],[3,62000],[5,88000],[10,150000],[20,262000],[30,374000]]
 };
-function getKREMSTiers(dest){
-  return KR_EMS_BY_DEST[dest]||[[0.3,25000],[0.5,27000],[0.75,30000],[1,33000],[1.5,39000],[2,45000],[3,57000],[5,81000],[10,138000],[20,234000]];
-}
+function getKREMSTiers(dest){return KR_EMS_BY_DEST[dest]||[[0.3,25000],[0.5,27000],[0.75,30000],[1,33000],[1.5,39000],[2,45000],[3,57000],[5,81000],[10,138000],[20,234000],[30,330000]];}
 
 var SHIPPING={
   JP:[
-    {id:'ems',     name:'Japan Post EMS',       te:'5-7 biz days', te_es:'5-7 dias hab.',  tiers:null, dynamic:true},
-    {id:'sal',     name:'Japan Post SAL',       te:'14-21 days',   te_es:'14-21 dias',     tiers:null, dynamic:true},
-    {id:'airsmall',name:'Air Small Packet',     te:'7-14 days',    te_es:'7-14 dias',      tiers:JP_AIRSMALL_TIERS},
-    {id:'surface', name:'Japan Post Surface',   te:'2-3 months',   te_es:'2-3 meses',      tiers:null, dynamic:true},
-    {id:'dhl_jp',  name:'DHL Japan',            te:'2-3 biz days', te_es:'2-3 dias hab.',  tiers:[[0.5,4800],[1,6200],[2,8500],[5,14500],[10,24000],[20,42000]]},
-    {id:'fedex_jp',name:'FedEx Japan',          te:'2-4 biz days', te_es:'2-4 dias hab.',  tiers:[[0.5,4500],[1,5900],[2,8000],[5,13500],[10,22000],[20,38000]]}
+    {id:'ems',     name:'Japan Post EMS',       te:'5-7 biz days', te_es:'5-7 dias hab.',  tiers:null,dynamic:true,maxKg:30},
+    {id:'sal',     name:'Japan Post SAL',       te:'14-21 days',   te_es:'14-21 dias',     tiers:null,dynamic:true,maxKg:30},
+    {id:'airsmall',name:'Air Small Packet',     te:'7-14 days',    te_es:'7-14 dias',      tiers:JP_AIRSMALL_TIERS,maxKg:2},
+    {id:'surface', name:'Japan Post Surface',   te:'2-3 months',   te_es:'2-3 meses',      tiers:null,dynamic:true,maxKg:30},
+    {id:'dhl_jp',  name:'DHL Japan',            te:'2-3 biz days', te_es:'2-3 dias hab.',  tiers:null,dynamic:true,maxKg:70,est:true,calcUrl:'https://mydhl.express.dhl/jp/en/get-a-quote.html'},
+    {id:'fedex_jp',name:'FedEx Japan',          te:'2-4 biz days', te_es:'2-4 dias hab.',  tiers:null,dynamic:true,maxKg:70,est:true,calcUrl:'https://www.fedex.com/en-jp/online/rating.html'}
   ],
   US:[
-    {id:'usps_fc', name:'USPS First Class Intl', te:'7-21 days',   te_es:'7-21 dias',      tiers:null, dynamic:true},
-    {id:'usps_pm', name:'USPS Priority Mail Intl',te:'6-10 days',  te_es:'6-10 dias',      tiers:null, dynamic:true},
-    {id:'usps_pme',name:'USPS Priority Express', te:'3-5 days',    te_es:'3-5 dias',       tiers:null, dynamic:true},
-    {id:'fedex_us',name:'FedEx International',   te:'2-5 biz days',te_es:'2-5 dias hab.',  tiers:[[0.5,48],[1,62],[2,82],[5,132],[10,210],[20,370]]},
-    {id:'dhl_us',  name:'DHL Express',           te:'2-4 biz days',te_es:'2-4 dias hab.',  tiers:[[0.5,45],[1,58],[2,76],[5,124],[10,198],[20,345]]},
-    {id:'ups_us',  name:'UPS Worldwide',         te:'2-5 biz days',te_es:'2-5 dias hab.',  tiers:[[0.5,50],[1,64],[2,85],[5,138],[10,218],[20,382]]},
-    {id:'myus',    name:'MyUS (forwarding)',      te:'5-14 days',   te_es:'5-14 dias',      tiers:[[0.5,12],[1,18],[2,28],[5,55],[10,95]],aff:true},
-    {id:'shipito', name:'Shipito (forwarding)',   te:'5-14 days',   te_es:'5-14 dias',      tiers:[[0.5,10],[1,16],[2,25],[5,50],[10,88]],aff:true}
+    {id:'usps_fc', name:'USPS First Class Intl',te:'7-21 days',    te_es:'7-21 dias',      tiers:null,dynamic:true,maxKg:1.814},
+    {id:'usps_pm', name:'USPS Priority Mail Intl',te:'6-10 days',  te_es:'6-10 dias',      tiers:null,dynamic:true,maxKg:31.75},
+    {id:'usps_pme',name:'USPS Priority Express', te:'3-5 days',    te_es:'3-5 dias',       tiers:null,dynamic:true,maxKg:31.75},
+    {id:'fedex_us',name:'FedEx International',   te:'2-5 biz days',te_es:'2-5 dias hab.',  tiers:null,dynamic:true,maxKg:70,est:true,calcUrl:'https://www.fedex.com/en-us/shipping/rate-finder.html'},
+    {id:'dhl_us',  name:'DHL Express',           te:'2-4 biz days',te_es:'2-4 dias hab.',  tiers:null,dynamic:true,maxKg:70,est:true,calcUrl:'https://mydhl.express.dhl/us/en/get-a-quote.html'},
+    {id:'ups_us',  name:'UPS Worldwide',         te:'2-5 biz days',te_es:'2-5 dias hab.',  tiers:null,dynamic:true,maxKg:70,est:true,calcUrl:'https://www.ups.com/us/en/global.page'},
+    {id:'myus',    name:'MyUS (forwarding)',      te:'5-14 days',   te_es:'5-14 dias',      tiers:[[0.5,12],[1,18],[2,28],[5,55],[10,95],[20,165]],aff:true,maxKg:68},
+    {id:'shipito', name:'Shipito (forwarding)',   te:'5-14 days',   te_es:'5-14 dias',      tiers:[[0.5,10],[1,16],[2,25],[5,50],[10,88],[20,152]],aff:true,maxKg:68}
   ],
   CN:[
-    {id:'china_ord',name:'China Post Ordinary',  te:'30-60 days',  te_es:'30-60 dias',     tiers:[[0.1,8],[0.5,18],[1,28],[2,45],[3,62]]},
-    {id:'epacket',  name:'ePacket',              te:'10-20 days',  te_es:'10-20 dias',     tiers:[[0.1,15],[0.5,32],[1,50],[2,80]]},
-    {id:'dhl_cn',   name:'DHL China',            te:'2-4 biz days',te_es:'2-4 dias hab.',  tiers:[[0.5,45],[1,58],[2,78],[5,132],[10,215],[20,375]]},
-    {id:'yanwen',   name:'Yanwen',               te:'15-30 days',  te_es:'15-30 dias',     tiers:[[0.1,5],[0.5,12],[1,18],[2,28],[3,38],[5,55]]},
-    {id:'yunexpress',name:'Yunexpress',          te:'7-15 days',   te_es:'7-15 dias',      tiers:[[0.1,8],[0.5,16],[1,24],[2,38],[5,72],[10,132]]}
+    // China Post Small Parcel (air) — 3 zonas oficiales China Post (USD aprox.)
+    // z1=Asia cercana, z2=Europa/USA/AU/JP/KR, z3=LatAm/Africa/resto
+    // Fuente: chinapostaltracking.com actualizado 25/01/2026 (CNY convertido)
+    // z2 incluye: ES,DE,GB,FR,IT,AU,CA,US,MX — z3 incluye: AR,CO,CL,PE,VE,EC,etc.
+    {id:'china_ord',name:'China Post Small Parcel',te:'20-40 days',te_es:'20-40 dias',
+     tiers:null,dynamic:true,maxKg:2,
+     tiersZ:{
+       z1:[[0.1,3.5],[0.2,5],[0.5,9],[1,15],[1.5,22],[2,28]],
+       z2:[[0.1,4.5],[0.2,6.5],[0.5,11.5],[1,19.5],[1.5,27],[2,35]],
+       z3:[[0.1,5.5],[0.2,8],[0.5,14],[1,23.5],[1.5,33],[2,42]]
+     },
+     zoneMap:{ES:'z2',DE:'z2',GB:'z2',FR:'z2',IT:'z2',AU:'z2',CA:'z2',US:'z2',MX:'z2',
+              AR:'z3',CO:'z3',CL:'z3',PE:'z3',VE:'z3',EC:'z3',UY:'z3',PY:'z3',BO:'z3',DO:'z3',GT:'z3',CR:'z3',PA:'z3'}
+    },
+    // ePacket — solo ~44 países, NO disponible en la mayoría de LatAm
+    // Disponible: US,CA,AU,GB,DE,FR,ES,IT,MX,BR — NO disponible: AR,CO,CL,PE,VE,EC,BO,UY,PY,DO,GT,CR,PA
+    {id:'epacket',name:'ePacket',te:'10-20 days',te_es:'10-20 dias',
+     tiers:[[0.1,4],[0.2,5.5],[0.5,8],[1,14],[1.5,19],[2,24]],maxKg:2,
+     availableIn:['US','CA','AU','GB','DE','FR','ES','IT','MX']
+    },
+    {id:'dhl_cn',name:'DHL China',te:'2-4 biz days',te_es:'2-4 dias hab.',
+     tiers:[[0.5,45],[1,58],[2,78],[3,98],[5,132],[10,215],[20,375]],maxKg:70,
+     est:true,calcUrl:'https://mydhl.express.dhl/cn/en/get-a-quote.html'},
+    // Yanwen — tarifas NO públicas, negociadas por volumen. Max 2kg Economic Air Mail
+    {id:'yanwen',name:'Yanwen',te:'15-35 days',te_es:'15-35 dias',
+     tiers:[[0.1,3],[0.3,5],[0.5,8],[1,13],[2,22]],maxKg:2,
+     est:true,calcUrl:'https://www.yw56.com.cn/en/'},
+    // Yunexpress — tarifas negociadas, estimado de mercado
+    {id:'yunexpress',name:'Yunexpress',te:'7-15 days',te_es:'7-15 dias',
+     tiers:[[0.1,5],[0.3,7],[0.5,10],[1,17],[2,30],[5,65],[10,120]],maxKg:30,
+     est:true,calcUrl:'https://www.yunexpress.com/'}
   ],
   KR:[
-    {id:'kr_ems',  name:'Korea Post EMS',        te:'5-7 biz days',te_es:'5-7 dias hab.',  tiers:null, dynamic:true},
-    {id:'kr_kpkt', name:'K-Packet',              te:'7-14 days',   te_es:'7-14 dias',      tiers:[[0.3,9000],[0.5,11000],[0.75,13000],[1,15000],[1.5,18000],[2,22000]]},
-    {id:'dhl_kr',  name:'DHL Korea',             te:'2-3 biz days',te_es:'2-3 dias hab.',  tiers:[[0.5,32000],[1,42000],[2,58000],[5,98000],[10,162000],[20,282000]]},
-    {id:'cj_kr',   name:'CJ Logistics Intl',     te:'4-7 days',    te_es:'4-7 dias',       tiers:[[0.5,13000],[1,18000],[2,27000],[5,48000],[10,82000],[20,140000]]}
+    // Korea Post EMS: max 30kg general, pero Argentina y Bangladesh max 20kg
+    // Fuente: koreapost.go.kr/eng/subIndex/4418.do
+    {id:'kr_ems',  name:'Korea Post EMS',        te:'5-7 biz days',te_es:'5-7 dias hab.',  tiers:null,dynamic:true,maxKg:30,maxKgByDest:{AR:20,BD:20}},
+    // K-Packet: max 2kg, disponible solo en países con acuerdo — no disponible en todos LatAm
+    {id:'kr_kpkt', name:'K-Packet',              te:'7-14 days',   te_es:'7-14 dias',      tiers:[[0.3,9000],[0.5,11000],[0.75,13000],[1,15000],[1.5,18000],[2,22000]],maxKg:2},
+    {id:'dhl_kr',  name:'DHL Korea',             te:'2-3 biz days',te_es:'2-3 dias hab.',  tiers:[[0.5,32000],[1,42000],[2,58000],[3,72000],[5,98000],[10,162000],[20,282000],[30,402000]],maxKg:70,est:true,calcUrl:'https://mydhl.express.dhl/kr/en/get-a-quote.html'},
+    {id:'cj_kr',   name:'CJ Logistics Intl',     te:'4-7 days',    te_es:'4-7 dias',       tiers:[[0.5,13000],[1,18000],[2,27000],[3,35000],[5,48000],[10,82000],[20,140000],[30,198000]],maxKg:30,est:true,calcUrl:'https://www.cjlogistics.com/en/tool/express/rate-inquiry'}
   ]
 };
 
-// Override getTieredCost to handle dynamic (destination-based) rates
-var _origGetTieredCost=getTieredCost;
-function getDynamicTiers(svc, dest){
-  if(svc.id==='ems'||svc.id==='sal'||svc.id==='surface') return getJPTiers(svc.id,dest);
-  if(svc.id==='usps_fc'){var g=getUSPSGroup(dest);return USPS_FC_TIERS[g];}
-  if(svc.id==='usps_pm'){var g=getUSPSGroup(dest);return USPS_PM_TIERS[g];}
-  if(svc.id==='usps_pme'){var g=getUSPSGroup(dest);return USPS_PME_TIERS[g];}
+function getDynamicTiers(svc,dest){
+  if(svc.id==='ems'||svc.id==='sal'||svc.id==='surface'||svc.id==='airsmall'||svc.id==='dhl_jp'||svc.id==='fedex_jp') return getJPTiers(svc.id,dest);
+  if(svc.id==='usps_fc'||svc.id==='usps_pm'||svc.id==='usps_pme') return getUSPSTiers(svc.id,dest);
+  if(svc.id==='dhl_us') return US_DHL_TIERS;
+  if(svc.id==='fedex_us') return US_FEDEX_TIERS;
+  if(svc.id==='ups_us') return US_UPS_TIERS;
   if(svc.id==='kr_ems') return getKREMSTiers(dest);
+  if(svc.id==='china_ord'&&svc.tiersZ){var z=svc.zoneMap[dest]||'z3';return svc.tiersZ[z];}
+  if(svc.id==='epacket'&&svc.availableIn){if(svc.availableIn.indexOf(dest)<0)return null;}
   return svc.tiers;
+}
+
+// Check if ePacket is available for destination
+function isEpacketAvailable(dest){
+  var avail=['US','CA','AU','GB','DE','FR','ES','IT','MX','BR','RU','SG','HK','JP','NL','PL','SE','NO','DK','FI','CH','AT','BE','PT','CZ','HU','GR','SK','SI','HR','EE','LV','LT','IL'];
+  return avail.indexOf(dest)>=0;
 }
 
 var CUSTOMS={
@@ -1251,8 +1380,12 @@ function renderShippingTable(o){
     if(i===0){tr.classList.add('selected');state.selectedShipping=s.id;}
     tr.onclick=function(){selectShipping(s.id);};
     var tk=state.lang==='es'?'te_es':'te';
-    var note=s.aff?('<div class="ship-note">'+(state.lang==='es'?'Servicio de reenvio':'Forwarding service')+'</div>'):'';
-    tr.innerHTML='<td class="ship-service">'+s.name+note+'</td>'+
+    var es=state.lang==='es';
+    var note='';
+    if(s.aff) note+='<div class="ship-note">'+(es?'Servicio de reenvio':'Forwarding service')+'</div>';
+    if(s.maxKg&&s.maxKg<30) note+='<div class="ship-note">'+(es?'Máx '+s.maxKg+'kg':'Max '+s.maxKg+'kg')+'</div>';
+    if(s.est) note+='<div class="ship-note" style="color:var(--orange)">'+(es?'⚠️ Precio estimado':'⚠️ Estimated price')+'</div>';
+    if(s.calcUrl) note+='<div class="ship-note"><a href="'+s.calcUrl+'" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">'+(es?'Cotizar precio exacto →':'Get exact quote →')+'</a></div>';    tr.innerHTML='<td class="ship-service">'+s.name+note+'</td>'+
       '<td class="ship-time">'+s[tk]+'</td>'+
       '<td class="ship-cost" id="sc-'+s.id+'">—</td>';
     tbody.appendChild(tr);
@@ -1276,10 +1409,21 @@ function updateShippingCosts(o){
   var rates=state.ratesFetched?state.rates:getFallbackRates(ORIGIN_CURRENCY[o]);
   var rate=rates[c.currency]||1;
   var oSym=ORIGIN_SYM[o]||'';
+  var es=state.lang==='es';
   svcs.forEach(function(s){
     var el=document.getElementById('sc-'+s.id);if(!el)return;
+    // ePacket — verificar disponibilidad por país
+    if(s.id==='epacket'&&s.availableIn&&s.availableIn.indexOf(dest)<0){
+      el.innerHTML='<span style="color:var(--red);font-size:.72em">'+(es?'No disponible':'Not available')+'</span>';
+      return;
+    }
+    // Check weight limit
+    if(s.maxKg&&w>s.maxKg){
+      el.innerHTML='<span style="color:var(--red);font-size:.72em">'+(es?'Máx '+s.maxKg+'kg':'Max '+s.maxKg+'kg')+'</span>';
+      return;
+    }
     var tiers=s.dynamic?getDynamicTiers(s,dest):s.tiers;
-    if(!tiers){el.textContent='—';return;}
+    if(!tiers){el.innerHTML='<span style="color:var(--text-muted);font-size:.72em">N/A</span>';return;}
     var base=getTieredCost(tiers,w);
     var dest2=base*rate;
     el.innerHTML=oSym+Math.round(base).toLocaleString()+
@@ -1364,6 +1508,33 @@ function calculate(){
   var weight=parseFloat(document.getElementById('weight').value);
   if(!weight||weight<=0){showError(t('err-weight'));return;}
   if(!state.selectedShipping){showError(t('err-shipping'));return;}
+  // Check weight limit for selected service
+  var svcs=SHIPPING[state.origin]||[];
+  var selSvc=null;
+  for(var si=0;si<svcs.length;si++){if(svcs[si].id===state.selectedShipping){selSvc=svcs[si];break;}}
+  if(selSvc&&weight>0){
+    var dest0b=document.getElementById('destination').value;
+    var effMax=selSvc.maxKg||999;
+    if(selSvc.maxKgByDest&&selSvc.maxKgByDest[dest0b]) effMax=selSvc.maxKgByDest[dest0b];
+    if(weight>effMax){
+      var es=state.lang==='es';
+      showError(es
+        ?'⚠️ '+selSvc.name+' no acepta paquetes de más de '+effMax+'kg para este destino. Peso introducido: '+weight+'kg.'
+        :'⚠️ '+selSvc.name+' does not accept packages over '+effMax+'kg for this destination. Weight entered: '+weight+'kg.');
+      return;
+    }
+  }
+  // ePacket — verificar disponibilidad por país de destino
+  if(selSvc&&selSvc.id==='epacket'&&selSvc.availableIn){
+    var dest0=document.getElementById('destination').value;
+    var es0=state.lang==='es';
+    if(selSvc.availableIn.indexOf(dest0)<0){
+      showError(es0
+        ?'⚠️ ePacket no está disponible para este país de destino. Solo disponible en ~44 países: USA, España, UK, Alemania, Francia, Australia, México, etc.'
+        :'⚠️ ePacket is not available for this destination. Only available in ~44 countries: USA, Spain, UK, Germany, France, Australia, Mexico, etc.');
+      return;
+    }
+  }
   var dest=document.getElementById('destination').value;
   var spr=document.getElementById('sell-price').value.replace(/[^\d.,]/g,'').replace(',','.');
   var sellPrice=parseFloat(spr)||0;
