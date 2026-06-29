@@ -5,29 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- PRIMARY SEO -->
-<title>ShipCalc — Shipping & Import Cost Calculator from Japan, USA, China & Korea</title>
-<meta name="description" content="Calculate the real cost of shipping and importing from Japan, USA, China or Korea. Includes shipping rates, customs duties, import VAT, and platform fees. Free calculator in English and Spanish.">
-<meta name="keywords" content="shipping cost calculator, Japan shipping calculator, import cost calculator, Japan Post EMS cost, DHL Japan shipping, customs duty calculator, send package from Japan, ship from Japan to USA, ship from Japan to Spain, cuanto cuesta enviar desde Japon, calculadora envios Japon, importar desde Japon">
+<title>ShipCalc — Calculadora de Importaciones desde Japón, EEUU, China y Corea</title>
+<meta name="description" content="Calcula el coste real de importar desde Japón, EEUU, China o Corea. Incluye envío, aduana, IVA y comisiones de plataforma. Calculadora gratuita en español e inglés. Resultado en 30 segundos.">
+<meta name="keywords" content="calculadora envios japon, cuanto cuesta importar desde japon, calculadora aduana españa, costo importacion mexico, shipping cost calculator, Japan Post EMS cost, DHL Japan shipping, customs duty calculator, importar desde japon españa, calculadora importacion">
 <meta name="author" content="ShipCalc">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://shipcalc.co">
+<link rel="canonical" href="https://shipcalc.live">
 
-<!-- OPEN GRAPH (Facebook, WhatsApp, LinkedIn) -->
+<!-- OPEN GRAPH (Facebook, WhatsApp, LinkedIn, Discord) -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://shipcalc.co">
-<meta property="og:title" content="ShipCalc — How much does it really cost to ship from Japan?">
-<meta property="og:description" content="Free calculator. Enter the product price, weight and destination — get the exact cost including shipping, customs, taxes and platform fees in 30 seconds.">
-<meta property="og:image" content="https://shipcalc.co/og-image.png">
-<meta property="og:locale" content="en_US">
-<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:url" content="https://shipcalc.live">
+<meta property="og:title" content="ShipCalc — ¿Cuánto cuesta realmente importar ese producto?">
+<meta property="og:description" content="Calculadora gratuita. Mete el precio, el peso y el destino — obtén el coste exacto con envío, aduana, impuestos y comisiones en 30 segundos.">
+<meta property="og:image" content="https://shipcalc.live/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ShipCalc — Calculadora de importaciones desde Japón, EEUU, China y Corea">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:site_name" content="ShipCalc">
 
 <!-- TWITTER CARD -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://shipcalc.co">
-<meta name="twitter:title" content="ShipCalc — Shipping & Import Cost Calculator">
-<meta name="twitter:description" content="Calculate the real cost of importing from Japan, USA, China or Korea. Shipping + customs + taxes. Free, instant, in English and Spanish.">
-<meta name="twitter:image" content="https://shipcalc.co/og-image.png">
+<meta name="twitter:site" content="@japangemu">
+<meta name="twitter:url" content="https://shipcalc.live">
+<meta name="twitter:title" content="ShipCalc — Calculadora de Importaciones">
+<meta name="twitter:description" content="Calcula el coste real de importar desde Japón, EEUU, China o Corea. Envío + aduana + impuestos. Gratis, instantáneo, en español e inglés.">
+<meta name="twitter:image" content="https://shipcalc.live/og-image.png">
+<meta name="twitter:image:alt" content="ShipCalc — Calculadora de importaciones">
+
+<!-- WHATSAPP / TELEGRAM extra -->
+<meta property="og:image:type" content="image/png">
 
 <!-- STRUCTURED DATA (Google Rich Results) -->
 <script type="application/ld+json">
@@ -36,7 +44,7 @@
   "@type": "WebApplication",
   "name": "ShipCalc",
   "description": "Free shipping and import cost calculator from Japan, USA, China and Korea. Calculates shipping rates, customs duties, import VAT and resale profitability.",
-  "url": "https://shipcalc.co",
+  "url": "https://shipcalc.live",
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Any",
   "offers": {
@@ -257,6 +265,13 @@ header{background:var(--white);border-bottom:1px solid var(--border);display:fle
 .share-btn{flex:1;min-width:70px;padding:9px 8px;border:1.5px solid var(--border);border-radius:8px;background:var(--surface);font-size:.72rem;font-weight:600;cursor:pointer;transition:all .15s;color:var(--text-mid);display:flex;align-items:center;justify-content:center;gap:5px;font-family:var(--sans)}
 .share-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
 .share-btn.copied{border-color:var(--green);color:var(--green);background:var(--green-bg)}
+.share-btn.wa{border-color:#25d366;color:#25d366}
+.share-btn.wa:hover{background:#25d366;color:#fff}
+.share-btn.tw{border-color:#000;color:#000}
+.share-btn.tw:hover{background:#000;color:#fff}
+.share-btn.img{border-color:#6c63ff;color:#6c63ff}
+.share-btn.img:hover{background:#6c63ff;color:#fff}
+.share-section-label{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-top:12px;margin-bottom:4px}
 
 /* MAPS */
 .maps-box{margin-top:10px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -1331,8 +1346,11 @@ function renderResults(d,hs,sellPrice,dest){
   html += '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">';
   html += '<div style="font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">'+shareLabel+'</div>';
   html += '<div class="share-row">';
-  html += '<button class="share-btn" onclick="shareWA()" id="btn-wa">&#128172; '+waLabel+'</button>';
-  html += '<button class="share-btn" onclick="shareTW()" id="btn-tw">&#120143; '+twLabel+'</button>';
+  html += '<button class="share-btn wa" onclick="shareWA()" id="btn-wa">&#128172; '+waLabel+'</button>';
+  html += '<button class="share-btn tw" onclick="shareTW()" id="btn-tw">&#120143; '+(es?'X / Twitter':'X / Twitter')+'</button>';
+  html += '</div>';
+  html += '<div class="share-row" style="margin-top:6px">';
+  html += '<button class="share-btn img" onclick="shareImage()">&#11015; '+(es?'Descargar imagen':'Download image')+'</button>';
   html += '<button class="share-btn" id="btn-copy" onclick="copyLink(this)">&#128279; '+copyLabel+'</button>';
   html += '</div>';
   html += '<button class="email-btn" onclick="toggleEmailBox()" id="btn-email">&#9993; '+emailLabel+'</button>';
@@ -1467,20 +1485,40 @@ function getShareText(){
   return lines.join('\n');
 }
 
-function getShareUrl(){return 'https://shipcalc.co';}
+function getShareUrl(){return 'https://shipcalc.live';}
 
 function shareWA(){
   var text=getShareText();
-  var msg=(state.lang==='es'?'Mira cuanto cuesta este envio (via ShipCalc):\n\n':'Check this shipping cost (via ShipCalc):\n\n')+text+'\n\n'+getShareUrl();
+  var total=document.querySelector('.r-total-val');
+  var tv=total?total.textContent.trim():'';
+  var profit=document.querySelector('.pb-val');
+  var pv=profit?profit.textContent.trim():'';
+  var es=state.lang==='es';
+  var originNames={en:{JP:'Japan',US:'USA',CN:'China',KR:'Korea'},es:{JP:'Japón',US:'EEUU',CN:'China',KR:'Corea'}};
+  var dest=document.getElementById('destination').value;
+  var c=CUSTOMS[dest];
+  var destName=c?c.name:dest;
+  var originName=(originNames[state.lang]||originNames.en)[state.origin]||state.origin;
+  var msg=es
+    ?'📦 *Calculé mi importación con ShipCalc*\n\n🌍 Ruta: '+originName+' → '+destName+'\n💸 Coste total: *'+tv+'*'+(pv?'\n📈 Margen: *'+pv+'*':'')+'\n\n🔗 Calcúlalo tú gratis: '+getShareUrl()
+    :'📦 *Calculated my import with ShipCalc*\n\n🌍 Route: '+originName+' → '+destName+'\n💸 Total cost: *'+tv+'*'+(pv?'\n📈 Margin: *'+pv+'*':'')+'\n\n🔗 Calculate yours free: '+getShareUrl();
   window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
 
 function shareTW(){
-  var dest=document.getElementById('destination').value;
-  var c=CUSTOMS[dest];
   var total=document.querySelector('.r-total-val');
   var tv=total?total.textContent.trim():'';
-  var msg=(state.lang==='es'?'Calculo mi envio desde '+state.origin+' con ShipCalc: '+tv:'Calculated my shipment from '+state.origin+' with ShipCalc: '+tv)+' '+getShareUrl()+' #ShipCalc';
+  var profit=document.querySelector('.pb-val');
+  var pv=profit?profit.textContent.trim():'';
+  var es=state.lang==='es';
+  var originNames={en:{JP:'Japan',US:'USA',CN:'China',KR:'Korea'},es:{JP:'Japón',US:'EEUU',CN:'China',KR:'Corea'}};
+  var dest=document.getElementById('destination').value;
+  var c=CUSTOMS[dest];
+  var destName=c?c.name:dest;
+  var originName=(originNames[state.lang]||originNames.en)[state.origin]||state.origin;
+  var msg=es
+    ?'Calculé mi importación '+originName+' → '+destName+' con ShipCalc 📦\n💸 Coste total: '+tv+(pv?' | Margen: '+pv:'')+'\n\nGratis en '+getShareUrl()+' #ShipCalc #Importacion'
+    :'Calculated my import '+originName+' → '+destName+' with ShipCalc 📦\n💸 Total: '+tv+(pv?' | Margin: '+pv:'')+'\n\nFree at '+getShareUrl()+' #ShipCalc';
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(msg),'_blank');
 }
 
@@ -1493,6 +1531,174 @@ function copyLink(btn){
   };
   if(navigator.clipboard){navigator.clipboard.writeText(text).then(done).catch(done);}
   else{var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);done();}
+}
+
+function shareImage(){
+  var total=document.querySelector('.r-total-val');
+  var tv=total?total.textContent.trim():'—';
+  var profit=document.querySelector('.pb-val');
+  var pv=profit?profit.textContent.trim():'';
+  var isGain=document.querySelector('.profit-box.gain');
+  var isLoss=document.querySelector('.profit-box.loss');
+  var dest=document.getElementById('destination').value;
+  var c=CUSTOMS[dest];
+  var destName=c?c.name:dest;
+  var originNames={JP:'Japan 🇯🇵',US:'USA 🇺🇸',CN:'China 🇨🇳',KR:'Korea 🇰🇷'};
+  var originName=originNames[state.origin]||state.origin;
+  var es=state.lang==='es';
+
+  // Build breakdown lines
+  var lines=[];
+  document.querySelectorAll('.r-line').forEach(function(el){
+    var l=el.querySelector('.r-label'),v=el.querySelector('.r-val');
+    if(l&&v)lines.push({label:l.textContent.trim(),value:v.textContent.trim()});
+  });
+
+  var canvas=document.createElement('canvas');
+  var W=1200,H=630;
+  canvas.width=W;canvas.height=H;
+  var ctx=canvas.getContext('2d');
+
+  // Background
+  ctx.fillStyle='#0f1117';
+  ctx.fillRect(0,0,W,H);
+
+  // Subtle grid pattern
+  ctx.strokeStyle='rgba(255,255,255,0.03)';
+  ctx.lineWidth=1;
+  for(var x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(var y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+
+  // Top gradient stripe
+  var grad=ctx.createLinearGradient(0,0,W,0);
+  grad.addColorStop(0,'#6c63ff');
+  grad.addColorStop(1,'#00d4aa');
+  ctx.fillStyle=grad;
+  ctx.fillRect(0,0,W,6);
+
+  // Card background
+  ctx.fillStyle='#1a1a2e';
+  ctx.beginPath();
+  ctx.roundRect(60,60,W-120,H-120,20);
+  ctx.fill();
+  ctx.strokeStyle='rgba(108,99,255,0.3)';
+  ctx.lineWidth=1.5;
+  ctx.stroke();
+
+  // Brand
+  ctx.fillStyle='#6c63ff';
+  ctx.beginPath();
+  ctx.roundRect(100,100,52,52,12);
+  ctx.fill();
+  ctx.fillStyle='#fff';
+  ctx.font='bold 22px monospace';
+  ctx.textAlign='center';
+  ctx.fillText('SC',126,133);
+
+  ctx.fillStyle='#ffffff';
+  ctx.font='bold 36px sans-serif';
+  ctx.textAlign='left';
+  ctx.fillText('Ship',167,138);
+  ctx.fillStyle='#6c63ff';
+  ctx.fillText('Calc',220,138);
+
+  // Route badge
+  var routeText=originName+' → '+destName+(es?' 🇪🇸':' 🌍');
+  ctx.fillStyle='rgba(108,99,255,0.2)';
+  ctx.beginPath();
+  ctx.roundRect(W-400,100,300,44,22);
+  ctx.fill();
+  ctx.strokeStyle='rgba(108,99,255,0.5)';
+  ctx.lineWidth=1;
+  ctx.stroke();
+  ctx.fillStyle='#a5b4fc';
+  ctx.font='bold 18px sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText(routeText,W-250,129);
+
+  // Divider line
+  ctx.strokeStyle='rgba(255,255,255,0.08)';
+  ctx.lineWidth=1;
+  ctx.beginPath();
+  ctx.moveTo(100,180);ctx.lineTo(W-100,180);
+  ctx.stroke();
+
+  // Breakdown lines (left column)
+  ctx.textAlign='left';
+  var startY=220;
+  var lineH=52;
+  var maxLines=Math.min(lines.length,4);
+  for(var i=0;i<maxLines;i++){
+    var item=lines[i];
+    ctx.fillStyle='rgba(255,255,255,0.06)';
+    ctx.beginPath();
+    ctx.roundRect(100,startY+i*lineH,480,40,8);
+    ctx.fill();
+    ctx.fillStyle='#8c94a6';
+    ctx.font='16px sans-serif';
+    ctx.fillText(item.label,120,startY+i*lineH+25);
+    ctx.fillStyle='#e8e8f0';
+    ctx.font='bold 16px monospace';
+    ctx.textAlign='right';
+    ctx.fillText(item.value,560,startY+i*lineH+25);
+    ctx.textAlign='left';
+  }
+
+  // Total block (right column)
+  ctx.fillStyle='rgba(108,99,255,0.15)';
+  ctx.beginPath();
+  ctx.roundRect(640,200,W-740,160,14);
+  ctx.fill();
+  ctx.strokeStyle='rgba(108,99,255,0.4)';
+  ctx.lineWidth=1.5;
+  ctx.stroke();
+  ctx.fillStyle='#8c94a6';
+  ctx.font='bold 13px sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText(es?'COSTE TOTAL REAL':'REAL TOTAL COST',640+(W-740)/2,235);
+  ctx.fillStyle='#ffffff';
+  ctx.font='bold 52px monospace';
+  ctx.fillText(tv,640+(W-740)/2,300);
+
+  // Profit block
+  if(pv){
+    var profitColor=isGain?'#00d4aa':(isLoss?'#ff4d6d':'#8c94a6');
+    var profitBg=isGain?'rgba(0,212,170,0.12)':(isLoss?'rgba(255,77,109,0.12)':'rgba(140,148,166,0.1)');
+    ctx.fillStyle=profitBg;
+    ctx.beginPath();
+    ctx.roundRect(640,380,W-740,120,14);
+    ctx.fill();
+    ctx.strokeStyle=isGain?'rgba(0,212,170,0.4)':(isLoss?'rgba(255,77,109,0.4)':'rgba(140,148,166,0.2)');
+    ctx.lineWidth=1.5;
+    ctx.stroke();
+    ctx.fillStyle='#8c94a6';
+    ctx.font='bold 13px sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText(es?(isGain?'BENEFICIO NETO':'PÉRDIDA NETA'):(isGain?'NET PROFIT':'NET LOSS'),640+(W-740)/2,415);
+    ctx.fillStyle=profitColor;
+    ctx.font='bold 42px monospace';
+    ctx.fillText(pv,640+(W-740)/2,470);
+  }
+
+  // Footer
+  ctx.fillStyle='rgba(255,255,255,0.2)';
+  ctx.beginPath();
+  ctx.moveTo(100,H-100);ctx.lineTo(W-100,H-100);
+  ctx.stroke();
+  ctx.fillStyle='#6c63ff';
+  ctx.font='bold 18px monospace';
+  ctx.textAlign='left';
+  ctx.fillText('shipcalc.live',100,H-65);
+  ctx.fillStyle='#4a4a5a';
+  ctx.font='14px sans-serif';
+  ctx.textAlign='right';
+  ctx.fillText(es?'Tipo de cambio en tiempo real · Calcúlalo gratis':'Real-time exchange rate · Calculate for free',W-100,H-65);
+
+  // Download
+  var link=document.createElement('a');
+  link.download='shipcalc-resultado.png';
+  link.href=canvas.toDataURL('image/png');
+  link.click();
 }
 
 function toggleEmailBox(){
