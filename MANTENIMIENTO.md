@@ -55,8 +55,19 @@ Tablas anuales de DHL y FedEx (Japón, Corea, China), K-Packet, EMS Premium y SF
 - DHL Corea por encima de 30 kg (la guía no aclara la fórmula).
 - Aranceles por categoría en UE, Reino Unido, Canadá, EE.UU. y Argentina (tipo general aproximado).
 
+## Páginas
+| Página | Qué es |
+|---|---|
+| `index.html` | Portada con los 4 servicios |
+| `maletas.html` | Envío de maletas entre hoteles/aeropuertos (formulario `shipcalc-maletas`) |
+| `calculadora.html` | Calculadora gratuita |
+| `envio.html` | "Lo enviamos por ti" (formulario `shipcalc-shipping`; recibe el cálculo adjunto desde la calculadora) |
+| `consigna.html` | Guardar maleta, próximamente (lista de espera `shipcalc-consigna`) |
+
+Textos de portada y servicios: `data/sitio.js` · estilos: `data/sitio.css`. Si los cambias, sube el `?v=` en las 4 páginas.
+
 ## Formularios
-Los formularios "Te enviamos el paquete" y "PRO" usan **Netlify Forms**. En Netlify: *Site configuration → Forms → Enable form detection* y vuelve a desplegar. Las solicitudes aparecen en *Forms* y se puede activar aviso por email.
+Los formularios (maletas, envío, consigna y PRO) usan **Netlify Forms**. En *Forms* verás cuántas solicitudes llegan de cada servicio: así sabrás cuál es el producto estrella. En Netlify: *Site configuration → Forms → Enable form detection* y vuelve a desplegar. Las solicitudes aparecen en *Forms* y se puede activar aviso por email.
 
 ## Pruebas antes de publicar
 Con Node instalado: `node tools/test_all.js` (debe terminar con `fails 0`).

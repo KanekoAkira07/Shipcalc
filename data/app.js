@@ -5,6 +5,7 @@
 (function(SC){
 'use strict';
 var VERIFIED='2026-10-29';
+var SITE='https://shipcalc.live/calculadora.html';
 var JP_CHANGE='2027-02-01';
 
 /* Tipos de cambio de respaldo (1 USD = X), ExchangeRate-API, 29-10-2026.
@@ -61,7 +62,9 @@ es:{
  'pro-ok':'¡Estás en la lista de PRO!','pro-ok-sub':'Te avisaremos en cuanto se lance.',
  'ssb-eyebrow':'Servicio de envío ShipCalc','ssb-title':'Te enviamos el paquete',
  'ssb-body':'¿De viaje por Japón, Corea o China? Recogemos tu paquete, revisamos el contenido contigo y gestionamos todo el envío internacional. Tú sigues disfrutando del viaje.',
- 'ssb-btn':'Solicitar envío'
+ 'ssb-btn':'Que ShipCalc lo envíe por ti →',
+ 'nav-bags':'Maletas a tu hotel','nav-calc':'Calculadora','nav-ship':'Lo enviamos por ti','nav-store':'Guardar maleta',
+ 'cta-title':'¿No quieres ir a correos? Lo enviamos por ti','cta-sub':'Revisamos el paquete contigo, lo embalamos y lo enviamos. Desde ¥1.500.','cta-btn':'Solicitar →'
 },
 en:{
  title:'How much does it really cost to ship or import from Japan, Korea or China?',
@@ -112,7 +115,9 @@ en:{
  'pro-ok':'You are on the PRO waitlist!','pro-ok-sub':'We will let you know as soon as it launches.',
  'ssb-eyebrow':'ShipCalc delivery service','ssb-title':'We ship it for you',
  'ssb-body':'Travelling in Japan, Korea or China? We pick up your package, check the contents with you and handle the whole international shipment. You keep enjoying your trip.',
- 'ssb-btn':'Request shipping'
+ 'ssb-btn':'Let ShipCalc ship it for you →',
+ 'nav-bags':'Luggage to your hotel','nav-calc':'Calculator','nav-ship':'We ship it for you','nav-store':'Luggage storage',
+ 'cta-title':'Don\'t want to go to the post office? We ship it for you','cta-sub':'We check the package with you, pack it and ship it. From ¥1,500.','cta-btn':'Request →'
 }};
 
 /* Textos dinámicos */
@@ -374,7 +379,7 @@ function refresh(){renderAlerts();renderShipList();updateRateDisplay();}
 /* ---------- Cálculo ---------- */
 function showError(m){var el=$('error-msg');el.textContent=m;el.style.display='block';el.scrollIntoView({block:'nearest',behavior:'smooth'});}
 function hideError(){$('error-msg').style.display='none';}
-function clearResults(){$('results-body').style.display='none';$('results-empty').style.display='block';$('compare-section').style.display='none';st.last=null;}
+function clearResults(){$('results-body').style.display='none';$('results-empty').style.display='block';$('compare-section').style.display='none';st.last=null;updateShipCta();}
 
 function calculate(silent){
   hideError();
@@ -387,7 +392,7 @@ function calculate(silent){
   var dest=$('dest').value,sell=parseNum($('sell').value)||0,plat=curPlatform(),date=readDate(),cat=$('cat').value,f=fxFn();
   var r=SC.calcTotal({origin:st.origin,svcRes:q,dest:dest,goodsOrig:price,fx:f,cat:cat,kg:kg,date:date,sellPrice:sell,platform:sell>0?plat:null});
   st.last={q:q,r:r,dest:dest,price:price,kg:kg,sell:sell,plat:plat,cat:cat,date:date};
-  renderResults();renderCompare();
+  renderResults();renderCompare();updateShipCta();
   if(!silent)saveHistory();
   if(!silent&&window.innerWidth<860)$('results-panel').scrollIntoView({behavior:'smooth'});
 }
@@ -430,9 +435,9 @@ function renderResults(){
   h+='<div class="src-box"><strong>'+d('sources')+':</strong> '+srcs.map(function(u){return '<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(u.replace(/^https?:\/\/(www\.)?/,'').split('/')[0])+'</a>';}).join(' · ')+
      '<br>'+d('fx')+': '+(st.ratesLive?d('fxlive')+(st.ratesDate?' ('+esc(st.ratesDate)+')':''):d('fxold'))+'. '+d('verified')+'</div>';
   /* Servicio de envío propio */
-  h+='<div class="ship-service-banner"><div class="ssb-eyebrow">'+t('ssb-eyebrow')+'</div><div class="ssb-title">'+t('ssb-title')+'</div><div class="ssb-body">'+t('ssb-body')+'</div>'+
+  if(st.origin==='JP')h+='<div class="ship-service-banner"><div class="ssb-eyebrow">'+t('ssb-eyebrow')+'</div><div class="ssb-title">'+t('ssb-title')+'</div><div class="ssb-body">'+t('ssb-body')+'</div>'+
      '<div class="ssb-prices">'+[['0'+(st.lang==='es'?',':'.')+'5–2',1500],['2–5',2500],['5–10',3500],['10–20',5000]].map(function(p){return '<span class="ssb-price-tag">'+p[0]+' kg: ¥'+fmtNum(p[1],0)+'</span>';}).join('')+'</div>'+
-     '<button class="ssb-btn" type="button" onclick="openModal(\'send-modal\')">📦 '+t('ssb-btn')+'</button></div>';
+     '<a class="big-cta" href="'+esc(envioURL())+'">📦 '+t('ssb-btn')+'</a></div>';
   /* Mapa */
   var mq=(MAPQ[s.carrier]||s.carrier);
   h+='<div class="maps-box"><div>📍 '+esc(s.carrier)+' '+d('maps')+'</div><a class="maps-link" href="https://www.google.com/maps/search/'+encodeURIComponent(mq)+'" target="_blank" rel="noopener">Google Maps ↗</a></div>';
@@ -483,6 +488,13 @@ function renderHistory(){
   }).join('');
 }
 
+/* Enlace al servicio "Lo enviamos por ti" con el cálculo adjunto */
+function envioURL(){
+  var L=st.last;if(!L)return 'envio.html';
+  var D=SC.dest[L.dest];
+  return 'envio.html?dest='+encodeURIComponent(st.lang==='es'?D.name_es:D.name_en)+'&kg='+encodeURIComponent(Math.round(L.kg*1000)/1000)+'&calc='+encodeURIComponent(summaryText());
+}
+function updateShipCta(){var a=$('ship-cta');if(!a)return;a.style.display=(st.origin==='JP')?'flex':'none';a.href=st.last?envioURL():'envio.html';}
 /* ---------- Compartir ---------- */
 function summaryText(){
   var L=st.last;if(!L)return '';
@@ -496,10 +508,10 @@ function summaryText(){
   if(L.r.profit!==null)lines.push((L.r.profit>=0?d('r_profit'):d('r_loss'))+': '+money(Math.abs(L.r.profit),D.cur));
   return lines.join('\n');
 }
-function shareWA(){var es=st.lang==='es';var msg=(es?'📦 Calculé mi envío con ShipCalc\n\n':'📦 I calculated my shipment with ShipCalc\n\n')+summaryText()+'\n\n'+(es?'Calcúlalo gratis: ':'Calculate yours free: ')+'https://shipcalc.live';window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener');}
-function shareX(){var L=st.last,D=SC.dest[L.dest],es=st.lang==='es';var msg=(es?'Calculé mi envío ':'I calculated my shipment ')+T[st.lang]['o-'+st.origin]+' → '+(es?D.name_es:D.name_en)+(es?' con ShipCalc 📦 Total: ':' with ShipCalc 📦 Total: ')+money(L.r.total,D.cur)+' https://shipcalc.live';window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(msg),'_blank','noopener');}
+function shareWA(){var es=st.lang==='es';var msg=(es?'📦 Calculé mi envío con ShipCalc\n\n':'📦 I calculated my shipment with ShipCalc\n\n')+summaryText()+'\n\n'+(es?'Calcúlalo gratis: ':'Calculate yours free: ')+SITE;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener');}
+function shareX(){var L=st.last,D=SC.dest[L.dest],es=st.lang==='es';var msg=(es?'Calculé mi envío ':'I calculated my shipment ')+T[st.lang]['o-'+st.origin]+' → '+(es?D.name_es:D.name_en)+(es?' con ShipCalc 📦 Total: ':' with ShipCalc 📦 Total: ')+money(L.r.total,D.cur)+' '+SITE;window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(msg),'_blank','noopener');}
 function copySummary(){
-  var b=$('b-copy'),txt=summaryText()+'\n\nhttps://shipcalc.live';
+  var b=$('b-copy'),txt=summaryText()+'\n\n'+SITE;
   var done=function(){b.classList.add('copied');b.textContent='✓ '+d('copied');setTimeout(function(){b.classList.remove('copied');b.textContent=d('copy');},2500);};
   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(done,function(){fallbackCopy(txt);done();});else{fallbackCopy(txt);done();}
 }
@@ -533,7 +545,7 @@ function sendEmail(){
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){msg.className='form-msg err';msg.textContent=d('emailbad');return;}
   if(!window.emailjs){msg.className='form-msg err';msg.textContent=d('emailerr');return;}
   var L=st.last,D=SC.dest[L.dest],es=st.lang==='es';
-  var params={user_email:em,origin:T[st.lang]['o-'+st.origin],destination:es?D.name_es:D.name_en,breakdown:summaryText(),lang:st.lang,site_url:'https://shipcalc.live',
+  var params={user_email:em,origin:T[st.lang]['o-'+st.origin],destination:es?D.name_es:D.name_en,breakdown:summaryText(),lang:st.lang,site_url:SITE,
     esim_text:es?'¿De viaje? Usa el código JAPANGEMU en Holafly o Saily para tener descuento en tu eSIM.':'Travelling? Use code JAPANGEMU on Holafly or Saily for an eSIM discount.'};
   try{window.emailjs.init({publicKey:EJS.key});}catch(e){try{window.emailjs.init(EJS.key);}catch(e2){}}
   window.emailjs.send(EJS.service,EJS.template,params).then(function(){msg.className='form-msg ok';msg.textContent=d('emailok');$('email-box').classList.remove('open');},function(){msg.className='form-msg err';msg.textContent=d('emailerr');});
@@ -599,7 +611,6 @@ function init(){
   $('qc-amount').addEventListener('input',quickConvert);$('qc-from').addEventListener('change',quickConvert);$('qc-to').addEventListener('change',quickConvert);
   document.querySelectorAll('.modal-overlay').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('open');});});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.modal-overlay.open').forEach(function(m){m.classList.remove('open');});});
-  wireForm('send-form','send-err','send-success',['sf-name','sf-email','sf-dest']);
   wireForm('pro-form','pro-err','pro-success',['pro-email']);
   var o=null;try{o=localStorage.getItem('sc_origin');}catch(e){}
   renderHistory();

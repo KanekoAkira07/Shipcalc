@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enviamos tus compras de Japón a tu país — ShipCalc</title>
+<meta name="description" content="¿Compraste figuras, videojuegos o cartas en Japón? Recogemos tu paquete, lo revisamos contigo, lo embalamos y lo enviamos a tu país. Calcula antes el coste gratis.">
+<link rel="canonical" href="https://shipcalc.live/envio.html">
+<meta name="theme-color" content="#0052cc">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230052cc'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='white' text-anchor='middle'%3ESC%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website"><meta property="og:url" content="https://shipcalc.live/envio.html">
+<meta property="og:title" content="¿Compraste en Japón? Lo enviamos por ti — ShipCalc">
+<meta property="og:description" content="Revisamos tu paquete contigo, lo embalamos y lo enviamos a tu país.">
+<meta property="og:image" content="https://shipcalc.live/og-image.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://shipcalc.live/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="data/sitio.css?v=20261029c">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="logo" href="index.html"><div class="logo-box">SC</div><span class="lt">Ship<span>Calc</span></span></a>
+  <nav class="nav" aria-label="Servicios">
+    <a href="maletas.html" data-i="nav-bags"></a><a href="calculadora.html" data-i="nav-calc"></a><a href="envio.html" class="on" aria-current="page" data-i="nav-ship"></a><a href="consigna.html" data-i="nav-store"></a>
+  </nav>
+  <div class="lang"><button type="button" data-lang="es">ES</button><button type="button" data-lang="en">EN</button></div>
+</div></header>
+
+<main class="wrap page">
+  <div class="grid2">
+    <div>
+      <h1 data-i="s-title"></h1>
+      <p class="lead" data-i="s-lead"></p>
+      <ol class="steps">
+        <li><div><b data-i="s-s1"></b><span data-i="s-s1d"></span></div></li>
+        <li><div><b data-i="s-s2"></b><span data-i="s-s2d"></span></div></li>
+        <li><div><b data-i="s-s3"></b><span data-i="s-s3d"></span></div></li>
+      </ol>
+      <p style="margin-bottom:24px"><a class="cta" href="calculadora.html" data-i="s-calc"></a></p>
+      <div class="box">
+        <h3 data-i="s-fee"></h3>
+        <div class="prices">
+          <div class="price"><small>0,5–2 kg</small><b>¥1.500</b></div>
+          <div class="price"><small>2–5 kg</small><b>¥2.500</b></div>
+          <div class="price"><small>5–10 kg</small><b>¥3.500</b></div>
+          <div class="price"><small>10–20 kg</small><b>¥5.000</b></div>
+        </div>
+        <p class="note" style="margin-top:10px" data-i="s-fee-n"></p>
+      </div>
+      <div class="box">
+        <h3 data-i="s-rules"></h3>
+        <ul><li data-i="s-r1"></li><li data-i="s-r2"></li><li data-i="s-r3"></li></ul>
+      </div>
+    </div>
+
+    <div>
+      <form class="form" name="shipcalc-shipping" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-ok="ship-ok">
+        <input type="hidden" name="form-name" value="shipcalc-shipping">
+        <p class="sr-only"><label>No rellenar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <input type="hidden" name="calculo" id="calc-hidden" value="">
+        <h2 data-i="s-f-title"></h2>
+        <p class="sub" data-i="s-f-sub"></p>
+        <div class="box" id="calc-box" style="display:none;padding:10px 12px;margin-bottom:12px"><p class="note"><b data-i="s-calc-att"></b></p><p class="note" id="calc-text" style="white-space:pre-line"></p></div>
+        <div class="f"><label for="s-name" data-i="f-name"></label><input id="s-name" name="name" required maxlength="120" autocomplete="name"></div>
+        <div class="f"><label for="s-email" data-i="f-email"></label><input id="s-email" type="email" name="email" required maxlength="160" autocomplete="email"></div>
+        <div class="f"><label for="s-wa" data-i="f-wa"></label><input id="s-wa" type="tel" name="whatsapp" maxlength="30" autocomplete="tel"></div>
+        <div class="f"><label for="s-dest-in" data-i="s-dest"></label><input id="s-dest-in" name="destination" required maxlength="80"></div>
+        <div class="row2">
+          <div class="f"><label for="s-city" data-i="s-city"></label><input id="s-city" name="city" maxlength="80"></div>
+          <div class="f"><label for="s-w-in" data-i="s-w"></label><input id="s-w-in" type="number" name="weight_kg" min="0.1" max="100" step="0.1" inputmode="decimal"></div>
+        </div>
+        <div class="f"><label for="s-date" data-i="s-date"></label><input id="s-date" type="date" name="date"></div>
+        <div class="f"><label for="s-notes" data-i="s-notes"></label><textarea id="s-notes" name="contents" maxlength="1500"></textarea></div>
+        <button class="submit" type="submit" data-i="f-send"></button>
+        <div class="msg"></div>
+        <p class="note" style="margin-top:10px" data-i="f-privacy"></p>
+      </form>
+      <div class="ok form" id="ship-ok"><span class="big">✓</span><h2 data-i="f-ok"></h2><p class="note" data-i="f-ok-sub"></p></div>
+    </div>
+  </div>
+</main>
+
+<footer><div class="wrap"><div data-i="footer"></div><div data-i="privacy"></div><div>© <span id="year"></span> ShipCalc · shipcalc.live</div></div></footer>
+<script src="data/sitio.js?v=20261029c"></script>
+</body>
+</html>

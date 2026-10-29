@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Envía tu maleta a tu próximo hotel en Japón — ShipCalc</title>
+<meta name="description" content="Recogemos tu maleta en tu hotel, Airbnb o aeropuerto en Japón y la llevamos a tu próximo destino (Tokio, Osaka, Kioto y más). Precio exacto antes de pagar. En español.">
+<link rel="canonical" href="https://shipcalc.live/maletas.html">
+<meta name="theme-color" content="#0052cc">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230052cc'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='white' text-anchor='middle'%3ESC%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website"><meta property="og:url" content="https://shipcalc.live/maletas.html">
+<meta property="og:title" content="Viaja por Japón sin cargar maletas — ShipCalc">
+<meta property="og:description" content="Recogemos tu maleta y la llevamos a tu próximo hotel, Airbnb o aeropuerto. En español.">
+<meta property="og:image" content="https://shipcalc.live/og-image.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://shipcalc.live/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="data/sitio.css?v=20261029c">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="logo" href="index.html"><div class="logo-box">SC</div><span class="lt">Ship<span>Calc</span></span></a>
+  <nav class="nav" aria-label="Servicios">
+    <a href="maletas.html" class="on" aria-current="page" data-i="nav-bags"></a><a href="calculadora.html" data-i="nav-calc"></a><a href="envio.html" data-i="nav-ship"></a><a href="consigna.html" data-i="nav-store"></a>
+  </nav>
+  <div class="lang"><button type="button" data-lang="es">ES</button><button type="button" data-lang="en">EN</button></div>
+</div></header>
+
+<main class="wrap page">
+  <div class="grid2">
+    <div>
+      <h1 data-i="b-title"></h1>
+      <p class="lead" data-i="b-lead"></p>
+      <ol class="steps">
+        <li><div><b data-i="b-s1"></b><span data-i="b-s1d"></span></div></li>
+        <li><div><b data-i="b-s2"></b><span data-i="b-s2d"></span></div></li>
+        <li><div><b data-i="b-s3"></b><span data-i="b-s3d"></span></div></li>
+      </ol>
+      <div class="box">
+        <h3 data-i="b-info"></h3>
+        <ul><li data-i="b-i1"></li><li data-i="b-i2"></li><li data-i="b-i3"></li></ul>
+      </div>
+      <div class="faq">
+        <h3 data-i="faq" style="margin-bottom:4px"></h3>
+        <details><summary data-i="q1"></summary><p data-i="a1"></p></details>
+        <details><summary data-i="q2"></summary><p data-i="a2"></p></details>
+        <details><summary data-i="q3"></summary><p data-i="a3"></p></details>
+      </div>
+    </div>
+
+    <div>
+      <form class="form" name="shipcalc-maletas" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-ok="bags-ok">
+        <input type="hidden" name="form-name" value="shipcalc-maletas">
+        <p class="sr-only"><label>No rellenar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <h2 data-i="b-f-title"></h2>
+        <p class="sub" data-i="b-f-sub"></p>
+        <div class="f"><label for="b-from" data-i="b-from"></label><input id="b-from" name="recogida" required maxlength="160"></div>
+        <div class="f"><label for="b-to" data-i="b-to"></label><input id="b-to" name="entrega" required maxlength="160"></div>
+        <div class="row2">
+          <div class="f"><label for="b-d1" data-i="b-date1"></label><input id="b-d1" type="date" name="dia_recogida" required></div>
+          <div class="f"><label for="b-d2" data-i="b-date2"></label><input id="b-d2" type="date" name="dia_entrega" required></div>
+        </div>
+        <div class="f"><label data-i="b-n"></label>
+          <div class="row3">
+            <div><label for="b-s" class="note" data-i="b-small"></label><input id="b-s" type="number" name="maletas_pequenas" min="0" max="20" value="0" inputmode="numeric"></div>
+            <div><label for="b-m" class="note" data-i="b-med"></label><input id="b-m" type="number" name="maletas_medianas" min="0" max="20" value="1" inputmode="numeric"></div>
+            <div><label for="b-l" class="note" data-i="b-large"></label><input id="b-l" type="number" name="maletas_grandes" min="0" max="20" value="0" inputmode="numeric"></div>
+          </div>
+          <p class="note" style="margin-top:4px" data-i="b-sizes"></p>
+        </div>
+        <div class="f"><label for="b-name" data-i="f-name"></label><input id="b-name" name="nombre" required maxlength="120" autocomplete="name"></div>
+        <div class="f"><label for="b-email" data-i="f-email"></label><input id="b-email" type="email" name="email" required maxlength="160" autocomplete="email"></div>
+        <div class="f"><label for="b-wa" data-i="f-wa"></label><input id="b-wa" type="tel" name="whatsapp" maxlength="30" autocomplete="tel"></div>
+        <div class="f"><label for="b-notes" data-i="f-notes"></label><textarea id="b-notes" name="comentarios" maxlength="1000"></textarea></div>
+        <button class="submit" type="submit" data-i="f-send"></button>
+        <div class="msg"></div>
+        <p class="note" style="margin-top:10px" data-i="f-privacy"></p>
+      </form>
+      <div class="ok form" id="bags-ok"><span class="big">✓</span><h2 data-i="f-ok"></h2><p class="note" data-i="f-ok-sub"></p></div>
+    </div>
+  </div>
+</main>
+
+<footer><div class="wrap"><div data-i="footer"></div><div data-i="privacy"></div><div>© <span id="year"></span> ShipCalc · shipcalc.live</div></div></footer>
+<script src="data/sitio.js?v=20261029c"></script>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de envíos e importación desde Japón, Corea y China — ShipCalc</title>
+<meta name="description" content="Calcula el coste real de enviar e importar desde Japón, Corea o China: tarifas oficiales de Japan Post, Korea Post, China Post, DHL, FedEx y SF, aduana, IVA y comisiones de reventa. Gratis, en español e inglés.">
+<meta name="keywords" content="calculadora envios japon, japan post ems precio, korea post ems tarifa, k-packet, china post envio, calculadora aduana españa, impuestos importacion mexico, enviar paquete desde japon, shipping cost calculator japan korea china">
+<meta name="author" content="ShipCalc">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://shipcalc.live/calculadora.html">
+<meta name="theme-color" content="#0052cc">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230052cc'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='white' text-anchor='middle'%3ESC%3C/text%3E%3C/svg%3E">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://shipcalc.live/calculadora.html">
+<meta property="og:title" content="ShipCalc — ¿Cuánto cuesta realmente importar desde Japón, Corea o China?">
+<meta property="og:description" content="Tarifas oficiales de envío + aduana + impuestos + comisión de reventa. 21 países de destino. Gratis.">
+<meta property="og:image" content="https://shipcalc.live/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ShipCalc — calculadora de envíos e importación desde Japón, Corea y China">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:site_name" content="ShipCalc">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@japangemu">
+<meta name="twitter:title" content="ShipCalc — Calculadora de envíos e importación">
+<meta name="twitter:description" content="Japón, Corea y China → 21 países. Envío oficial + aduana + impuestos. Gratis.">
+<meta name="twitter:image" content="https://shipcalc.live/og-image.png">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"ShipCalc","url":"https://shipcalc.live/",
+ "description":"Free shipping and import cost calculator from Japan, Korea and China: official postal and courier rates, customs duties, import VAT and resale profit.",
+ "applicationCategory":"FinanceApplication","operatingSystem":"Any","inLanguage":["es","en"],
+ "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js" defer></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f0f2f7;--white:#fff;--surface:#f7f8fb;--border:#dde1ea;
+  --accent:#0052cc;--accent-light:#e8f0ff;--accent-hover:#0041a8;
+  --text:#0f1117;--text-mid:#4a5263;--text-muted:#6b7385;
+  --green:#006644;--green-bg:#e3fcef;--green-border:#abf5d1;
+  --red:#bf2600;--red-bg:#ffebe6;--red-border:#ffbdad;
+  --orange:#8a4a0b;--orange-bg:#fff4e5;--orange-border:#ffd8a8;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;--sans:'IBM Plex Sans',system-ui,sans-serif;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04)
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.4}
+a{color:var(--accent)}
+button{font-family:var(--sans)}
+header{background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:56px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+.logo{font-weight:700;font-size:1.2rem;letter-spacing:-.02em;display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text)}
+.logo-box{width:30px;height:30px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.72rem;font-weight:700;font-family:var(--mono)}
+.logo-text span{color:var(--accent)}
+.header-right{display:flex;align-items:center;gap:10px}
+.lang-toggle{display:flex;border:1px solid var(--border);border-radius:7px;overflow:hidden}
+.lang-btn{padding:6px 13px;cursor:pointer;color:var(--text-muted);background:var(--white);border:none;font-family:var(--mono);font-size:.72rem;font-weight:600}
+.lang-btn.active{background:var(--accent);color:#fff}
+.pro-btn{padding:6px 12px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;border:none;border-radius:7px;font-size:.72rem;font-weight:700;cursor:pointer;font-family:var(--mono);letter-spacing:.05em}
+.page-wrap{max-width:1080px;margin:0 auto;padding:28px 20px 60px}
+.page-header{margin-bottom:18px}
+.page-title{font-size:1.55rem;font-weight:700;letter-spacing:-.025em;line-height:1.2;margin-bottom:6px}
+.page-sub{font-size:.9rem;color:var(--text-mid);font-weight:400;line-height:1.5}
+.trust-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.trust-chip{font-size:.68rem;background:var(--white);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text-mid)}
+.quick-converter{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);flex-wrap:wrap}
+.qc-label{font-size:.68rem;font-weight:600;color:var(--text-muted);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+.qc-input,.qc-select{border:1.5px solid var(--border);border-radius:7px;padding:6px 10px;font-size:.88rem;outline:none;background:var(--surface)}
+.qc-input{font-family:var(--mono);width:120px}
+.qc-input:focus,.qc-select:focus{border-color:var(--accent)}
+.qc-result{font-family:var(--mono);font-size:.9rem;font-weight:600;color:var(--accent);min-width:120px}
+.qc-rate{font-size:.65rem;color:var(--text-muted)}
+.main-grid{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:20px;align-items:start}
+.card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card-head{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.step-badge{width:20px;height:20px;background:var(--accent);color:#fff;border-radius:5px;font-size:.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}
+.step-badge.muted{background:#a9b3c6}
+.card-title{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.optional-tag{font-size:.58rem;background:var(--surface);border:1px solid var(--border);color:var(--text-muted);padding:2px 7px;border-radius:4px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.origin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.origin-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 10px;text-align:center;cursor:pointer;transition:all .15s;position:relative;user-select:none}
+.origin-card:hover{border-color:#a0b4d6}
+.origin-card.selected{border-color:var(--accent);background:var(--accent-light)}
+.origin-card:focus-visible{outline:3px solid rgba(0,82,204,.35);outline-offset:2px}
+.origin-flag{font-size:1.8rem;display:block;margin-bottom:6px;line-height:1}
+.origin-name{font-size:.85rem;font-weight:600}
+.origin-sub{font-size:.62rem;color:var(--text-muted);margin-top:2px;line-height:1.3}
+.check-mark{position:absolute;top:6px;right:6px;width:16px;height:16px;background:var(--accent);border-radius:50%;display:none;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700}
+.origin-card.selected .check-mark{display:flex}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field label{font-size:.7rem;font-weight:600;color:var(--text-mid);letter-spacing:.02em}
+.field input,.field select{background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-family:var(--sans);font-size:.9rem;color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s;width:100%;min-width:0}
+.field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,#6b7385 50%),linear-gradient(135deg,#6b7385 50%,transparent 50%);background-position:calc(100% - 16px) 52%,calc(100% - 11px) 52%;background-size:5px 5px;background-repeat:no-repeat;padding-right:28px}
+.field input:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,82,204,.1)}
+.mono{font-family:var(--mono)!important}
+.inline{display:flex;gap:6px}
+.inline input{flex:1}
+.inline select{width:auto;flex:0 0 78px}
+.hint{font-size:.66rem;color:var(--text-muted);line-height:1.4}
+.adv-toggle{font-size:.72rem;color:var(--accent);cursor:pointer;font-weight:600;margin-top:10px;display:inline-flex;gap:4px;background:none;border:none;padding:0}
+.adv{display:none;margin-top:10px;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:8px}
+.adv.open{display:block}
+.vol-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+.alert{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:.78rem;line-height:1.5}
+.alert.warn{background:var(--orange-bg);border:1px solid var(--orange-border);color:var(--orange)}
+.alert.info{background:#eef4ff;border:1px solid #c5d3ef;color:#20365e}
+.alert.err{background:var(--red-bg);border:1px solid var(--red-border);color:var(--red)}
+.ship-list{display:flex;flex-direction:column;gap:8px}
+.ship-row{border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;background:var(--white);cursor:pointer;transition:border-color .12s,background .12s}
+.ship-row:hover{border-color:#a0b4d6}
+.ship-row.selected{border-color:var(--accent);background:var(--accent-light)}
+.ship-row.disabled{cursor:default;background:var(--surface)}
+.ship-row.disabled:hover{border-color:var(--border)}
+.ship-name{font-weight:600;font-size:.86rem}
+.ship-carrier{font-size:.66rem;color:var(--text-muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.ship-meta{font-size:.7rem;color:var(--text-muted);margin-top:2px}
+.ship-cost{text-align:right;font-family:var(--mono);font-size:.84rem;font-weight:600;color:var(--accent);white-space:nowrap}
+.ship-cost small{display:block;font-size:.68rem;color:var(--text-muted);font-weight:500}
+.ship-note{grid-column:1 / -1;font-size:.68rem;color:var(--text-mid);line-height:1.4}
+.ship-note a{font-weight:600;text-decoration:none}
+.badge{display:inline-block;font-size:.56rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:4px;margin-left:4px;vertical-align:middle}
+.b-off{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.b-est{background:var(--orange-bg);color:var(--orange);border:1px solid var(--orange-border)}
+.b-no{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.b-q{background:#eef4ff;color:#20365e;border:1px solid #c5d3ef}
+.status-txt{font-size:.72rem;font-weight:600}
+.status-txt.no{color:var(--red)}
+.status-txt.q{color:var(--accent)}
+.calc-btn{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .15s;margin-top:4px}
+.calc-btn:hover{background:var(--accent-hover);box-shadow:0 4px 14px rgba(0,82,204,.3)}
+.topnav{display:flex;gap:2px;flex:1;margin:0 16px;overflow-x:auto;scrollbar-width:none}
+.topnav::-webkit-scrollbar{display:none}
+.topnav a{white-space:nowrap;text-decoration:none;color:var(--text-mid);font-size:.84rem;font-weight:500;padding:7px 10px;border-radius:8px}
+.topnav a:hover{background:var(--surface);color:var(--text)}
+.topnav a.on{background:var(--accent-light);color:var(--accent);font-weight:600}
+.ship-cta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;padding:14px 16px;border-radius:12px;background:linear-gradient(135deg,#0f1117,#1a2035);color:#fff;text-decoration:none}
+.ship-cta b{display:block;font-size:.92rem}
+.ship-cta span{font-size:.76rem;color:rgba(255,255,255,.75)}
+.ship-cta em{font-style:normal;background:#f0b429;color:#000;font-weight:700;font-size:.8rem;padding:8px 12px;border-radius:8px;white-space:nowrap}
+.big-cta{display:block;text-align:center;margin-top:12px;padding:13px;border-radius:10px;background:#f0b429;color:#000;font-weight:700;text-decoration:none;font-size:.95rem}
+.big-cta:hover{background:#e0a820}
+.history-section{margin-top:20px}
+.history-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.history-title{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.history-clear{font-size:.68rem;color:var(--red);cursor:pointer;font-weight:500;background:none;border:none}
+.history-item{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:.8rem}
+.history-item-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;gap:8px}
+.history-item-name{font-weight:600}
+.history-item-total{font-family:var(--mono);font-size:.82rem;font-weight:700;color:var(--accent)}
+.history-item-sub{color:var(--text-muted);font-size:.72rem}
+.results-panel{background:var(--white);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);position:sticky;top:72px;max-height:calc(100vh - 88px);overflow-y:auto}
+.results-header{padding:16px 20px;background:var(--text);color:#fff}
+.results-header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.results-title-label{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;opacity:.6}
+.rate-live{display:flex;align-items:center;gap:5px;font-size:.65rem;opacity:.6}
+.live-dot{width:6px;height:6px;background:#22c55e;border-radius:50%}
+.live-dot.off{background:#f59e0b}
+#rate-display{font-family:var(--mono);font-size:.78rem;opacity:.75}
+.results-empty{padding:40px 20px;text-align:center;color:var(--text-muted);font-size:.85rem;line-height:1.6}
+.results-empty .icon{font-size:2rem;margin-bottom:10px;display:block;opacity:.4}
+.results-body{padding:16px 20px;display:none}
+.r-line{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--border);font-size:.82rem;gap:8px}
+.r-line.sub{padding:3px 0 3px 12px;border-bottom:none;font-size:.74rem;color:var(--text-muted)}
+.r-line.sub .r-val{font-size:.72rem;color:var(--text-muted)}
+.r-label{color:var(--text-mid);line-height:1.3}
+.r-val{font-family:var(--mono);font-size:.78rem;font-weight:500;white-space:nowrap}
+.r-section{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin:12px 0 2px;display:flex;align-items:center;gap:6px}
+.r-divider{border:none;border-top:2px solid var(--border);margin:8px 0}
+.r-total-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;gap:8px}
+.r-total-label{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.r-total-val{font-size:1.6rem;font-weight:700;letter-spacing:-.02em;font-family:var(--mono);text-align:right}
+.r-total-alt{font-size:.72rem;color:var(--text-muted);text-align:right;font-family:var(--mono)}
+.profit-box{padding:12px 14px;border-radius:8px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.profit-box.loss{background:var(--red-bg);border:1px solid var(--red-border)}
+.profit-box.gain{background:var(--green-bg);border:1px solid var(--green-border)}
+.profit-box.neutral{background:var(--surface);border:1px solid var(--border)}
+.pb-label{font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.profit-box.loss .pb-label,.profit-box.loss .pb-val{color:var(--red)}
+.profit-box.gain .pb-label,.profit-box.gain .pb-val{color:var(--green)}
+.pb-sub{font-size:.68rem;margin-top:2px;opacity:.8}
+.pb-val{font-family:var(--mono);font-size:1.2rem;font-weight:700;white-space:nowrap}
+.note-box{margin-top:10px;padding:10px 12px;background:#f0f4fb;border:1px solid #c5d3ef;border-radius:8px;font-size:.73rem;color:var(--text-mid);line-height:1.55}
+.note-box ul{padding-left:16px}
+.note-box li{margin:3px 0}
+.note-box.warn{background:var(--orange-bg);border-color:var(--orange-border);color:var(--orange)}
+.src-box{margin-top:8px;font-size:.66rem;color:var(--text-muted);line-height:1.5;word-break:break-word}
+.src-box a{color:var(--text-muted)}
+.ship-service-banner{margin-top:14px;padding:18px 20px;background:linear-gradient(135deg,#0f1117 0%,#1a2035 100%);border-radius:12px;color:#fff}
+.ssb-eyebrow{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#f0b429;margin-bottom:6px}
+.ssb-title{font-size:1rem;font-weight:700;margin-bottom:6px}
+.ssb-body{font-size:.78rem;line-height:1.55;color:rgba(255,255,255,.75);margin-bottom:12px}
+.ssb-prices{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.ssb-price-tag{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:6px;padding:4px 8px;font-size:.66rem;color:rgba(255,255,255,.8);font-family:var(--mono)}
+.ssb-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#f0b429;color:#000;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;border:none}
+.compare-section{padding:16px 20px;border-top:1px solid var(--border);display:none}
+.compare-title{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.compare-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:.77rem;gap:8px}
+.compare-row:last-child{border-bottom:none}
+.compare-name{flex:1;color:var(--text-mid);min-width:0}
+.compare-row.best .compare-name{color:var(--green);font-weight:600}
+.best-badge{font-size:.55rem;background:var(--green);color:#fff;padding:1px 5px;border-radius:3px;font-weight:700;margin-left:4px}
+.compare-cost{font-family:var(--mono);font-size:.75rem;white-space:nowrap}
+.compare-margin{font-family:var(--mono);font-size:.72rem;white-space:nowrap;text-align:right;min-width:64px}
+.compare-margin.pos{color:var(--green)}.compare-margin.neg{color:var(--red)}.compare-margin.neu{color:var(--text-muted)}
+.email-btn{width:100%;padding:10px;background:var(--surface);border:1.5px solid var(--border);border-radius:9px;font-size:.84rem;font-weight:600;cursor:pointer;color:var(--text-mid);margin-top:8px}
+.email-inline{margin-top:8px;display:none;gap:8px;align-items:center}
+.email-inline.open{display:flex}
+.email-inline input{flex:1;border:1.5px solid var(--border);border-radius:7px;padding:8px 11px;font-size:.85rem;outline:none;min-width:0}
+.email-inline button{padding:8px 14px;background:var(--accent);color:#fff;border:none;border-radius:7px;font-size:.8rem;font-weight:600;cursor:pointer}
+.form-msg{font-size:.75rem;padding:8px 0;display:none}
+.form-msg.ok{color:var(--green)}.form-msg.err{color:var(--red)}
+.share-row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.share-btn{flex:1;min-width:90px;padding:9px 8px;border:1.5px solid var(--border);border-radius:8px;background:var(--surface);font-size:.72rem;font-weight:600;cursor:pointer;color:var(--text-mid)}
+.share-btn:hover{border-color:var(--accent);color:var(--accent)}
+.share-btn.copied{border-color:var(--green);color:var(--green);background:var(--green-bg)}
+.maps-box{margin-top:10px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.76rem}
+.maps-link{font-size:.7rem;font-weight:700;color:var(--accent);padding:5px 10px;border:1px solid var(--accent);border-radius:6px;text-decoration:none;white-space:nowrap}
+.error-msg{display:none;padding:10px 14px;background:var(--red-bg);border:1px solid var(--red-border);border-radius:8px;color:var(--red);font-size:.8rem;margin-bottom:8px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);border-radius:16px;padding:28px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-close{float:right;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted)}
+.modal-title{font-size:1.2rem;font-weight:700;margin-bottom:6px;clear:both}
+.modal-sub{font-size:.85rem;color:var(--text-mid);margin-bottom:18px;line-height:1.5}
+.modal-field{margin-bottom:12px}
+.modal-field label{display:block;font-size:.72rem;font-weight:600;color:var(--text-mid);margin-bottom:5px}
+.modal-field input,.modal-field textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-family:var(--sans);font-size:.9rem;outline:none}
+.modal-field input:focus,.modal-field textarea:focus{border-color:var(--accent)}
+.modal-field textarea{resize:vertical;min-height:80px}
+.modal-submit{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:600;cursor:pointer}
+.modal-submit:disabled{opacity:.6;cursor:wait}
+.modal-success{display:none;text-align:center;padding:20px 0}
+.modal-success .icon{font-size:2.6rem;display:block;margin-bottom:10px}
+.notice-box{background:var(--orange-bg);border:1px solid var(--orange-border);border-radius:8px;padding:12px;font-size:.78rem;color:var(--orange);margin-bottom:14px;line-height:1.5}
+.rates-box{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:.78rem;color:var(--text-mid);margin-bottom:14px;line-height:1.7}
+.privacy{font-size:.68rem;color:var(--text-muted);margin-top:10px;line-height:1.5}
+.pro-features{list-style:none;margin-bottom:18px}
+.pro-features li{padding:8px 0;border-bottom:1px solid var(--border);font-size:.85rem}
+.pro-features li::before{content:'✓ ';color:var(--green);font-weight:700}
+.pro-price{text-align:center;padding:14px;background:var(--surface);border-radius:10px;margin-bottom:14px}
+.pro-price-num{font-size:2rem;font-weight:800;font-family:var(--mono)}
+.pro-submit{background:linear-gradient(135deg,#f59e0b,#d97706)!important}
+.below{max-width:1080px;margin:0 auto;padding:0 20px 40px}
+.sep{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+.sep div{flex:1;height:1px;background:var(--border)}
+.sep span{font-size:.65rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+.aff-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.aff{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow);display:flex;gap:12px}
+.aff-title{font-size:.78rem;font-weight:700;margin-bottom:4px}
+.aff-text{font-size:.74rem;color:var(--text-mid);line-height:1.5;margin-bottom:8px}
+.aff a{font-size:.72rem;font-weight:700;color:var(--accent);text-decoration:none;padding:5px 10px;border:1px solid var(--accent);border-radius:6px;display:inline-block}
+.seo{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:26px 30px;box-shadow:var(--shadow);margin-top:20px}
+.seo h2{font-size:1rem;font-weight:700;margin-bottom:10px}
+.seo h3{font-size:.86rem;font-weight:700;margin:14px 0 6px}
+.seo p,.seo li{font-size:.84rem;color:var(--text-mid);line-height:1.7}
+.seo ul{padding-left:18px}
+footer{text-align:center;padding:20px;color:var(--text-muted);font-size:.72rem;border-top:1px solid var(--border);background:var(--white);line-height:1.7}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(max-width:860px){
+  header{flex-wrap:wrap;height:auto;padding:8px 14px;gap:6px}
+  .topnav{order:3;flex-basis:100%;margin:0;flex-wrap:wrap;gap:4px}
+  .topnav a{font-size:.78rem;padding:6px 9px;background:var(--surface)}
+  .main-grid{grid-template-columns:1fr}
+  .results-panel{position:static;max-height:none}
+  header{padding:0 14px}
+  .page-wrap{padding:18px 14px 40px}
+  .card{padding:18px 16px}
+  .aff-grid{grid-template-columns:1fr}
+  .seo{padding:20px}
+}
+@media(max-width:520px){
+  .form-row,.vol-row{grid-template-columns:1fr}
+  .origin-grid{gap:6px}
+  .origin-card{padding:10px 4px}
+  .origin-sub{display:none}
+  .page-title{font-size:1.3rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="index.html" aria-label="ShipCalc"><div class="logo-box">SC</div><div class="logo-text">Ship<span>Calc</span></div></a>
+  <nav class="topnav" aria-label="Servicios">
+    <a href="maletas.html" data-i="nav-bags"></a><a href="calculadora.html" class="on" aria-current="page" data-i="nav-calc"></a><a href="envio.html" data-i="nav-ship"></a><a href="consigna.html" data-i="nav-store"></a>
+  </nav>
+  <div class="header-right">
+    <button class="pro-btn" type="button" onclick="openModal('pro-modal')">&#9733; PRO</button>
+    <div class="lang-toggle" role="group" aria-label="Idioma / Language">
+      <button class="lang-btn" type="button" data-lang="es" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" type="button" data-lang="en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<main class="page-wrap">
+  <div class="page-header">
+    <h1 class="page-title" data-i="title"></h1>
+    <p class="page-sub" data-i="subtitle"></p>
+    <div class="trust-row">
+      <span class="trust-chip" data-i="chip1"></span>
+      <span class="trust-chip" data-i="chip2"></span>
+      <span class="trust-chip" data-i="chip3"></span>
+    </div>
+  </div>
+
+  <div class="quick-converter">
+    <span class="qc-label" data-i="qc-label"></span>
+    <input type="number" class="qc-input" id="qc-amount" placeholder="10000" min="0" inputmode="decimal" aria-label="Amount">
+    <select class="qc-select" id="qc-from" aria-label="From">
+      <option value="JPY">JPY 🇯🇵</option><option value="KRW">KRW 🇰🇷</option><option value="CNY">CNY 🇨🇳</option>
+    </select>
+    <span aria-hidden="true">→</span>
+    <select class="qc-select" id="qc-to" aria-label="To">
+      <option>EUR</option><option>USD</option><option>GBP</option><option>MXN</option><option>ARS</option><option>COP</option><option>CLP</option><option>PEN</option><option>UYU</option><option>PYG</option><option>BOB</option><option>DOP</option><option>GTQ</option><option>CRC</option><option>CAD</option><option>AUD</option>
+    </select>
+    <div><div class="qc-result" id="qc-result">—</div><div class="qc-rate" id="qc-rate"></div></div>
+  </div>
+
+  <div class="main-grid">
+    <div class="left-col">
+      <section class="card" aria-labelledby="h-step1">
+        <div class="card-head"><div class="step-badge">1</div><h2 class="card-title" id="h-step1" data-i="step1"></h2></div>
+        <div class="origin-grid" role="radiogroup">
+          <div class="origin-card" role="radio" tabindex="0" data-origin="JP"><div class="check-mark">✓</div><span class="origin-flag" aria-hidden="true">🇯🇵</span><div class="origin-name" data-i="o-JP"></div><div class="origin-sub" data-i="o-JP-sub"></div></div>
+          <div class="origin-card" role="radio" tabindex="0" data-origin="KR"><div class="check-mark">✓</div><span class="origin-flag" aria-hidden="true">🇰🇷</span><div class="origin-name" data-i="o-KR"></div><div class="origin-sub" data-i="o-KR-sub"></div></div>
+          <div class="origin-card" role="radio" tabindex="0" data-origin="CN"><div class="check-mark">✓</div><span class="origin-flag" aria-hidden="true">🇨🇳</span><div class="origin-name" data-i="o-CN"></div><div class="origin-sub" data-i="o-CN-sub"></div></div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="h-step2">
+        <div class="card-head"><div class="step-badge">2</div><h2 class="card-title" id="h-step2" data-i="step2"></h2></div>
+        <div class="form-row" style="margin-bottom:12px">
+          <div class="field">
+            <label for="price" id="price-label"></label>
+            <input type="text" id="price" class="mono" inputmode="decimal" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="weight" data-i="weight-label"></label>
+            <div class="inline">
+              <input type="text" id="weight" class="mono" inputmode="decimal" autocomplete="off" placeholder="500">
+              <select id="wunit" aria-label="Unit"><option value="g">g</option><option value="kg">kg</option></select>
+            </div>
+            <div class="hint" data-i="weight-hint"></div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="dest" data-i="dest-label"></label>
+            <select id="dest"></select>
+          </div>
+          <div class="field">
+            <label for="cat" data-i="cat-label"></label>
+            <select id="cat"></select>
+          </div>
+        </div>
+        <button type="button" class="adv-toggle" id="adv-toggle" aria-expanded="false" aria-controls="adv"></button>
+        <div class="adv" id="adv">
+          <div class="hint" style="margin-bottom:8px" data-i="vol-note"></div>
+          <div class="vol-row">
+            <div class="field"><label for="dl" data-i="vol-l"></label><input type="number" id="dl" class="mono" min="0" inputmode="decimal"></div>
+            <div class="field"><label for="dw" data-i="vol-w"></label><input type="number" id="dw" class="mono" min="0" inputmode="decimal"></div>
+            <div class="field"><label for="dh" data-i="vol-h"></label><input type="number" id="dh" class="mono" min="0" inputmode="decimal"></div>
+          </div>
+          <div class="field" style="max-width:240px">
+            <label for="sdate" data-i="date-label"></label>
+            <input type="date" id="sdate" class="mono">
+          </div>
+          <div class="hint" style="margin-top:6px" data-i="date-hint"></div>
+        </div>
+        <div id="alerts"></div>
+      </section>
+
+      <section class="card" aria-labelledby="h-step3">
+        <div class="card-head"><div class="step-badge">3</div><h2 class="card-title" id="h-step3" data-i="step3"></h2></div>
+        <div class="hint" style="margin-bottom:10px" data-i="ship-hint"></div>
+        <div class="ship-list" id="ship-list"></div>
+        <a class="ship-cta" id="ship-cta" href="envio.html"><div><b data-i="cta-title"></b><span data-i="cta-sub"></span></div><em data-i="cta-btn"></em></a>
+      </section>
+
+      <section class="card" aria-labelledby="h-step4">
+        <div class="card-head"><div class="step-badge muted">4</div><h2 class="card-title" id="h-step4" data-i="step4"></h2><span class="optional-tag" data-i="optional"></span></div>
+        <div class="form-row">
+          <div class="field">
+            <label for="sell" id="sell-label"></label>
+            <input type="text" id="sell" class="mono" inputmode="decimal" autocomplete="off" placeholder="0">
+          </div>
+          <div class="field">
+            <label for="platform" data-i="platform-label"></label>
+            <select id="platform"></select>
+            <div class="hint" id="platform-note"></div>
+          </div>
+        </div>
+      </section>
+
+      <div id="error-msg" class="error-msg" role="alert"></div>
+      <button class="calc-btn" type="button" id="calc-btn" data-i="calc-btn"></button>
+
+      <div class="history-section" id="history-section" style="display:none">
+        <div class="history-header"><span class="history-title" data-i="history"></span><button class="history-clear" type="button" id="history-clear" data-i="history-clear"></button></div>
+        <div id="history-list"></div>
+      </div>
+    </div>
+
+    <aside class="right-col">
+      <div class="results-panel" id="results-panel" aria-live="polite">
+        <div class="results-header">
+          <div class="results-header-top">
+            <div class="results-title-label" data-i="breakdown"></div>
+            <div class="rate-live"><div class="live-dot" id="live-dot"></div><span id="live-txt"></span></div>
+          </div>
+          <div id="rate-display">—</div>
+        </div>
+        <div class="results-empty" id="results-empty"><span class="icon" aria-hidden="true">📦</span><span data-i="empty-msg"></span></div>
+        <div class="results-body" id="results-body"></div>
+        <div class="compare-section" id="compare-section">
+          <div class="compare-title" data-i="compare"></div>
+          <div id="compare-list"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<div class="below">
+  <div class="sep"><div></div><span>ShipCalc</span><div></div></div>
+  <div style="font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px" data-i="travel-title"></div>
+  <div class="aff-grid">
+    <div class="aff"><div style="font-size:1.4rem" aria-hidden="true">📱</div><div><div class="aff-title">Holafly eSIM</div><div class="aff-text" data-i="aff-holafly" data-html="1"></div><a href="https://holafly.sjv.io/c/6760093/2006335/24764" target="_blank" rel="noopener sponsored" data-i="aff-btn"></a></div></div>
+    <div class="aff"><div style="font-size:1.4rem" aria-hidden="true">🌐</div><div><div class="aff-title">Saily eSIM</div><div class="aff-text" data-i="aff-saily" data-html="1"></div><a href="https://saily.com/japangemu" target="_blank" rel="noopener sponsored" data-i="aff-btn"></a></div></div>
+  </div>
+
+  <article class="seo">
+    <h2 data-i="seo-title"></h2>
+    <p data-i="seo-p1"></p>
+    <h3 data-i="seo-h-ship"></h3>
+    <ul>
+      <li data-i="seo-jp"></li>
+      <li data-i="seo-kr"></li>
+      <li data-i="seo-cn"></li>
+    </ul>
+    <h3 data-i="seo-h-tax"></h3>
+    <p data-i="seo-p2"></p>
+    <h3 data-i="seo-h-upd"></h3>
+    <p data-i="seo-p3"></p>
+  </article>
+</div>
+
+<footer>
+  <div data-i="footer"></div>
+  <div data-i="privacy"></div>
+  <div>© <span id="year"></span> ShipCalc · shipcalc.live</div>
+</footer>
+
+<!-- PRO MODAL (Netlify Forms) -->
+<div class="modal-overlay" id="pro-modal" role="dialog" aria-modal="true" aria-labelledby="pro-title">
+  <div class="modal">
+    <button class="modal-close" type="button" onclick="closeModal('pro-modal')" aria-label="Cerrar">✕</button>
+    <div class="modal-title" id="pro-title">ShipCalc PRO</div>
+    <div class="modal-sub" data-i="pro-sub"></div>
+    <ul class="pro-features"><li data-i="pro-f1"></li><li data-i="pro-f2"></li><li data-i="pro-f3"></li><li data-i="pro-f4"></li></ul>
+    <div class="pro-price"><div class="pro-price-num">$5<span style="font-size:1rem;font-weight:400" data-i="pro-mo"></span></div><div class="hint" data-i="pro-price-sub"></div></div>
+    <form name="shipcalc-pro" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="pro-form">
+      <input type="hidden" name="form-name" value="shipcalc-pro">
+      <p class="sr-only"><label>No rellenar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <div class="modal-field"><label for="pro-email" data-i="pro-email-label"></label><input type="email" id="pro-email" name="email" required maxlength="160" autocomplete="email"></div>
+      <button class="modal-submit pro-submit" type="submit" data-i="pro-submit"></button>
+      <div class="form-msg err" id="pro-err"></div>
+      <div class="privacy" data-i="form-privacy"></div>
+    </form>
+    <div class="modal-success" id="pro-success"><span class="icon">★</span><strong data-i="pro-ok"></strong><p style="font-size:.85rem;color:var(--text-mid);margin-top:8px" data-i="pro-ok-sub"></p></div>
+  </div>
+</div>
+
+<script>window.SC={origins:{},fuel:{},demand:{}};</script>
+<script src="data/japon.js?v=20261029"></script>
+<script src="data/corea.js?v=20261029"></script>
+<script src="data/china.js?v=20261029"></script>
+<script src="data/destinos.js?v=20261029"></script>
+<script src="data/motor.js?v=20261029"></script>
+<script src="data/app.js?v=20261029b"></script>
+</body>
+</html>

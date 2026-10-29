@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guarda tu maleta en Tokio (próximamente) — ShipCalc</title>
+<meta name="description" content="Muy pronto: consigna de maletas en Tokio por horas o días. Apúntate y te avisamos primero.">
+<link rel="canonical" href="https://shipcalc.live/consigna.html">
+<meta name="theme-color" content="#0052cc">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230052cc'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='white' text-anchor='middle'%3ESC%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website"><meta property="og:url" content="https://shipcalc.live/consigna.html">
+<meta property="og:title" content="Guarda tu maleta en Tokio — ShipCalc">
+<meta property="og:image" content="https://shipcalc.live/og-image.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://shipcalc.live/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="data/sitio.css?v=20261029c">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="logo" href="index.html"><div class="logo-box">SC</div><span class="lt">Ship<span>Calc</span></span></a>
+  <nav class="nav" aria-label="Servicios">
+    <a href="maletas.html" data-i="nav-bags"></a><a href="calculadora.html" data-i="nav-calc"></a><a href="envio.html" data-i="nav-ship"></a><a href="consigna.html" class="on" aria-current="page" data-i="nav-store"></a>
+  </nav>
+  <div class="lang"><button type="button" data-lang="es">ES</button><button type="button" data-lang="en">EN</button></div>
+</div></header>
+
+<main class="wrap page">
+  <div class="grid2">
+    <div>
+      <p style="margin-bottom:10px"><span class="tag soon" style="position:static" data-i="soon"></span></p>
+      <h1 data-i="st-title"></h1>
+      <p class="lead" data-i="st-lead"></p>
+      <div class="box">
+        <h3 data-i="st-ex"></h3>
+        <ul><li data-i="st-e1"></li><li data-i="st-e2"></li></ul>
+      </div>
+    </div>
+    <div>
+      <form class="form" name="shipcalc-consigna" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-ok="store-ok">
+        <input type="hidden" name="form-name" value="shipcalc-consigna">
+        <p class="sr-only"><label>No rellenar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <h2 data-i="st-f-title"></h2>
+        <p class="sub" data-i="st-f-sub"></p>
+        <div class="f"><label for="st-email" data-i="f-email"></label><input id="st-email" type="email" name="email" required maxlength="160" autocomplete="email"></div>
+        <div class="f"><label for="st-city" data-i="st-city"></label><input id="st-city" name="ciudad" maxlength="80"></div>
+        <div class="f"><label for="st-when" data-i="st-when"></label><input id="st-when" type="month" name="fecha_viaje"></div>
+        <button class="submit" type="submit" data-i="f-wait"></button>
+        <div class="msg"></div>
+        <p class="note" style="margin-top:10px" data-i="f-privacy"></p>
+      </form>
+      <div class="ok form" id="store-ok"><span class="big">✓</span><h2 data-i="f-ok"></h2><p class="note" data-i="f-ok-sub"></p></div>
+    </div>
+  </div>
+</main>
+
+<footer><div class="wrap"><div data-i="footer"></div><div data-i="privacy"></div><div>© <span id="year"></span> ShipCalc · shipcalc.live</div></div></footer>
+<script src="data/sitio.js?v=20261029c"></script>
+</body>
+</html>
