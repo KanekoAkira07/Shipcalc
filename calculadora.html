@@ -8,6 +8,7 @@
 <meta name="keywords" content="calculadora envios japon, japan post ems precio, korea post ems tarifa, k-packet, china post envio, calculadora aduana españa, impuestos importacion mexico, enviar paquete desde japon, shipping cost calculator japan korea china">
 <meta name="author" content="ShipCalc">
 <meta name="robots" content="index, follow">
+<link rel="apple-touch-icon" href="logo.png">
 <link rel="canonical" href="https://shipcalc.live/calculadora.html">
 <meta name="theme-color" content="#0052cc">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230052cc'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='white' text-anchor='middle'%3ESC%3C/text%3E%3C/svg%3E">
@@ -62,7 +63,7 @@ header{background:var(--white);border-bottom:1px solid var(--border);display:fle
 .logo-text span{color:var(--accent)}
 .header-right{display:flex;align-items:center;gap:10px}
 .lang-toggle{display:flex;border:1px solid var(--border);border-radius:7px;overflow:hidden}
-.lang-btn{padding:6px 13px;cursor:pointer;color:var(--text-muted);background:var(--white);border:none;font-family:var(--mono);font-size:.72rem;font-weight:600}
+.lang-btn{display:inline-block;text-decoration:none;padding:6px 13px;cursor:pointer;color:var(--text-muted);background:var(--white);border:none;font-family:var(--mono);font-size:.72rem;font-weight:600}
 .lang-btn.active{background:var(--accent);color:#fff}
 .pro-btn{padding:6px 12px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;border:none;border-radius:7px;font-size:.72rem;font-weight:700;cursor:pointer;font-family:var(--mono);letter-spacing:.05em}
 .page-wrap{max-width:1080px;margin:0 auto;padding:28px 20px 60px}
@@ -263,6 +264,11 @@ header{background:var(--white);border-bottom:1px solid var(--border);display:fle
 .seo h3{font-size:.86rem;font-weight:700;margin:14px 0 6px}
 .seo p,.seo li{font-size:.84rem;color:var(--text-mid);line-height:1.7}
 .seo ul{padding-left:18px}
+.seo details{border-bottom:1px solid var(--border);padding:9px 0}
+.seo summary{cursor:pointer;font-weight:600;font-size:.86rem}
+.seo details p{margin-top:6px}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 14px;margin-bottom:6px}
+.flinks a{color:var(--text-mid);text-decoration:none}.flinks a:hover{text-decoration:underline}
 footer{text-align:center;padding:20px;color:var(--text-muted);font-size:.72rem;border-top:1px solid var(--border);background:var(--white);line-height:1.7}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media(max-width:860px){
@@ -296,8 +302,8 @@ footer{text-align:center;padding:20px;color:var(--text-muted);font-size:.72rem;b
   <div class="header-right">
     <button class="pro-btn" type="button" onclick="openModal('pro-modal')">&#9733; PRO</button>
     <div class="lang-toggle" role="group" aria-label="Idioma / Language">
-      <button class="lang-btn" type="button" data-lang="es" onclick="setLang('es')">ES</button>
-      <button class="lang-btn" type="button" data-lang="en" onclick="setLang('en')">EN</button>
+      <a class="lang-btn" href="calculadora.html" data-lang="es" hreflang="es">ES</a>
+      <a class="lang-btn" href="en/calculadora.html" data-lang="en" hreflang="en">EN</a>
     </div>
   </div>
 </header>
@@ -452,13 +458,18 @@ footer{text-align:center;padding:20px;color:var(--text-muted);font-size:.72rem;b
     <p data-i="seo-p2"></p>
     <h3 data-i="seo-h-upd"></h3>
     <p data-i="seo-p3"></p>
+    <h3 data-i="cf-title"></h3>
+    <details><summary data-i="cf-q1"></summary><p data-i="cf-a1"></p></details>
+    <details><summary data-i="cf-q2"></summary><p data-i="cf-a2"></p></details>
+    <details><summary data-i="cf-q3"></summary><p data-i="cf-a3"></p></details>
   </article>
 </div>
 
 <footer>
+  <nav class="flinks" aria-label="ShipCalc"><a href="maletas.html" data-i="nav-bags"></a><a href="calculadora.html" data-i="nav-calc"></a><a href="envio.html" data-i="nav-ship"></a><a href="consigna.html" data-i="nav-store"></a><a href="guia-enviar-maletas-japon.html" data-i="fl-guide"></a></nav>
   <div data-i="footer"></div>
   <div data-i="privacy"></div>
-  <div>© <span id="year"></span> ShipCalc · shipcalc.live</div>
+  <div>© <span id="year">2026</span> ShipCalc · shipcalc.live</div>
 </footer>
 
 <!-- PRO MODAL (Netlify Forms) -->
@@ -482,11 +493,11 @@ footer{text-align:center;padding:20px;color:var(--text-muted);font-size:.72rem;b
 </div>
 
 <script>window.SC={origins:{},fuel:{},demand:{}};</script>
-<script src="data/japon.js?v=20261029"></script>
-<script src="data/corea.js?v=20261029"></script>
-<script src="data/china.js?v=20261029"></script>
-<script src="data/destinos.js?v=20261029"></script>
-<script src="data/motor.js?v=20261029"></script>
-<script src="data/app.js?v=20261029b"></script>
+<script src="data/japon.js"></script>
+<script src="data/corea.js"></script>
+<script src="data/china.js"></script>
+<script src="data/destinos.js"></script>
+<script src="data/motor.js"></script>
+<script src="data/app.js"></script>
 </body>
 </html>

@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guarda tu maleta en Tokio (próximamente) — ShipCalc</title>
 <meta name="description" content="Muy pronto: consigna de maletas en Tokio por horas o días. Apúntate y te avisamos primero.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="apple-touch-icon" href="logo.png">
 <link rel="canonical" href="https://shipcalc.live/consigna.html">
 <meta name="theme-color" content="#0052cc">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230052cc'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='white' text-anchor='middle'%3ESC%3C/text%3E%3C/svg%3E">
@@ -14,15 +16,15 @@
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://shipcalc.live/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="data/sitio.css?v=20261029c">
+<link rel="stylesheet" href="data/sitio.css">
 </head>
 <body>
 <header class="top"><div class="wrap">
   <a class="logo" href="index.html"><div class="logo-box">SC</div><span class="lt">Ship<span>Calc</span></span></a>
-  <nav class="nav" aria-label="Servicios">
+  <nav class="nav" aria-label="Servicios" data-ia="nav-aria">
     <a href="maletas.html" data-i="nav-bags"></a><a href="calculadora.html" data-i="nav-calc"></a><a href="envio.html" data-i="nav-ship"></a><a href="consigna.html" class="on" aria-current="page" data-i="nav-store"></a>
   </nav>
-  <div class="lang"><button type="button" data-lang="es">ES</button><button type="button" data-lang="en">EN</button></div>
+  <div class="lang"><a href="consigna.html" data-lang="es" hreflang="es">ES</a><a href="en/consigna.html" data-lang="en" hreflang="en">EN</a></div>
 </div></header>
 
 <main class="wrap page">
@@ -35,6 +37,7 @@
         <h3 data-i="st-ex"></h3>
         <ul><li data-i="st-e1"></li><li data-i="st-e2"></li></ul>
       </div>
+      <p><a class="cta ghost" href="maletas.html" data-i="st-alt"></a></p>
     </div>
     <div>
       <form class="form" name="shipcalc-consigna" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-ok="store-ok">
@@ -54,7 +57,10 @@
   </div>
 </main>
 
-<footer><div class="wrap"><div data-i="footer"></div><div data-i="privacy"></div><div>© <span id="year"></span> ShipCalc · shipcalc.live</div></div></footer>
-<script src="data/sitio.js?v=20261029c"></script>
+<footer><div class="wrap">
+  <nav class="flinks" aria-label="ShipCalc"><a href="maletas.html" data-i="nav-bags"></a><a href="calculadora.html" data-i="nav-calc"></a><a href="envio.html" data-i="nav-ship"></a><a href="consigna.html" data-i="nav-store"></a><a href="guia-enviar-maletas-japon.html" data-i="fl-guide"></a></nav>
+  <div data-i="footer"></div><div data-i="privacy"></div><div>© <span id="year">2026</span> ShipCalc · shipcalc.live</div>
+</div></footer>
+<script src="data/sitio.js"></script>
 </body>
 </html>

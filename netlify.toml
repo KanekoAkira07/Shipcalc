@@ -1,6 +1,16 @@
-# ShipCalc · configuración de Netlify (sitio estático, sin build)
+# ShipCalc · configuración de Netlify
+# En cada despliegue Netlify ejecuta tools/build.js, que genera la carpeta dist/
+# (páginas en español e inglés, sitemap, robots y datos para Google con el dominio del sitio).
 [build]
-  publish = "."
+  command = "node tools/build.js"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Tras cada despliegue en producción avisa a Bing/Yandex (IndexNow) de las páginas que han cambiado.
+[[plugins]]
+  package = "./plugins/indexnow"
 
 [[headers]]
   for = "/*"
@@ -11,17 +21,13 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.exchangerate-api.com https://api.emailjs.com; form-action 'self'; base-uri 'self'; frame-ancestors 'none'"
 
-[[headers]]
-  for = "/"
-  [headers.values]
-    Cache-Control = "no-cache"
-
-[[headers]]
-  for = "/index.html"
-  [headers.values]
-    Cache-Control = "no-cache"
-
+# CSS y JS llevan ?v=<huella> automática: se pueden guardar en caché mucho tiempo.
 [[headers]]
   for = "/data/*"
   [headers.values]
-    Cache-Control = "public, max-age=3600"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

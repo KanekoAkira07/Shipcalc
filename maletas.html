@@ -3,85 +3,256 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Envía tu maleta a tu próximo hotel en Japón — ShipCalc</title>
-<meta name="description" content="Recogemos tu maleta en tu hotel, Airbnb o aeropuerto en Japón y la llevamos a tu próximo destino (Tokio, Osaka, Kioto y más). Precio exacto antes de pagar. En español.">
+<title>Envío de maletas en Japón de hotel a hotel desde ¥2.090 — ShipCalc</title>
+<meta name="description" content="Envía tu maleta entre hoteles, casas y aeropuertos de Japón: Tokio, Kioto, Osaka y más. Precio al instante desde ¥2.090, normalmente al día siguiente. Reserva en español.">
 <link rel="canonical" href="https://shipcalc.live/maletas.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#0052cc">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230052cc'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='white' text-anchor='middle'%3ESC%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="logo.png">
 <meta property="og:type" content="website"><meta property="og:url" content="https://shipcalc.live/maletas.html">
 <meta property="og:title" content="Viaja por Japón sin cargar maletas — ShipCalc">
-<meta property="og:description" content="Recogemos tu maleta y la llevamos a tu próximo hotel, Airbnb o aeropuerto. En español.">
+<meta property="og:description" content="De hotel a hotel o al aeropuerto. Desde ¥2.090 por maleta, normalmente al día siguiente.">
 <meta property="og:image" content="https://shipcalc.live/og-image.png">
+<meta property="og:site_name" content="ShipCalc">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://shipcalc.live/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="data/sitio.css?v=20261029c">
+<link rel="stylesheet" href="data/sitio.css">
 </head>
 <body>
 <header class="top"><div class="wrap">
   <a class="logo" href="index.html"><div class="logo-box">SC</div><span class="lt">Ship<span>Calc</span></span></a>
-  <nav class="nav" aria-label="Servicios">
+  <nav class="nav" aria-label="Servicios" data-ia="nav-aria">
     <a href="maletas.html" class="on" aria-current="page" data-i="nav-bags"></a><a href="calculadora.html" data-i="nav-calc"></a><a href="envio.html" data-i="nav-ship"></a><a href="consigna.html" data-i="nav-store"></a>
   </nav>
-  <div class="lang"><button type="button" data-lang="es">ES</button><button type="button" data-lang="en">EN</button></div>
+  <div class="lang"><a href="maletas.html" data-lang="es" hreflang="es">ES</a><a href="en/maletas.html" data-lang="en" hreflang="en">EN</a></div>
 </div></header>
 
-<main class="wrap page">
-  <div class="grid2">
+<main>
+  <section class="bk-hero"><div class="wrap">
     <div>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html" data-i="home"></a><span aria-hidden="true">›</span><span data-i="nav-bags"></span></nav>
+      <span class="chip" data-i="m-from-p"></span>
       <h1 data-i="b-title"></h1>
       <p class="lead" data-i="b-lead"></p>
-      <ol class="steps">
-        <li><div><b data-i="b-s1"></b><span data-i="b-s1d"></span></div></li>
-        <li><div><b data-i="b-s2"></b><span data-i="b-s2d"></span></div></li>
-        <li><div><b data-i="b-s3"></b><span data-i="b-s3d"></span></div></li>
-      </ol>
-      <div class="box">
-        <h3 data-i="b-info"></h3>
-        <ul><li data-i="b-i1"></li><li data-i="b-i2"></li><li data-i="b-i3"></li></ul>
-      </div>
-      <div class="faq">
-        <h3 data-i="faq" style="margin-bottom:4px"></h3>
-        <details><summary data-i="q1"></summary><p data-i="a1"></p></details>
-        <details><summary data-i="q2"></summary><p data-i="a2"></p></details>
-        <details><summary data-i="q3"></summary><p data-i="a3"></p></details>
-      </div>
+      <ul class="badges"><li data-i="m-t1"></li><li data-i="m-t2"></li><li data-i="m-t3"></li><li data-i="m-t4"></li></ul>
+      <div class="hero-links"><a class="cta ghost" href="#precios" data-i="m-prices"></a><a class="cta ghost" href="#faq" data-i="faq"></a></div>
     </div>
 
-    <div>
-      <form class="form" name="shipcalc-maletas" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-ok="bags-ok">
+    <div class="bk-card" id="reserva">
+      <h2 data-i="m-w-title"></h2>
+      <ol class="bk-steps"><li class="on" data-i="m-st1"></li><li data-i="m-st2"></li><li data-i="m-st3"></li><li data-i="m-st4"></li></ol>
+      <form id="bk-form" name="shipcalc-maletas" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-own novalidate>
         <input type="hidden" name="form-name" value="shipcalc-maletas">
         <p class="sr-only"><label>No rellenar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-        <h2 data-i="b-f-title"></h2>
-        <p class="sub" data-i="b-f-sub"></p>
-        <div class="f"><label for="b-from" data-i="b-from"></label><input id="b-from" name="recogida" required maxlength="160"></div>
-        <div class="f"><label for="b-to" data-i="b-to"></label><input id="b-to" name="entrega" required maxlength="160"></div>
-        <div class="row2">
-          <div class="f"><label for="b-d1" data-i="b-date1"></label><input id="b-d1" type="date" name="dia_recogida" required></div>
-          <div class="f"><label for="b-d2" data-i="b-date2"></label><input id="b-d2" type="date" name="dia_entrega" required></div>
-        </div>
-        <div class="f"><label data-i="b-n"></label>
-          <div class="row3">
-            <div><label for="b-s" class="note" data-i="b-small"></label><input id="b-s" type="number" name="maletas_pequenas" min="0" max="20" value="0" inputmode="numeric"></div>
-            <div><label for="b-m" class="note" data-i="b-med"></label><input id="b-m" type="number" name="maletas_medianas" min="0" max="20" value="1" inputmode="numeric"></div>
-            <div><label for="b-l" class="note" data-i="b-large"></label><input id="b-l" type="number" name="maletas_grandes" min="0" max="20" value="0" inputmode="numeric"></div>
+        <input type="hidden" name="reserva_id" id="bk-h-id">
+        <input type="hidden" name="total_estimado_jpy" id="bk-h-total">
+        <input type="hidden" name="recogida_lugar_nombre" id="bk-h-from">
+        <input type="hidden" name="entrega_lugar_nombre" id="bk-h-to">
+        <input type="hidden" name="resumen" id="bk-h-sum">
+        <input type="hidden" name="idioma" id="bk-h-lang">
+        <input type="hidden" name="contenido" id="bk-h-cont">
+        <input type="hidden" name="etiqueta_yamato" id="bk-h-jp">
+
+        <div id="bk1">
+          <div class="bk-f"><label for="bk-from" data-i="m-from"></label>
+            <select id="bk-from" name="recogida_lugar"><option value="" data-i="m-choose"></option><optgroup label="Ciudades" data-il="m-g-city"><option value="tokyo" data-i="pl-tokyo"></option><option value="kyoto" data-i="pl-kyoto"></option><option value="osaka" data-i="pl-osaka"></option><option value="yokohama" data-i="pl-yokohama"></option><option value="hakone" data-i="pl-hakone"></option><option value="kawaguchiko" data-i="pl-kawaguchiko"></option><option value="nikko" data-i="pl-nikko"></option><option value="nara" data-i="pl-nara"></option><option value="kobe" data-i="pl-kobe"></option><option value="nagoya" data-i="pl-nagoya"></option><option value="takayama" data-i="pl-takayama"></option><option value="kanazawa" data-i="pl-kanazawa"></option><option value="hiroshima" data-i="pl-hiroshima"></option><option value="fukuoka" data-i="pl-fukuoka"></option><option value="sapporo" data-i="pl-sapporo"></option><option value="okinawa" data-i="pl-okinawa"></option></optgroup><optgroup label="Aeropuertos" data-il="m-g-air"><option value="NRT" data-i="pl-NRT"></option><option value="HND" data-i="pl-HND"></option><option value="KIX" data-i="pl-KIX"></option><option value="NGO" data-i="pl-NGO"></option><option value="FUK" data-i="pl-FUK"></option><option value="CTS" data-i="pl-CTS"></option><option value="OKA" data-i="pl-OKA"></option></optgroup><optgroup label="Otra" data-il="m-g-other"><option value="other" data-i="pl-other"></option></optgroup></select></div>
+          <div class="bk-f"><label for="bk-to" data-i="m-to"></label>
+            <select id="bk-to" name="entrega_lugar"><option value="" data-i="m-choose"></option><optgroup label="Ciudades" data-il="m-g-city"><option value="tokyo" data-i="pl-tokyo"></option><option value="kyoto" data-i="pl-kyoto"></option><option value="osaka" data-i="pl-osaka"></option><option value="yokohama" data-i="pl-yokohama"></option><option value="hakone" data-i="pl-hakone"></option><option value="kawaguchiko" data-i="pl-kawaguchiko"></option><option value="nikko" data-i="pl-nikko"></option><option value="nara" data-i="pl-nara"></option><option value="kobe" data-i="pl-kobe"></option><option value="nagoya" data-i="pl-nagoya"></option><option value="takayama" data-i="pl-takayama"></option><option value="kanazawa" data-i="pl-kanazawa"></option><option value="hiroshima" data-i="pl-hiroshima"></option><option value="fukuoka" data-i="pl-fukuoka"></option><option value="sapporo" data-i="pl-sapporo"></option><option value="okinawa" data-i="pl-okinawa"></option></optgroup><optgroup label="Aeropuertos" data-il="m-g-air"><option value="NRT" data-i="pl-NRT"></option><option value="HND" data-i="pl-HND"></option><option value="KIX" data-i="pl-KIX"></option><option value="NGO" data-i="pl-NGO"></option><option value="FUK" data-i="pl-FUK"></option><option value="CTS" data-i="pl-CTS"></option><option value="OKA" data-i="pl-OKA"></option></optgroup><optgroup label="Otra" data-il="m-g-other"><option value="other" data-i="pl-other"></option></optgroup></select></div>
+          <div class="bk-two">
+            <div class="bk-f"><label for="bk-d1" data-i="m-d1"></label><input type="date" id="bk-d1" name="dia_recogida" data-own></div>
+            <div class="bk-f"><label for="bk-d2" id="bk-d2-l" data-i="m-d2"></label><input type="date" id="bk-d2" name="dia_entrega" data-own></div>
           </div>
-          <p class="note" style="margin-top:4px" data-i="b-sizes"></p>
+          <span class="bk-lbl" data-i="m-bags"></span>
+          <div class="bk-bags">
+            <div class="bk-bag"><div><b id="bk-b-s" data-i="m-bs"></b><small data-i="m-bs-d"></small></div><span class="pr" data-i="m-ps"></span><div class="cnt"><button type="button" id="bk-m-s" data-ia="m-less" aria-label="−">−</button><input id="bk-n-s" name="maletas_pequenas" type="number" min="0" max="10" value="0" inputmode="numeric" aria-labelledby="bk-b-s"><button type="button" id="bk-p-s" data-ia="m-more" aria-label="+">+</button></div></div>
+            <div class="bk-bag"><div><b id="bk-b-m" data-i="m-bm"></b><small data-i="m-bm-d"></small></div><span class="pr" data-i="m-pm"></span><div class="cnt"><button type="button" id="bk-m-m" data-ia="m-less" aria-label="−">−</button><input id="bk-n-m" name="maletas_medianas" type="number" min="0" max="10" value="0" inputmode="numeric" aria-labelledby="bk-b-m"><button type="button" id="bk-p-m" data-ia="m-more" aria-label="+">+</button></div></div>
+            <div class="bk-bag"><div><b id="bk-b-l" data-i="m-bl"></b><small data-i="m-bl-d"></small></div><span class="pr" data-i="m-pl"></span><div class="cnt"><button type="button" id="bk-m-l" data-ia="m-less" aria-label="−">−</button><input id="bk-n-l" name="maletas_grandes" type="number" min="0" max="10" value="1" inputmode="numeric" aria-labelledby="bk-b-l"><button type="button" id="bk-p-l" data-ia="m-more" aria-label="+">+</button></div></div>
+            <div class="bk-bag"><div><b id="bk-b-x" data-i="m-bx"></b><small data-i="m-bx-d"></small></div><span class="pr" data-i="m-px"></span><div class="cnt"><button type="button" id="bk-m-x" data-ia="m-less" aria-label="−">−</button><input id="bk-n-x" name="maletas_especiales" type="number" min="0" max="10" value="0" inputmode="numeric" aria-labelledby="bk-b-x"><button type="button" id="bk-p-x" data-ia="m-more" aria-label="+">+</button></div></div>
+          </div>
+          <p class="bk-note" data-i="m-p-n2"></p>
+          <div class="bk-totalbox" aria-live="polite">
+            <div id="bk-lines"></div>
+            <div class="bk-tot"><span id="bk-total-l" data-i="m-total"></span><b id="bk-total">—</b></div>
+            <div class="bk-eta" id="bk-eta"></div>
+            <div class="bk-q" id="bk-qnote" data-i="m-quote-d"></div>
+          </div>
+          <button type="button" class="bk-btn" id="bk-next1" data-i="m-next"></button>
         </div>
-        <div class="f"><label for="b-name" data-i="f-name"></label><input id="b-name" name="nombre" required maxlength="120" autocomplete="name"></div>
-        <div class="f"><label for="b-email" data-i="f-email"></label><input id="b-email" type="email" name="email" required maxlength="160" autocomplete="email"></div>
-        <div class="f"><label for="b-wa" data-i="f-wa"></label><input id="b-wa" type="tel" name="whatsapp" maxlength="30" autocomplete="tel"></div>
-        <div class="f"><label for="b-notes" data-i="f-notes"></label><textarea id="b-notes" name="comentarios" maxlength="1000"></textarea></div>
-        <button class="submit" type="submit" data-i="f-send"></button>
-        <div class="msg"></div>
-        <p class="note" style="margin-top:10px" data-i="f-privacy"></p>
+
+        <div id="bk2" hidden>
+          <fieldset class="bk-set">
+            <legend><span data-i="m-pick-t"></span> <small id="pk-where"></small></legend>
+            <div data-when="from:city"><div class="bk-f"><label for="pk-type" data-i="m-ptype"></label><select id="pk-type" name="recogida_tipo"><option value="hotel" data-i="m-t-hotel"></option><option value="airbnb" data-i="m-t-airbnb"></option><option value="casa" data-i="m-t-home"></option></select></div></div>
+            <div data-when="from:hotel">
+            <div class="bk-f"><label for="pk-hotel" data-i="m-hotel"></label><input type="text" id="pk-hotel" name="recogida_hotel" maxlength="160" data-req></div>
+            <div class="bk-f"><label for="pk-haddr" data-i="m-hotel-addr"></label><input type="text" id="pk-haddr" name="recogida_direccion" maxlength="200" data-req></div>
+            <div class="bk-f"><label for="pk-guest" data-i="m-guest"></label><input type="text" id="pk-guest" name="recogida_nombre_reserva" maxlength="120" data-req></div>
+            <p class="bk-note" data-i="m-n-pick-hotel"></p></div>
+            <div data-when="from:airbnb">
+            <div class="bk-f"><label for="pk-baddr" data-i="m-addr"></label><input type="text" id="pk-baddr" name="recogida_direccion" maxlength="200" data-req></div>
+            <p class="bk-warn" data-i="m-n-pick-airbnb"></p></div>
+            <div data-when="from:casa">
+            <div class="bk-f"><label for="pk-caddr" data-i="m-home-addr"></label><input type="text" id="pk-caddr" name="recogida_direccion" maxlength="200" data-req></div>
+            <div class="bk-f"><label for="pk-ctel" data-i="m-tel-jp"></label><input type="tel" id="pk-ctel" name="recogida_telefono" maxlength="30" data-req autocomplete="tel"></div>
+            <p class="bk-note" data-i="m-n-pick-home"></p></div>
+            <div data-when="from:air">
+            <div class="bk-f"><label for="pk-term" data-i="m-term"></label><input type="text" id="pk-term" name="recogida_terminal" maxlength="40" data-req></div>
+            <div class="bk-f"><label for="pk-arr" data-i="m-flight-arr"></label><input type="text" id="pk-arr" name="recogida_vuelo_llegada" maxlength="40"></div>
+            <p class="bk-note" data-i="m-n-pick-air"></p></div>
+          </fieldset>
+          <fieldset class="bk-set">
+            <legend><span data-i="m-drop-t"></span> <small id="dl-where"></small></legend>
+            <div data-when="to:city"><div class="bk-f"><label for="dl-type" data-i="m-ptype"></label><select id="dl-type" name="entrega_tipo"><option value="hotel" data-i="m-t-hotel"></option><option value="airbnb" data-i="m-t-airbnb"></option><option value="casa" data-i="m-t-home"></option></select></div></div>
+            <div data-when="to:hotel">
+            <div class="bk-f"><label for="dl-hotel" data-i="m-hotel"></label><input type="text" id="dl-hotel" name="entrega_hotel" maxlength="160" data-req></div>
+            <div class="bk-f"><label for="dl-haddr" data-i="m-hotel-addr"></label><input type="text" id="dl-haddr" name="entrega_direccion" maxlength="200" data-req></div>
+            <div class="bk-f"><label for="dl-htel" data-i="m-hotel-tel"></label><input type="tel" id="dl-htel" name="entrega_telefono" maxlength="30"></div>
+            <div class="bk-f"><label for="dl-guest" data-i="m-guest"></label><input type="text" id="dl-guest" name="entrega_nombre_reserva" maxlength="120" data-req></div>
+            <div class="bk-f"><label for="dl-resv" data-i="m-resv"></label><input type="text" id="dl-resv" name="entrega_num_reserva" maxlength="60"></div>
+            <div class="bk-f"><label for="dl-hslot" data-i="m-slot"></label><select id="dl-hslot" name="entrega_franja"><option value="" data-i="m-slot-any"></option><option value="am" data-i="m-slot-am"></option><option value="14-16">14:00–16:00</option><option value="16-18">16:00–18:00</option><option value="18-20">18:00–20:00</option><option value="19-21">19:00–21:00</option></select></div>
+            <p class="bk-note" data-i="m-n-drop-hotel"></p></div>
+            <div data-when="to:airbnb">
+            <div class="bk-f"><label for="dl-baddr" data-i="m-addr"></label><input type="text" id="dl-baddr" name="entrega_direccion" maxlength="200" data-req></div>
+            <p class="bk-warn" data-i="m-n-drop-airbnb"></p></div>
+            <div data-when="to:casa">
+            <div class="bk-f"><label for="dl-recip" data-i="m-recip"></label><input type="text" id="dl-recip" name="entrega_destinatario" maxlength="120" data-req></div>
+            <div class="bk-f"><label for="dl-caddr" data-i="m-home-addr"></label><input type="text" id="dl-caddr" name="entrega_direccion" maxlength="200" data-req></div>
+            <div class="bk-f"><label for="dl-ctel" data-i="m-tel-jp"></label><input type="tel" id="dl-ctel" name="entrega_telefono" maxlength="30" data-req></div>
+            <div class="bk-f"><label for="dl-cslot" data-i="m-slot"></label><select id="dl-cslot" name="entrega_franja"><option value="" data-i="m-slot-any"></option><option value="am" data-i="m-slot-am"></option><option value="14-16">14:00–16:00</option><option value="16-18">16:00–18:00</option><option value="18-20">18:00–20:00</option><option value="19-21">19:00–21:00</option></select></div>
+            <p class="bk-note" data-i="m-n-drop-home"></p></div>
+            <div data-when="to:air">
+            <div class="bk-f"><label for="dl-term" data-i="m-term"></label><input type="text" id="dl-term" name="entrega_terminal" maxlength="40" data-req></div>
+            <div class="bk-f"><label for="dl-flight" data-i="m-flight"></label><input type="text" id="dl-flight" name="entrega_vuelo" maxlength="40" data-req></div>
+            <div class="bk-f"><label for="dl-ftime" data-i="m-ftime"></label><input type="time" id="dl-ftime" name="entrega_hora_vuelo" maxlength="5" data-req></div>
+            <p class="bk-note" data-i="m-n-drop-air"></p></div>
+          </fieldset>
+          <div class="bk-actions"><button type="button" class="bk-ghost" id="bk-back2" data-i="m-back"></button><button type="button" class="bk-btn" id="bk-next2" data-i="m-next"></button></div>
+        </div>
+
+        <div id="bk3" hidden>
+          <span class="bk-lbl" data-i="m-cont"></span>
+          <div class="bk-checks"><label><input type="checkbox" data-cont="ropa"><span data-i="m-c-ropa"></span></label><label><input type="checkbox" data-cont="calzado"><span data-i="m-c-calzado"></span></label><label><input type="checkbox" data-cont="aseo"><span data-i="m-c-aseo"></span></label><label><input type="checkbox" data-cont="libros"><span data-i="m-c-libros"></span></label><label><input type="checkbox" data-cont="souv"><span data-i="m-c-souv"></span></label><label><input type="checkbox" data-cont="elec"><span data-i="m-c-elec"></span></label><label><input type="checkbox" data-cont="fig"><span data-i="m-c-fig"></span></label></div>
+          <div class="bk-f"><label for="bk-otros" class="sr-only" data-i="m-c-otros"></label><input type="text" id="bk-otros" name="contenido_otros" maxlength="200" data-ph="m-c-otros"></div>
+          <p class="bk-note" data-i="m-cont-n"></p>
+          <label class="check"><input type="checkbox" id="bk-fragil" name="fragil" value="si"><span data-i="m-fragil"></span></label>
+          <div class="bk-f"><label for="bk-name" data-i="f-name"></label><input type="text" id="bk-name" name="nombre" maxlength="120" autocomplete="name"></div>
+          <div class="bk-f"><label for="bk-email" data-i="f-email"></label><input type="email" id="bk-email" name="email" maxlength="160" autocomplete="email"></div>
+          <div class="bk-f"><label for="bk-wa" data-i="m-tel"></label><input type="tel" id="bk-wa" name="telefono_whatsapp" maxlength="30" autocomplete="tel"></div>
+          <div class="bk-f"><label for="bk-notes" data-i="f-notes"></label><textarea id="bk-notes" name="comentarios" maxlength="1000"></textarea></div>
+          <label class="check"><input type="checkbox" id="bk-acc" name="acepta_condiciones" value="si"><span data-i="m-acc"></span></label>
+          <div class="bk-actions"><button type="button" class="bk-ghost" id="bk-back3" data-i="m-back"></button><button type="button" class="bk-btn" id="bk-next3" data-i="m-next"></button></div>
+        </div>
+
+        <div id="bk4" hidden>
+          <span class="bk-lbl" data-i="m-sum"></span>
+          <div class="bk-sumtext" id="bk-sum"></div>
+          <div class="paybox"><b><span aria-hidden="true">🔒</span><span data-i="m-pay-t"></span></b><p id="bk-pay-d" data-i="m-pay-d"></p><div class="pm" aria-hidden="true"><span>VISA</span><span>MASTERCARD</span><span>AMEX</span><span>JCB</span></div></div>
+          <div class="bk-actions"><button type="button" class="bk-ghost" id="bk-back4" data-i="m-back"></button><button type="submit" class="bk-btn" id="bk-pay" data-i="m-reserve"></button></div>
+          <p class="bk-note" style="margin-top:8px" data-i="f-privacy"></p>
+        </div>
+        <p class="bk-err" id="bk-msg" role="alert"></p>
       </form>
-      <div class="ok form" id="bags-ok"><span class="big">✓</span><h2 data-i="f-ok"></h2><p class="note" data-i="f-ok-sub"></p></div>
+      <div class="bk-done" id="bk-ok" hidden>
+        <span class="big" aria-hidden="true">✓</span>
+        <h2 data-i="m-ok"></h2>
+        <p><span data-i="m-ok-d"></span><br><code id="bk-ok-id"></code></p>
+        <p data-i="m-ok-d2"></p>
+        <button type="button" class="bk-ghost" id="bk-new" data-i="m-new"></button>
+      </div>
     </div>
+  </div></section>
+
+  <div class="wrap">
+    <section class="sec" id="como-funciona">
+      <h2 data-i="m-how"></h2>
+      <div class="how3">
+        <div><span class="n">1</span><b data-i="m-h1t"></b><p data-i="m-h1d"></p></div>
+        <div><span class="n">2</span><b data-i="m-h2t"></b><p data-i="m-h2d"></p></div>
+        <div><span class="n">3</span><b data-i="m-h3t"></b><p data-i="m-h3d"></p></div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2 data-i="m-uc"></h2>
+      <div class="tabs-box">
+        <div class="tabs" role="tablist">
+          <button type="button" role="tab" id="tab1" aria-controls="tp1" aria-selected="true" data-i="m-uc1"></button>
+          <button type="button" role="tab" id="tab2" aria-controls="tp2" aria-selected="false" tabindex="-1" data-i="m-uc2"></button>
+          <button type="button" role="tab" id="tab3" aria-controls="tp3" aria-selected="false" tabindex="-1" data-i="m-uc3"></button>
+        </div>
+        <div class="tabpanel" role="tabpanel" id="tp1" aria-labelledby="tab1"><p data-i="m-uc1d"></p></div>
+        <div class="tabpanel" role="tabpanel" id="tp2" aria-labelledby="tab2" hidden><p data-i="m-uc2d"></p></div>
+        <div class="tabpanel" role="tabpanel" id="tp3" aria-labelledby="tab3" hidden><p data-i="m-uc3d"></p></div>
+      </div>
+    </section>
+
+    <section class="sec" id="rutas">
+      <h2 data-i="m-routes"></h2>
+      <div class="routes">
+        <a class="route" href="#reserva" data-route="tokyo>kyoto"><b><span data-i="pl-tokyo"></span><i aria-hidden="true">→</i><span data-i="pl-kyoto"></span></b><small data-i="m-r-next"></small><em data-i="m-from-p"></em></a>
+        <a class="route" href="#reserva" data-route="tokyo>osaka"><b><span data-i="pl-tokyo"></span><i aria-hidden="true">→</i><span data-i="pl-osaka"></span></b><small data-i="m-r-next"></small><em data-i="m-from-p"></em></a>
+        <a class="route" href="#reserva" data-route="kyoto>osaka"><b><span data-i="pl-kyoto"></span><i aria-hidden="true">→</i><span data-i="pl-osaka"></span></b><small data-i="m-r-next"></small><em data-i="m-from-p"></em></a>
+        <a class="route" href="#reserva" data-route="osaka>tokyo"><b><span data-i="pl-osaka"></span><i aria-hidden="true">→</i><span data-i="pl-tokyo"></span></b><small data-i="m-r-next"></small><em data-i="m-from-p"></em></a>
+        <a class="route" href="#reserva" data-route="HND>tokyo"><b><span data-i="pl-HND"></span><i aria-hidden="true">→</i><span data-i="pl-tokyo"></span></b><small data-i="m-r-next"></small><em data-i="m-from-p"></em></a>
+        <a class="route" href="#reserva" data-route="tokyo>hakone"><b><span data-i="pl-tokyo"></span><i aria-hidden="true">→</i><span data-i="pl-hakone"></span></b><small data-i="m-r-next"></small><em data-i="m-from-p"></em></a>
+        <a class="route" href="#reserva" data-route="tokyo>NRT"><b><span data-i="pl-tokyo"></span><i aria-hidden="true">→</i><span data-i="pl-NRT"></span></b><small data-i="m-r-air"></small><em data-i="m-from-air"></em></a>
+        <a class="route" href="#reserva" data-route="kyoto>KIX"><b><span data-i="pl-kyoto"></span><i aria-hidden="true">→</i><span data-i="pl-KIX"></span></b><small data-i="m-r-air"></small><em data-i="m-from-air"></em></a>
+      </div>
+    </section>
+
+    <section class="sec" id="precios">
+      <h2 data-i="m-prices"></h2>
+      <div class="tscroll"><table class="tb">
+        <thead><tr><th data-i="m-p-size"></th><th data-i="m-p-ex"></th><th data-i="m-p-max"></th><th data-i="m-p-price"></th></tr></thead>
+        <tbody>
+          <tr><td><b data-i="m-bs"></b></td><td data-i="m-p-s-ex"></td><td data-i="m-smax"></td><td class="num" data-i="m-ps"></td></tr>
+          <tr><td><b data-i="m-bm"></b></td><td data-i="m-p-m-ex"></td><td data-i="m-mmax"></td><td class="num" data-i="m-pm"></td></tr>
+          <tr><td><b data-i="m-bl"></b></td><td data-i="m-p-l-ex"></td><td data-i="m-lmax"></td><td class="num" data-i="m-pl"></td></tr>
+          <tr><td><b data-i="m-bx"></b></td><td data-i="m-p-x-ex"></td><td data-i="m-xmax"></td><td class="num" data-i="m-px"></td></tr>
+        </tbody>
+      </table></div>
+      <p class="note" style="margin-top:10px" data-i="m-p-n1"></p>
+    </section>
+
+    <section class="sec">
+      <h2 data-i="m-cmp"></h2>
+      <div class="tscroll"><table class="tb">
+        <thead><tr><th><span class="sr-only">—</span></th><th class="c" data-i="m-c-us"></th><th class="c" data-i="m-c-diy"></th><th class="c" data-i="m-c-carry"></th></tr></thead>
+        <tbody>
+          <tr><td data-i="m-c1"></td><td class="c"><span class="ok-c" aria-hidden="true">✓</span><span class="sr-only" data-i="yes"></span></td><td class="c"><span class="ok-c" aria-hidden="true">✓</span><span class="sr-only" data-i="yes"></span></td><td class="c"><span class="no-c" aria-hidden="true">✗</span><span class="sr-only" data-i="no"></span></td></tr>
+          <tr><td data-i="m-c2"></td><td class="c"><span class="ok-c" aria-hidden="true">✓</span><span class="sr-only" data-i="yes"></span></td><td class="c"><span class="no-c" aria-hidden="true">✗</span><span class="sr-only" data-i="no"></span></td><td class="c"><span class="na-c" aria-hidden="true">—</span><span class="sr-only" data-i="na"></span></td></tr>
+          <tr><td data-i="m-c3"></td><td class="c"><span class="ok-c" aria-hidden="true">✓</span><span class="sr-only" data-i="yes"></span></td><td class="c"><span class="no-c" aria-hidden="true">✗</span><span class="sr-only" data-i="no"></span></td><td class="c"><span class="na-c" aria-hidden="true">—</span><span class="sr-only" data-i="na"></span></td></tr>
+          <tr><td data-i="m-c4"></td><td class="c"><span class="ok-c" aria-hidden="true">✓</span><span class="sr-only" data-i="yes"></span></td><td class="c"><span class="ok-c" aria-hidden="true">✓</span><span class="sr-only" data-i="yes"></span></td><td class="c"><span class="no-c" aria-hidden="true">✗</span><span class="sr-only" data-i="no"></span></td></tr>
+          <tr><td data-i="m-c5"></td><td class="c"><span class="ok-c" aria-hidden="true">✓</span><span class="sr-only" data-i="yes"></span></td><td class="c"><span class="no-c" aria-hidden="true">✗</span><span class="sr-only" data-i="no"></span></td><td class="c"><span class="na-c" aria-hidden="true">—</span><span class="sr-only" data-i="na"></span></td></tr>
+        </tbody>
+      </table></div>
+      <p class="note" style="margin-top:10px" data-i="m-c-note"></p>
+      <p style="margin-top:14px"><a href="guia-enviar-maletas-japon.html" data-i="m-guide"></a></p>
+    </section>
+
+    <section class="sec faq" id="faq">
+      <h2 data-i="faq"></h2>
+      <details><summary data-i="m-q1"></summary><p data-i="m-a1"></p></details>
+      <details><summary data-i="m-q2"></summary><p data-i="m-a2"></p></details>
+      <details><summary data-i="m-q3"></summary><p data-i="m-a3"></p></details>
+      <details><summary data-i="m-q4"></summary><p data-i="m-a4"></p></details>
+      <details><summary data-i="m-q5"></summary><p data-i="m-a5"></p></details>
+      <details><summary data-i="m-q6"></summary><p data-i="m-a6"></p></details>
+      <details><summary data-i="m-q7"></summary><p data-i="m-a7"></p></details>
+      <details><summary data-i="m-q8"></summary><p data-i="m-a8"></p></details>
+    </section>
+
+    <div class="band"><h2 data-i="m-band-t"></h2><a class="cta" href="#reserva" data-i="m-band-btn"></a></div>
   </div>
 </main>
 
-<footer><div class="wrap"><div data-i="footer"></div><div data-i="privacy"></div><div>© <span id="year"></span> ShipCalc · shipcalc.live</div></div></footer>
-<script src="data/sitio.js?v=20261029c"></script>
+<footer><div class="wrap">
+  <nav class="flinks" aria-label="ShipCalc"><a href="maletas.html" data-i="nav-bags"></a><a href="calculadora.html" data-i="nav-calc"></a><a href="envio.html" data-i="nav-ship"></a><a href="consigna.html" data-i="nav-store"></a><a href="guia-enviar-maletas-japon.html" data-i="fl-guide"></a></nav>
+  <div data-i="footer"></div><div data-i="privacy"></div><div>© <span id="year">2026</span> ShipCalc · shipcalc.live</div>
+</div></footer>
+<script src="data/maletas.js"></script>
+<script src="data/sitio.js"></script>
 </body>
 </html>

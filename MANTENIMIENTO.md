@@ -1,17 +1,60 @@
 # ShipCalc — Guía de mantenimiento
 
-Datos verificados: **29-10-2026**. Todo lo que cambia está en la carpeta `data/`. Para actualizar, se cambian **solo números y fechas**, nunca la estructura. Después de cualquier cambio, sube el número de versión `?v=20261029` en las 6 líneas `<script src="data/...">` del final de `index.html` (por ejemplo `?v=20261105`) para que los navegadores carguen la versión nueva.
+Datos verificados: **29-10-2026**. Para actualizar, se cambian **solo números, fechas y textos**, nunca la estructura.
+
+## Cómo se publica (automático)
+
+Netlify ejecuta `tools/build.js` en cada despliegue (está en `netlify.toml`, no hay que tocar nada en la web de Netlify). El script genera la carpeta `dist/`, que es lo que se publica:
+
+- Páginas en español (`/`) y en inglés (`/en/`), con el texto ya escrito en el HTML para que Google lo lea.
+- Título, descripción, canonical, hreflang, Open Graph y datos estructurados de cada página.
+- `sitemap.xml` y `robots.txt` con el dominio del sitio. En despliegues de prueba, `robots.txt` bloquea a Google.
+- Versión `?v=` de CSS y JS automática: **ya no hay que subir números de versión a mano**.
+- Si falta un texto, un enlace está roto o una página no tiene título, **el despliegue se detiene** y la web publicada sigue como estaba. El motivo aparece en Netlify → *Deploys* → el despliegue fallido → *Deploy log*.
+
+## Dominio
+
+El dominio sale solo de Netlify. Al comprar el dominio:
+
+1. Netlify → tu sitio → *Domain management* → *Add a domain* → escribe el dominio.
+2. Sigue los pasos de DNS que te da Netlify (en el panel de donde compraste el dominio).
+3. Márcalo como *Primary domain*.
+4. *Deploys* → *Trigger deploy* → *Deploy site*. Canonical, sitemap, robots, datos para Google y enlaces para compartir pasan al dominio nuevo.
+
+Si quieres pasar `shipcalc.live` del proyecto antiguo (shipcalcco) al nuevo (shipcalc1), primero quítalo del antiguo.
+
+## Google y Bing (hacer una vez, con el dominio ya activo)
+
+1. **Google Search Console** (search.google.com/search-console) → *Añadir propiedad* → *Dominio* → verifica con el registro TXT de DNS. Alternativa: tipo *Prefijo de URL* → método *Etiqueta HTML* → copia solo el código del `content="…"` y ponlo en Netlify → *Site configuration* → *Environment variables* → `GOOGLE_SITE_VERIFICATION` → vuelve a desplegar.
+2. En Search Console → *Sitemaps* → escribe `sitemap.xml` → *Enviar*.
+3. **Bing Webmaster Tools** (bing.com/webmasters) → *Importar desde Google Search Console*. (Si prefieres etiqueta: variable `BING_SITE_VERIFICATION`.)
+4. **IndexNow** (Bing, Yandex…) ya funciona solo: después de cada despliegue en producción con dominio propio, el plugin `plugins/indexnow` avisa de las páginas que han cambiado. Google no usa IndexNow: Google lee el sitemap.
 
 ## Archivos
 
 | Archivo | Qué contiene |
 |---|---|
-| `data/japon.js` | Japan Post (EMS, paquete aéreo, marítimo, Small Packet, Air Packet, SAL suspendido), DHL Japón, FedEx Japón, UPS (solo enlace) |
-| `data/corea.js` | Korea Post (EMS, EMS Premium, paquete aéreo y marítimo, pequeño paquete, K-Packet), DHL Corea, FedEx Corea, UPS (solo enlace) |
-| `data/china.js` | China Post pequeño paquete (normal y certificado), SF Express, FedEx China; EMS, paquetes, e邮宝, DHL y UPS solo con enlace |
-| `data/destinos.js` | Aduana e impuestos de los 21 países + comisiones de plataformas de venta |
+| `data/maletas.js` | **Precios del envío de maletas** (objeto `CFG`) y la reserva |
+| `data/sitio.js` | Textos ES/EN de portada, maletas, envío, consigna y guía |
+| `data/app.js` | Textos e interfaz de la calculadora (solo tocar textos) |
+| `data/japon.js` | Japan Post, DHL Japón, FedEx Japón, UPS (solo enlace) |
+| `data/corea.js` | Korea Post, DHL Corea, FedEx Corea, UPS (solo enlace) |
+| `data/china.js` | China Post pequeño paquete, SF Express, FedEx China; EMS, paquetes, e邮宝, DHL y UPS solo con enlace |
+| `data/destinos.js` | Aduana e impuestos de los 21 países + comisiones de plataformas |
 | `data/motor.js` | Lógica de cálculo (no tocar) |
-| `data/app.js` | Textos e interfaz (solo tocar textos) |
+| `data/sitio.css` | Estilos de las páginas (menos la calculadora, que lleva los suyos) |
+| `tools/paginas.js` | **Títulos y descripciones para Google** de cada página, en ES y EN |
+| `tools/build.js` | Script de publicación (no tocar) |
+| `plugins/indexnow/` | Aviso automático a Bing/Yandex (no tocar) |
+
+## Precios de maletas (`data/maletas.js` → `CFG`)
+
+- `sizes`: precio por maleta en rutas principales. Ahora: Pequeña ¥2.090 · Mediana ¥3.070 · Grande ¥4.939 · Especial ¥4.939.
+- `tierFee`: suplemento por maleta en rutas largas (¥1.000 / ¥2.000). Qué ruta lleva cuál: tabla `TIER` en el mismo archivo.
+- `airFee`: suplemento por maleta si la entrega es en un aeropuerto (¥700; Yamato cobra ¥660).
+- `payURL`: cuando tengas un enlace de pago (por ejemplo un *Payment Link* de Stripe), pégalo aquí. El botón pasa de «Reservar» a «Pagar» y, tras guardar la reserva, lleva al cliente al pago con su número de reserva. Vacío = el cliente reserva y tú le envías el enlace de pago por email.
+- Coste de referencia Yamato (tarifa general, Tokio→Osaka): 100 cm ¥1.650 · 140 cm ¥2.780 · 160 cm ¥3.160 · 180 cm ¥4.480. `node tools/test_all.js` comprueba que ningún precio quede por debajo de ese coste: si bajas precios y falla, estás perdiendo dinero en alguna ruta.
+- Si Yamato cambia tarifas: actualiza la tabla `Y` de `tools/test_all.js` y los precios de la guía (`guia-enviar-maletas-japon.html`, textos `ga2` de `data/sitio.js`).
 
 ## Calendario de revisión
 
@@ -45,6 +88,7 @@ Formato: `{from:'AAAA-MM-DD',pct:49.50,until:'AAAA-MM-DD'}`. Añade la semana nu
 - Países que aceptan EMS de Korea Post (lista "접수가능국가" en ems.epost.go.kr) → `KR_EMS_OK` en corea.js.
 - Aduanas de Latinoamérica (México, Argentina, Colombia, Chile, Perú, Ecuador, Uruguay): cambian a menudo.
 - Aranceles de EE.UU. (Sección 301) y comisiones de plataformas.
+- Tarifas de Yamato (precios de maletas y guía).
 
 ### Cada año (enero)
 Tablas anuales de DHL y FedEx (Japón, Corea, China), K-Packet, EMS Premium y SF Express. Se publican en enero.
@@ -58,16 +102,26 @@ Tablas anuales de DHL y FedEx (Japón, Corea, China), K-Packet, EMS Premium y SF
 ## Páginas
 | Página | Qué es |
 |---|---|
-| `index.html` | Portada con los 4 servicios |
-| `maletas.html` | Envío de maletas entre hoteles/aeropuertos (formulario `shipcalc-maletas`) |
+| `index.html` | Portada con los 4 servicios y guías |
+| `maletas.html` | Reserva de envío de maletas (formulario `shipcalc-maletas`) |
 | `calculadora.html` | Calculadora gratuita |
-| `envio.html` | "Lo enviamos por ti" (formulario `shipcalc-shipping`; recibe el cálculo adjunto desde la calculadora) |
+| `envio.html` | "Lo enviamos por ti" (formulario `shipcalc-shipping`; recibe el cálculo desde la calculadora) |
 | `consigna.html` | Guardar maleta, próximamente (lista de espera `shipcalc-consigna`) |
+| `guia-enviar-maletas-japon.html` | Guía para Google: cómo enviar maletas en Japón (texto ES y EN en el propio archivo) |
+| `404.html` | Página de error |
 
-Textos de portada y servicios: `data/sitio.js` · estilos: `data/sitio.css`. Si los cambias, sube el `?v=` en las 4 páginas.
+Las versiones en inglés (`/en/…`) se generan solas. Para añadir una página nueva: crea el HTML y añádela a `tools/paginas.js`.
 
 ## Formularios
-Los formularios (maletas, envío, consigna y PRO) usan **Netlify Forms**. En *Forms* verás cuántas solicitudes llegan de cada servicio: así sabrás cuál es el producto estrella. En Netlify: *Site configuration → Forms → Enable form detection* y vuelve a desplegar. Las solicitudes aparecen en *Forms* y se puede activar aviso por email.
+Netlify Forms. En *Forms* verás un formulario por servicio y por idioma (las versiones inglesas acaban en `-en`, por ejemplo `shipcalc-maletas-en`): así sabes qué servicio se pide más. Cada reserva de maletas lleva número (`SC-AAMMDD-XXXX`), total, un resumen en el idioma del cliente y el campo **`etiqueta_yamato`**: los datos de la etiqueta en japonés, listos para copiar (お届け先, 宿泊者名 y número de reserva del hotel, fecha y franja, ご依頼主 con teléfono, 品名, número de bultos y tamaño, y dónde se recoge). Para aeropuerto incluye 搭乗日, 便名 y 出発時刻.
+
+Reglas de Yamato que ya aplica el formulario:
+- Hotel: nombre del hotel, dirección y nombre de la reserva (más teléfono y número de reserva opcionales).
+- Airbnb o apartamento sin recepción: Yamato **no recoge ni entrega** allí. El cliente deja la maleta en una tienda 7-Eleven o FamilyMart o en una oficina de Yamato, y para recibirla se envía a la oficina de Yamato más cercana (営業所止め). No se puede poner una tienda de conveniencia como dirección de entrega.
+- Casa particular: dirección con código postal, teléfono y nombre de quien la recibe.
+- Aeropuerto: terminal, aerolínea y número de vuelo, y hora de salida. Sin franja horaria.
+- Franjas de entrega de Yamato: 午前中, 14–16, 16–18, 18–20, 19–21.
+- Contenido concreto obligatorio (Yamato puede retrasar o no entregar si pone solo «artículos varios»). Primera vez: *Site configuration → Forms → Enable form detection* y vuelve a desplegar. Para recibir avisos por email: *Forms → Form notifications*.
 
 ## Pruebas antes de publicar
-Con Node instalado: `node tools/test_all.js` (debe terminar con `fails 0`).
+Con Node instalado: `node tools/test_all.js` (debe terminar con `fails 0`) y `node tools/build.js` (debe terminar con ✓).

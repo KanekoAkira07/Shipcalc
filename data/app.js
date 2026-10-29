@@ -5,7 +5,8 @@
 (function(SC){
 'use strict';
 var VERIFIED='2026-10-29';
-var SITE='https://shipcalc.live/calculadora.html';
+/* Dirección de la calculadora para compartir: la del propio sitio (vale para cualquier dominio) */
+var SITE=(/^https?:$/.test(location.protocol)?location.origin+location.pathname.replace(/[^\/]*$/,''):'https://shipcalc.live/')+'calculadora.html';
 var JP_CHANGE='2027-02-01';
 
 /* Tipos de cambio de respaldo (1 USD = X), ExchangeRate-API, 29-10-2026.
@@ -64,7 +65,11 @@ es:{
  'ssb-body':'¿De viaje por Japón, Corea o China? Recogemos tu paquete, revisamos el contenido contigo y gestionamos todo el envío internacional. Tú sigues disfrutando del viaje.',
  'ssb-btn':'Que ShipCalc lo envíe por ti →',
  'nav-bags':'Maletas a tu hotel','nav-calc':'Calculadora','nav-ship':'Lo enviamos por ti','nav-store':'Guardar maleta',
- 'cta-title':'¿No quieres ir a correos? Lo enviamos por ti','cta-sub':'Revisamos el paquete contigo, lo embalamos y lo enviamos. Desde ¥1.500.','cta-btn':'Solicitar →'
+ 'cta-title':'¿No quieres ir a correos? Lo enviamos por ti','cta-sub':'Revisamos el paquete contigo, lo embalamos y lo enviamos. Desde ¥1.500.','cta-btn':'Solicitar →',
+ 'fl-guide':'Guía: enviar maletas en Japón','cf-title':'Preguntas frecuentes',
+ 'cf-q1':'¿Qué incluye el cálculo?','cf-a1':'El envío con la tarifa oficial del operador (Japan Post, Korea Post, China Post, DHL, FedEx o SF Express), los recargos de combustible y de demanda vigentes en la fecha de envío, la aduana y los impuestos de importación de tu país y, si vas a revender, la comisión de la plataforma.',
+ 'cf-q2':'¿Cuánto se paga de aduana en España por un paquete de Japón?','cf-a2':'El IVA (21 %) se paga desde el primer euro. Hasta 150 € no hay arancel según el producto, pero desde el 1 de julio de 2026 la UE cobra 3 € por cada tipo de producto. Por encima de 150 € se paga arancel según el producto. Correos o la mensajería pueden cobrar además una tasa por gestionar la aduana.',
+ 'cf-q3':'¿Las tarifas son oficiales?','cf-a3':'Sí. Salen de las tablas publicadas por cada operador y aduana, revisadas el 29-10-2026. Cuando un dato es aproximado, la calculadora lo marca como «estimado» y enlaza a la calculadora oficial.'
 },
 en:{
  title:'How much does it really cost to ship or import from Japan, Korea or China?',
@@ -117,8 +122,13 @@ en:{
  'ssb-body':'Travelling in Japan, Korea or China? We pick up your package, check the contents with you and handle the whole international shipment. You keep enjoying your trip.',
  'ssb-btn':'Let ShipCalc ship it for you →',
  'nav-bags':'Luggage to your hotel','nav-calc':'Calculator','nav-ship':'We ship it for you','nav-store':'Luggage storage',
- 'cta-title':'Don\'t want to go to the post office? We ship it for you','cta-sub':'We check the package with you, pack it and ship it. From ¥1,500.','cta-btn':'Request →'
+ 'cta-title':'Don\'t want to go to the post office? We ship it for you','cta-sub':'We check the package with you, pack it and ship it. From ¥1,500.','cta-btn':'Request →',
+ 'fl-guide':'Guide: sending luggage in Japan','cf-title':'FAQ',
+ 'cf-q1':'What does the calculation include?','cf-a1':'Shipping at the carrier\'s official rate (Japan Post, Korea Post, China Post, DHL, FedEx or SF Express), the fuel and demand surcharges in force on the shipping date, your country\'s customs and import taxes and, if you resell, the platform fee.',
+ 'cf-q2':'How much customs do I pay in Spain for a parcel from Japan?','cf-a2':'VAT (21%) applies from the first euro. Up to €150 there is no product duty, but since 1 July 2026 the EU charges €3 per product type. Above €150, duty depends on the product. The postal operator or courier may also charge a customs handling fee.',
+ 'cf-q3':'Are the rates official?','cf-a3':'Yes. They come from the tables published by each carrier and customs authority, checked on 2026-10-29. When a figure is approximate, the calculator marks it as "estimated" and links to the official calculator.'
 }};
+SC.UI_T=T; /* para el script de publicación (tools/build.js) */
 
 /* Textos dinámicos */
 var D_TXT={
@@ -533,7 +543,7 @@ function shareImage(){
   x.fillStyle='#fff';x.font='bold 46px monospace';x.fillText(money(L.r.total,D.cur),905,320);
   x.fillStyle='#9aa4b8';x.font='16px monospace';x.fillText('≈ '+money(fxFn()(L.r.total,D.cur,oc),oc),905,352);
   if(L.r.profit!==null){var gain=L.r.profit>=0;x.fillStyle=gain?'rgba(0,179,134,.18)':'rgba(255,77,109,.18)';rrect(x,690,390,430,110,14);x.fill();x.fillStyle='#9aa4b8';x.font='bold 15px sans-serif';x.fillText((gain?d('r_profit'):d('r_loss')).toUpperCase(),905,425);x.fillStyle=gain?'#2bd9a8':'#ff6b81';x.font='bold 38px monospace';x.fillText((gain?'+':'−')+money(Math.abs(L.r.profit),D.cur),905,475);}
-  x.textAlign='left';x.fillStyle='#4d8dff';x.font='bold 20px monospace';x.fillText('shipcalc.live',80,575);
+  x.textAlign='left';x.fillStyle='#4d8dff';x.font='bold 20px monospace';x.fillText((/^https?:$/.test(location.protocol)&&location.host)||'shipcalc.live',80,575);
   x.textAlign='right';x.fillStyle='#6b7385';x.font='15px sans-serif';x.fillText(es?'Tarifas oficiales · Cálculo gratuito':'Official rates · Free calculator',1120,575);
   var a=document.createElement('a');a.download='shipcalc.png';a.href=c.toDataURL('image/png');document.body.appendChild(a);a.click();document.body.removeChild(a);
 }
@@ -583,9 +593,18 @@ function selectOrigin(o){
   fetchRates(ORIGIN_CUR[o],function(){refresh();});
 }
 function init(){
-  var l=null;try{l=localStorage.getItem('sc_lang');}catch(e){}
-  if(!l){var nl=(navigator.languages&&navigator.languages[0])||navigator.language||'es';l=/^en/i.test(nl)?'en':'es';}
+  /* Publicado (tools/build.js): el idioma lo marca la página (/ = español, /en/ = inglés).
+     Abierto como archivo local: se cambia de idioma sin salir de la página. */
+  var built=document.documentElement.hasAttribute('data-built'),l=null;
+  if(built)l=document.documentElement.lang;
+  else{try{l=localStorage.getItem('sc_lang');}catch(e){}
+    if(!l){var nl=(navigator.languages&&navigator.languages[0])||navigator.language||'es';l=/^en/i.test(nl)?'en':'es';}}
   st.lang=(l==='en')?'en':'es';
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.addEventListener('click',function(e){
+    var lg=b.getAttribute('data-lang');
+    if(built){try{localStorage.setItem('sc_lang',lg);}catch(x){}return;}
+    e.preventDefault();setLang(lg);
+  });});
   var today=SC.today();$('sdate').value=today;$('sdate').min='2026-01-01';$('sdate').max='2027-12-31';
   applyTexts();
   document.querySelectorAll('.origin-card').forEach(function(c){
