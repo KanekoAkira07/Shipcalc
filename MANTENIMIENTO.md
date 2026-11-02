@@ -52,6 +52,8 @@ Si quieres pasar `shipcalc.live` del proyecto antiguo (shipcalcco) al nuevo (shi
 - `sizes`: precio por maleta en rutas principales. Ahora: Pequeña ¥2.090 · Mediana ¥3.070 · Grande ¥4.939 · Especial ¥4.939.
 - `tierFee`: suplemento por maleta en rutas largas (¥1.000 / ¥2.000). Qué ruta lleva cuál: tabla `TIER` en el mismo archivo.
 - `airFee`: suplemento por maleta si la entrega es en un aeropuerto (¥700; Yamato cobra ¥660).
+- `whatsapp`: tu número de WhatsApp con prefijo (por ejemplo `819012345678`). Si lo pones, al terminar la reserva sale el botón «Escríbenos por WhatsApp» con el número de reserva ya escrito. Vacío = no sale.
+- Precio en la moneda del cliente: se muestra «≈ 57,37 € aprox.» con el tipo de cambio en vivo (o el de respaldo `FX_FALLBACK_USD`). Siempre se cobra en yenes.
 - `payURL`: cuando tengas un enlace de pago (por ejemplo un *Payment Link* de Stripe), pégalo aquí. El botón pasa de «Reservar» a «Pagar» y, tras guardar la reserva, lleva al cliente al pago con su número de reserva. Vacío = el cliente reserva y tú le envías el enlace de pago por email.
 - Coste de referencia Yamato (tarifa general, Tokio→Osaka): 100 cm ¥1.650 · 140 cm ¥2.780 · 160 cm ¥3.160 · 180 cm ¥4.480. `node tools/test_all.js` comprueba que ningún precio quede por debajo de ese coste: si bajas precios y falla, estás perdiendo dinero en alguna ruta.
 - Si Yamato cambia tarifas: actualiza la tabla `Y` de `tools/test_all.js` y los precios de la guía (`guia-enviar-maletas-japon.html`, textos `ga2` de `data/sitio.js`).
@@ -113,14 +115,22 @@ Tablas anuales de DHL y FedEx (Japón, Corea, China), K-Packet, EMS Premium y SF
 Las versiones en inglés (`/en/…`) se generan solas. Para añadir una página nueva: crea el HTML y añádela a `tools/paginas.js`.
 
 ## Formularios
-Netlify Forms. En *Forms* verás un formulario por servicio y por idioma (las versiones inglesas acaban en `-en`, por ejemplo `shipcalc-maletas-en`): así sabes qué servicio se pide más. Cada reserva de maletas lleva número (`SC-AAMMDD-XXXX`), total, un resumen en el idioma del cliente y el campo **`etiqueta_yamato`**: los datos de la etiqueta en japonés, listos para copiar (お届け先, 宿泊者名 y número de reserva del hotel, fecha y franja, ご依頼主 con teléfono, 品名, número de bultos y tamaño, y dónde se recoge). Para aeropuerto incluye 搭乗日, 便名 y 出発時刻.
+Netlify Forms. En *Forms* verás un formulario por servicio y por idioma (las versiones inglesas acaban en `-en`, por ejemplo `shipcalc-maletas-en`): así sabes qué servicio se pide más. Cada reserva de maletas lleva número (`SC-AAMMDD-XXXX`), total, un resumen en el idioma del cliente y el campo **`etiqueta_yamato`**: los datos de la etiqueta en japonés, listos para copiar (お届け先, 宿泊者名 y número de reserva del hotel, fecha y franja, ご依頼主 con teléfono, 品名, número de bultos y tamaño, y dónde se recoge). Para aeropuerto incluye 搭乗日, 便名 y 出発時刻. También llegan `instrucciones_cliente` (los pasos que vio el cliente al terminar, listos para pegar en WhatsApp) y `precio_aprox_moneda`.
 
-Reglas de Yamato que ya aplica el formulario:
-- Hotel: nombre del hotel, dirección y nombre de la reserva (más teléfono y número de reserva opcionales).
+**Cómo se gestiona hoy (sin contrato con Yamato):** llega la reserva → confirmas por WhatsApp o email y mandas el enlace de pago → cuando paga, pides la recogida a Yamato por teléfono (0570-200-000, AI, de 8:00 a 21:00) o en su web de 集荷, usando `etiqueta_yamato` → le pasas al cliente por WhatsApp la hora y, si hay, la etiqueta o el código.
+
+El envío internacional de maletas va por «Lo enviamos por ti» (`envio.html`, campo `tipo_envio`: compras, maleta o ambos), no por la reserva de maletas.
+
+Reglas de Yamato que ya aplica el formulario (comprobadas en su web y en su formulario oficial de 集荷 https://shuka.kuronekoyamato.co.jp/shuka_req/TopAction_doInit.action):
+- Hotel: nombre, dirección, nombre de la reserva y **fecha de entrada (宿泊日, obligatoria en el formulario de Yamato «宿泊施設に送る»)**; teléfono y número de reserva opcionales.
 - Airbnb o apartamento sin recepción: Yamato **no recoge ni entrega** allí. El cliente deja la maleta en una tienda 7-Eleven o FamilyMart o en una oficina de Yamato, y para recibirla se envía a la oficina de Yamato más cercana (営業所止め). No se puede poner una tienda de conveniencia como dirección de entrega.
-- Casa particular: dirección con código postal, teléfono y nombre de quien la recibe.
-- Aeropuerto: terminal, aerolínea y número de vuelo, y hora de salida. Sin franja horaria.
+- Casa particular: dirección con código postal, teléfono, nombre de quien la recibe y franja de recogida (13時まで, 14–16, 16–18, 17–18:30).
+- Aeropuerto: solo terminales con mostrador de Yamato (lista `TERMINALS` en data/maletas.js, copiada del formulario oficial). Naha no está en esa lista. Se pide terminal, aerolínea y número de vuelo, y hora de salida. Sin franja horaria. No se puede recoger fuera del horario del mostrador.
+- Máximo **10 bultos por solicitud de recogida** (`maxTotal`).
+- Tramos en avión (全国⇔沖縄 y 北海道⇔中国・四国・九州): no aerosoles, perfumes u otros líquidos, mecheros ni baterías de litio. El formulario lo avisa.
 - Franjas de entrega de Yamato: 午前中, 14–16, 16–18, 18–20, 19–21.
+- Cuidado especial (máx. 2 en Yamato): ワレモノ y 精密機械.
+- Para pedir tú la recogida en la web de Yamato hace falta: nombre en kanji/letras **y en katakana**, código postal, dirección, teléfono japonés (máx. 13 caracteres) y email. El nombre en katakana del cliente lo tienes que escribir tú.
 - Contenido concreto obligatorio (Yamato puede retrasar o no entregar si pone solo «artículos varios»). Primera vez: *Site configuration → Forms → Enable form detection* y vuelve a desplegar. Para recibir avisos por email: *Forms → Form notifications*.
 
 ## Pruebas antes de publicar

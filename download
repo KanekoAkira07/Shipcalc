@@ -1,0 +1,4 @@
+dist/
+.build-meta/
+.indexnow-state/
+node_modules/
